@@ -1,0 +1,49 @@
+"use client";
+
+import { useCart } from "@/context/CartContext";
+import AnnouncementBar from "@/components/AnnouncementBar";
+import Header from "@/components/Header";
+import CartDrawer from "@/components/CartDrawer";
+import Footer from "@/components/Footer";
+import SearchModal from "@/components/SearchModal";
+
+export default function LayoutWrapper({ children }) {
+  const {
+    items,
+    isCartOpen,
+    setIsCartOpen,
+    isSearchOpen,
+    setIsSearchOpen,
+    updateQuantity,
+    removeItem,
+    totalCount,
+  } = useCart();
+
+  return (
+    <>
+      <AnnouncementBar />
+      <Header
+        cartCount={totalCount}
+        onOpenCart={() => setIsCartOpen(true)}
+        onOpenSearch={() => setIsSearchOpen(true)}
+      />
+
+      <div className="flex-1">{children}</div>
+
+      <Footer />
+
+      <CartDrawer
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        items={items}
+        onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeItem}
+      />
+
+      <SearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
+    </>
+  );
+}

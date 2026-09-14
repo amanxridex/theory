@@ -1,0 +1,260 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import Link from "next/link";
+import ProductCard from "@/components/ProductCard";
+import { SlidersHorizontal, ArrowUpDown, Grid3X3, Grid2X2 } from "lucide-react";
+
+export default function CollectionClient({ handle, allProducts }) {
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [sortBy, setSortBy] = useState("featured");
+  const [desktopCols, setDesktopCols] = useState(4);
+
+  // Map handle to readable titles and descriptions for The Home Definer categories
+  const collectionInfo = useMemo(() => {
+    switch (handle) {
+      case "all-products":
+      case "all":
+      case "shop":
+      case "year-round":
+        return {
+          title: "All Objects & Homeware",
+          subtitle: "Complete The Home Definer Collection",
+          description: "Discover our comprehensive portfolio of everyday ceramics, sculptural tabletop pieces, and artisanal soft furnishings.",
+        };
+      case "everyday-ceramics":
+        return {
+          title: "Everyday Ceramics",
+          subtitle: "Artisanal Tableware & Dinnerware",
+          description: "Handcrafted mugs, ceramic bowls, plates, and breakfast sets designed for daily ritual and elevated dining.",
+        };
+      case "tableware":
+        return {
+          title: "Tableware & Dinnerware",
+          subtitle: "Dining Accents",
+          description: "Porcelain & stoneware dining sets, ramen bowls, dessert plates, and condiment bowls.",
+        };
+      case "serveware":
+        return {
+          title: "Platters & Serveware",
+          subtitle: "Entertaining Statements",
+          description: "Elevated ceramic serving trays, dip bowls, tiered platters, and cheese boards.",
+        };
+      case "vases-planters":
+      case "vases":
+        return {
+          title: "Vases & Planters",
+          subtitle: "Sculptural Vessels",
+          description: "Contemporary ceramic, metal, and glass vases crafted to transform botanical stems into gallery centerpieces.",
+        };
+      case "decorative-objects":
+      case "decor":
+        return {
+          title: "Decorative Objects",
+          subtitle: "Conversational Sculptures",
+          description: "Handcrafted figurines, resin art pieces, bookends, and abstract architectural monoliths.",
+        };
+      case "candles-holders":
+      case "candles":
+        return {
+          title: "Candles & Holders",
+          subtitle: "Ambient Illumination",
+          description: "Sculptural brass, ceramic, and glass candleholders paired with fragrant artisanal wax pieces.",
+        };
+      case "home-linen":
+      case "bedding":
+        return {
+          title: "Premium Home Linen",
+          subtitle: "Bedding & Soft Furnishings",
+          description: "Pure cotton double, queen, and king bedsheets, quilted bed covers, matching cushion covers, and table runners.",
+        };
+      case "merry-bright":
+      case "festive":
+      case "holiday":
+        return {
+          title: "Merry & Bright Holiday Collection",
+          subtitle: "Festive Heirloom Accents",
+          description: "Resin Santa camper vans, light-up village houses, decorative tree stands, and heirloom holiday figurines.",
+        };
+      case "blue-pottery":
+        return {
+          title: "Traditional Blue Pottery",
+          subtitle: "Heritage Craft",
+          description: "Authentic hand-painted blue pottery planters, decorative bowls, and glazed artistic vessels.",
+        };
+      case "storage-solutions":
+        return {
+          title: "Storage Solutions & Jars",
+          subtitle: "Kitchen & Vanity",
+          description: "Ceramic canisters, wooden-lidded spice containers, and elegant bathroom vanity organisers.",
+        };
+      default:
+        return {
+          title: handle.replace(/-/g, " ").toUpperCase(),
+          subtitle: "Curated Category",
+          description: "Artisanal home objects crafted to bring warmth, texture, and character to living spaces.",
+        };
+    }
+  }, [handle]);
+
+  // Filter products matching collection
+  const filteredProducts = useMemo(() => {
+    return allProducts.filter((p) => {
+      const lowerTitle = p.title.toLowerCase();
+      const lowerType = (p.product_type || "").toLowerCase();
+      const tags = (p.tags || []).map((t) => t.toLowerCase());
+      const fullSearch = `${lowerTitle} ${lowerType} ${tags.join(" ")}`;
+
+      if (handle === "everyday-ceramics" && !fullSearch.includes("ceramic") && !fullSearch.includes("tableware") && !fullSearch.includes("bowl") && !fullSearch.includes("mug")) return false;
+      if (handle === "tableware" && !fullSearch.includes("tableware") && !fullSearch.includes("plate") && !fullSearch.includes("bowl") && !fullSearch.includes("dinner")) return false;
+      if (handle === "serveware" && !fullSearch.includes("serveware") && !fullSearch.includes("platter") && !fullSearch.includes("tray")) return false;
+      if ((handle === "vases-planters" || handle === "vases") && !fullSearch.includes("vase") && !fullSearch.includes("planter")) return false;
+      if (handle === "decorative-objects" && !fullSearch.includes("decorative") && !fullSearch.includes("object") && !fullSearch.includes("figurine") && !fullSearch.includes("stand")) return false;
+      if (handle === "candles-holders" && !fullSearch.includes("candle") && !fullSearch.includes("holder")) return false;
+      if ((handle === "home-linen" || handle === "bedding") && !fullSearch.includes("bedsheet") && !fullSearch.includes("linen") && !fullSearch.includes("cushion") && !fullSearch.includes("cotton")) return false;
+      if ((handle === "merry-bright" || handle === "festive") && !fullSearch.includes("christmas") && !fullSearch.includes("santa") && !fullSearch.includes("holiday") && !fullSearch.includes("merry") && !fullSearch.includes("tree")) return false;
+      if (handle === "blue-pottery" && !fullSearch.includes("pottery") && !fullSearch.includes("blue")) return false;
+      if (handle === "storage-solutions" && !fullSearch.includes("storage") && !fullSearch.includes("jar") && !fullSearch.includes("canister")) return false;
+
+      // Sub-filters
+      if (activeCategory === "available" && !p.available) return false;
+      if (activeCategory === "under1500" && Number(p.price) >= 1500) return false;
+      if (activeCategory === "over1500" && Number(p.price) < 1500) return false;
+
+      return true;
+    }).sort((a, b) => {
+      if (sortBy === "price-low") return Number(a.price) - Number(b.price);
+      if (sortBy === "price-high") return Number(b.price) - Number(a.price);
+      if (sortBy === "title-asc") return a.title.localeCompare(b.title);
+      return 0;
+    });
+  }, [allProducts, handle, activeCategory, sortBy]);
+
+  return (
+    <div className="bg-[#fffdf8] min-h-screen">
+      
+      {/* Breadcrumbs */}
+      <div className="max-w-[1600px] mx-auto px-4 md:px-8 py-4 text-xs font-mono text-neutral-500 flex items-center gap-2 border-b border-[#e5e3dc]">
+        <Link href="/" className="hover:text-black">Home</Link>
+        <span>/</span>
+        <Link href="/collections/all-products" className="hover:text-black">Collections</Link>
+        <span>/</span>
+        <span className="text-black font-semibold uppercase">{collectionInfo.title}</span>
+      </div>
+
+      {/* Collection Editorial Banner */}
+      <div className="border-b border-[#e5e3dc] py-12 md:py-16 bg-[#f7f5ef]">
+        <div className="max-w-[1600px] mx-auto px-4 md:px-8 space-y-3">
+          <span className="text-[10px] md:text-xs font-mono tracking-[0.25em] uppercase text-neutral-500 block">
+            {collectionInfo.subtitle}
+          </span>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-[#121212]">
+            {collectionInfo.title}
+          </h1>
+          <p className="text-xs md:text-sm text-neutral-600 font-normal max-w-xl leading-relaxed">
+            {collectionInfo.description}
+          </p>
+        </div>
+      </div>
+
+      {/* Filter and Controls Bar */}
+      <div className="sticky top-16 md:top-20 z-30 bg-[#fffdf8]/95 backdrop-blur-md border-b border-[#e5e3dc]">
+        <div className="max-w-[1600px] mx-auto px-4 md:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+          
+          {/* Quick Sub-Filter Chips */}
+          <div className="flex items-center gap-2 overflow-x-auto max-w-full pb-1 sm:pb-0">
+            {[
+              { id: "all", label: "All Items" },
+              { id: "available", label: "In Stock" },
+              { id: "under1500", label: "Under Rs. 1,500" },
+              { id: "over1500", label: "Rs. 1,500+" },
+            ].map((chip) => (
+              <button
+                key={chip.id}
+                onClick={() => setActiveCategory(chip.id)}
+                className={`px-3 py-1.5 text-xs font-mono uppercase whitespace-nowrap transition-colors border ${
+                  activeCategory === chip.id
+                    ? "bg-[#121212] text-white border-[#121212]"
+                    : "bg-white text-neutral-700 border-[#e5e3dc] hover:border-black"
+                }`}
+              >
+                {chip.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Right Tools: Count, Sort, Grid toggles */}
+          <div className="flex items-center gap-4 text-xs font-mono ml-auto">
+            <span className="text-neutral-500 hidden sm:inline-block">
+              {filteredProducts.length} Objects
+            </span>
+
+            {/* Sort Dropdown */}
+            <div className="flex items-center gap-1.5 border border-[#e5e3dc] px-3 py-1.5 bg-white">
+              <ArrowUpDown className="w-3.5 h-3.5 text-neutral-500" />
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="bg-transparent focus:outline-none cursor-pointer uppercase"
+                aria-label="Sort objects"
+              >
+                <option value="featured">Featured</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="title-asc">Alphabetical (A-Z)</option>
+              </select>
+            </div>
+
+            {/* Desktop Grid Layout Switcher */}
+            <div className="hidden lg:flex items-center gap-1 border border-[#e5e3dc] p-1 bg-white">
+              <button
+                onClick={() => setDesktopCols(3)}
+                className={`p-1 transition-colors ${desktopCols === 3 ? "bg-[#121212] text-white" : "text-neutral-400 hover:text-black"}`}
+                aria-label="3 Column Grid"
+              >
+                <Grid3X3 className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setDesktopCols(4)}
+                className={`p-1 transition-colors ${desktopCols === 4 ? "bg-[#121212] text-white" : "text-neutral-400 hover:text-black"}`}
+                aria-label="4 Column Grid"
+              >
+                <Grid2X2 className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Product Grid Area */}
+      <div className="max-w-[1600px] mx-auto px-4 md:px-8 py-10">
+        <div
+          className={`grid grid-cols-2 ${
+            desktopCols === 3 ? "md:grid-cols-3" : "md:grid-cols-3 lg:grid-cols-4"
+          } gap-3 sm:gap-4 md:gap-6`}
+        >
+          {filteredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+
+        {filteredProducts.length === 0 && (
+          <div className="py-24 text-center space-y-4">
+            <p className="text-xl font-bold uppercase tracking-tight">
+              No objects found in this category
+            </p>
+            <p className="text-xs font-mono text-neutral-500">
+              Try adjusting your filters or browse the complete studio collection.
+            </p>
+            <button
+              onClick={() => setActiveCategory("all")}
+              className="px-6 py-3 bg-[#121212] text-[#fffdf8] text-xs font-mono uppercase tracking-widest"
+            >
+              Reset Filters
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
