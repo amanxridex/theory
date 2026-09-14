@@ -335,21 +335,63 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
 
           </div>
 
-          <div className="pt-4 flex items-center gap-4 text-xs font-mono text-neutral-500">
-            <button
-              onClick={() => {
-                if (navigator.share) {
-                  navigator.share({ title: product.title, url: window.location.href });
-                } else {
+          {/* Social Share Suite: WhatsApp, Telegram, Facebook, Copy Link */}
+          <div className="pt-4 border-t border-[#e5e3dc] space-y-2">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500 block">
+              Share Object With Friends & Collectors
+            </span>
+            <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
+              {/* WhatsApp Share Button with Auto Message */}
+              <button
+                onClick={() => {
+                  const url = window.location.href;
+                  const text = `✨ *${product.title}* (₹${formattedPrice})\nDiscover handcrafted living objects by The Cozy Theory Studio:\n${url}`;
+                  window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#25D366]/10 text-[#128C7E] hover:bg-[#25D366] hover:text-white rounded border border-[#25D366]/30 transition-colors font-medium"
+                title="Share on WhatsApp with preview"
+              >
+                <span>WhatsApp</span>
+              </button>
+
+              {/* Telegram Share Button */}
+              <button
+                onClick={() => {
+                  const url = window.location.href;
+                  const text = `✨ ${product.title} (₹${formattedPrice}) — The Cozy Theory`;
+                  window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, "_blank");
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0088cc]/10 text-[#0088cc] hover:bg-[#0088cc] hover:text-white rounded border border-[#0088cc]/30 transition-colors font-medium"
+                title="Share on Telegram"
+              >
+                <span>Telegram</span>
+              </button>
+
+              {/* Facebook Share Button */}
+              <button
+                onClick={() => {
+                  const url = window.location.href;
+                  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank");
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1877f2]/10 text-[#1877f2] hover:bg-[#1877f2] hover:text-white rounded border border-[#1877f2]/30 transition-colors font-medium"
+                title="Share on Facebook"
+              >
+                <span>Facebook</span>
+              </button>
+
+              {/* Copy Link */}
+              <button
+                onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
-                  alert("Link copied to clipboard!");
-                }
-              }}
-              className="flex items-center gap-1.5 hover:text-black transition-colors"
-            >
-              <Share2 className="w-3.5 h-3.5" />
-              <span>Share Object</span>
-            </button>
+                  alert("Link copied! Paste anywhere on WhatsApp, Telegram, or Facebook for instant preview card.");
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 rounded border border-neutral-300 transition-colors"
+                title="Copy Link"
+              >
+                <Share2 className="w-3 h-3" />
+                <span>Copy Link</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
