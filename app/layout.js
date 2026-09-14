@@ -4,7 +4,7 @@ import { StoreProvider } from "@/context/StoreContext";
 import LayoutWrapper from "@/components/LayoutWrapper";
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://thecozytheory.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://thecozytheory.playstax.xyz"),
   title: {
     default: "THE COZY THEORY — Objects For Warm & Deliberate Living",
     template: "%s | THE COZY THEORY",
@@ -29,7 +29,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://thecozytheory.com",
+    url: "https://thecozytheory.playstax.xyz",
     siteName: "THE COZY THEORY",
     title: "THE COZY THEORY — Objects For Warm & Deliberate Living",
     description:
@@ -74,8 +74,9 @@ export default function RootLayout({ children }) {
           property="og:description"
           content="Handcrafted everyday ceramics, stoneware tableware, sculptural vessels, and washed cotton bedding. Elevated living objects for deliberate rituals."
         />
-        <meta property="og:image" content="https://thecozytheory.com/og-image.jpg" />
-        <meta property="og:image:secure_url" content="https://thecozytheory.com/og-image.jpg" />
+        <meta property="og:url" content="https://thecozytheory.playstax.xyz" />
+        <meta property="og:image" content="https://thecozytheory.playstax.xyz/og-image.jpg" />
+        <meta property="og:image:secure_url" content="https://thecozytheory.playstax.xyz/og-image.jpg" />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -87,7 +88,7 @@ export default function RootLayout({ children }) {
           name="twitter:description"
           content="Handcrafted everyday ceramics, stoneware tableware, sculptural vessels, and washed cotton bedding."
         />
-        <meta name="twitter:image" content="https://thecozytheory.com/og-image.jpg" />
+        <meta name="twitter:image" content="https://thecozytheory.playstax.xyz/og-image.jpg" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

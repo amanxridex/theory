@@ -19,7 +19,7 @@ export async function generateMetadata({ params }) {
 
   const title = `${product.title} (₹${priceFormatted}) | The Cozy Theory`;
   const description = `Shop ${product.title} (₹${priceFormatted}) by The Cozy Theory. Handcrafted ${product.product_type || "artisanal homeware"}, daily stoneware ceramics, and living objects.`;
-  const image = product.images && product.images[0] ? product.images[0] : "https://thecozytheory.com/og-image.jpg";
+  const image = product.images && product.images[0] ? product.images[0] : "https://thecozytheory.playstax.xyz/og-image.jpg";
 
   return {
     title,
