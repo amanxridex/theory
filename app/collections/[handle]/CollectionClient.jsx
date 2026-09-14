@@ -4,14 +4,27 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import { SlidersHorizontal, ArrowUpDown, Grid3X3, Grid2X2 } from "lucide-react";
+import { useStore } from "@/context/StoreContext";
 
 export default function CollectionClient({ handle, allProducts }) {
+  const { products: storeProducts, collections: storeCollections } = useStore();
   const [activeCategory, setActiveCategory] = useState("all");
   const [sortBy, setSortBy] = useState("featured");
   const [desktopCols, setDesktopCols] = useState(4);
 
+  const activeCatalog = storeProducts && storeProducts.length > 0 ? storeProducts : allProducts;
+
   // Map handle to readable titles and descriptions for The Home Definer categories
   const collectionInfo = useMemo(() => {
+    const customCol = (storeCollections || []).find((c) => c.handle === handle);
+    if (customCol) {
+      return {
+        title: customCol.title,
+        subtitle: "Curated Category",
+        description: customCol.description || "Artisanal home objects crafted to bring warmth, texture, and character to living spaces.",
+      };
+    }
+
     switch (handle) {
       case "all-products":
       case "all":
@@ -19,7 +32,7 @@ export default function CollectionClient({ handle, allProducts }) {
       case "year-round":
         return {
           title: "All Objects & Homeware",
-          subtitle: "Complete The Home Definer Collection",
+          subtitle: "Complete The Cozy Theory Collection",
           description: "Discover our comprehensive portfolio of everyday ceramics, sculptural tabletop pieces, and artisanal soft furnishings.",
         };
       case "everyday-ceramics":
@@ -95,26 +108,49 @@ export default function CollectionClient({ handle, allProducts }) {
           description: "Artisanal home objects crafted to bring warmth, texture, and character to living spaces.",
         };
     }
-  }, [handle]);
+  }, [handle, storeCollections]);
 
   // Filter products matching collection
   const filteredProducts = useMemo(() => {
-    return allProducts.filter((p) => {
+    return activeCatalog.filter((p) => {
       const lowerTitle = p.title.toLowerCase();
       const lowerType = (p.product_type || "").toLowerCase();
       const tags = (p.tags || []).map((t) => t.toLowerCase());
       const fullSearch = `${lowerTitle} ${lowerType} ${tags.join(" ")}`;
 
-      if (handle === "everyday-ceramics" && !fullSearch.includes("ceramic") && !fullSearch.includes("tableware") && !fullSearch.includes("bowl") && !fullSearch.includes("mug")) return false;
-      if (handle === "tableware" && !fullSearch.includes("tableware") && !fullSearch.includes("plate") && !fullSearch.includes("bowl") && !fullSearch.includes("dinner")) return false;
-      if (handle === "serveware" && !fullSearch.includes("serveware") && !fullSearch.includes("platter") && !fullSearch.includes("tray")) return false;
-      if ((handle === "vases-planters" || handle === "vases") && !fullSearch.includes("vase") && !fullSearch.includes("planter")) return false;
-      if (handle === "decorative-objects" && !fullSearch.includes("decorative") && !fullSearch.includes("object") && !fullSearch.includes("figurine") && !fullSearch.includes("stand")) return false;
-      if (handle === "candles-holders" && !fullSearch.includes("candle") && !fullSearch.includes("holder")) return false;
-      if ((handle === "home-linen" || handle === "bedding") && !fullSearch.includes("bedsheet") && !fullSearch.includes("linen") && !fullSearch.includes("cushion") && !fullSearch.includes("cotton")) return false;
-      if ((handle === "merry-bright" || handle === "festive") && !fullSearch.includes("christmas") && !fullSearch.includes("santa") && !fullSearch.includes("holiday") && !fullSearch.includes("merry") && !fullSearch.includes("tree")) return false;
-      if (handle === "blue-pottery" && !fullSearch.includes("pottery") && !fullSearch.includes("blue")) return false;
-      if (handle === "storage-solutions" && !fullSearch.includes("storage") && !fullSearch.includes("jar") && !fullSearch.includes("canister")) return false;
+      if (handle === "all-products" || handle === "all" || handle === "shop") {
+        // match all
+      } else if (handle === "everyday-ceramics" && !fullSearch.includes("ceramic") && !fullSearch.includes("tableware") && !fullSearch.includes("bowl") && !fullSearch.includes("mug")) {
+        return false;
+      } else if (handle === "tableware" && !fullSearch.includes("tableware") && !fullSearch.includes("plate") && !fullSearch.includes("bowl") && !fullSearch.includes("dinner")) {
+        return false;
+      } else if (handle === "serveware" && !fullSearch.includes("serveware") && !fullSearch.includes("platter") && !fullSearch.includes("tray")) {
+        return false;
+      } else if ((handle === "vases-planters" || handle === "vases") && !fullSearch.includes("vase") && !fullSearch.includes("planter")) {
+        return false;
+      } else if (handle === "decorative-objects" && !fullSearch.includes("decorative") && !fullSearch.includes("object") && !fullSearch.includes("figurine") && !fullSearch.includes("stand")) {
+        return false;
+      } else if (handle === "candles-holders" && !fullSearch.includes("candle") && !fullSearch.includes("holder")) {
+        return false;
+      } else if ((handle === "home-linen" || handle === "bedding") && !fullSearch.includes("bedsheet") && !fullSearch.includes("linen") && !fullSearch.includes("cushion") && !fullSearch.includes("cotton")) {
+        return false;
+      } else if ((handle === "merry-bright" || handle === "festive") && !fullSearch.includes("christmas") && !fullSearch.includes("santa") && !fullSearch.includes("holiday") && !fullSearch.includes("merry") && !fullSearch.includes("tree")) {
+        return false;
+      } else if (handle === "blue-pottery" && !fullSearch.includes("pottery") && !fullSearch.includes("blue")) {
+        return false;
+      } else if (handle === "storage-solutions" && !fullSearch.includes("storage") && !fullSearch.includes("jar") && !fullSearch.includes("canister")) {
+        return false;
+      } else {
+        // Check if custom category handle or title matches
+        const customCol = (storeCollections || []).find((c) => c.handle === handle);
+        if (customCol) {
+          const colTitle = customCol.title.toLowerCase();
+          const colHandle = customCol.handle.toLowerCase();
+          if (!fullSearch.includes(colTitle) && !fullSearch.includes(colHandle)) {
+            return false;
+          }
+        }
+      }
 
       // Sub-filters
       if (activeCategory === "available" && !p.available) return false;
@@ -128,7 +164,7 @@ export default function CollectionClient({ handle, allProducts }) {
       if (sortBy === "title-asc") return a.title.localeCompare(b.title);
       return 0;
     });
-  }, [allProducts, handle, activeCategory, sortBy]);
+  }, [activeCatalog, handle, activeCategory, sortBy, storeCollections]);
 
   return (
     <div className="bg-[#fffdf8] min-h-screen">

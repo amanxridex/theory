@@ -17,12 +17,37 @@ import {
   Share2,
 } from "lucide-react";
 
-export default function ProductDetailClient({ product, relatedProducts }) {
+import { useStore } from "@/context/StoreContext";
+
+export default function ProductDetailClient({ product: initialProduct, relatedProducts: initialRelated, handle }) {
+  const { products } = useStore();
   const { addToCart } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
   const [openAccordion, setOpenAccordion] = useState("details");
+
+  const product = initialProduct || (products && products.find((p) => p.handle === handle)) || null;
+  const relatedProducts = initialRelated || (products ? products.slice(0, 4) : []);
+
+  if (!product) {
+    return (
+      <div className="bg-[#fffdf8] min-h-[60vh] flex flex-col items-center justify-center p-8 text-center">
+        <h2 className="text-2xl font-mono uppercase tracking-widest text-[#121212] mb-3">
+          Object Not Found
+        </h2>
+        <p className="text-sm font-mono text-neutral-500 max-w-md mb-6">
+          This object might have been archived or is newly created in the admin portal.
+        </p>
+        <Link
+          href="/collections/all-products"
+          className="bg-black text-white px-6 py-3 font-mono text-xs uppercase tracking-wider hover:bg-neutral-800"
+        >
+          Explore All Objects →
+        </Link>
+      </div>
+    );
+  }
 
   const formattedPrice = Number(product.price).toLocaleString("en-IN", {
     minimumFractionDigits: 2,

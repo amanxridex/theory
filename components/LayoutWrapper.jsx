@@ -7,7 +7,12 @@ import CartDrawer from "@/components/CartDrawer";
 import Footer from "@/components/Footer";
 import SearchModal from "@/components/SearchModal";
 
+import { usePathname } from "next/navigation";
+
 export default function LayoutWrapper({ children }) {
+  const pathname = usePathname();
+  const isAdmin = pathname?.startsWith("/admin");
+
   const {
     items,
     isCartOpen,
@@ -18,6 +23,10 @@ export default function LayoutWrapper({ children }) {
     removeItem,
     totalCount,
   } = useCart();
+
+  if (isAdmin) {
+    return <div className="min-h-screen flex-1 bg-[#0f1117]">{children}</div>;
+  }
 
   return (
     <>

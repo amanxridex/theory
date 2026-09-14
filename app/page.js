@@ -10,19 +10,23 @@ import QuickViewModal from "@/components/QuickViewModal";
 import { NOTICE_PRODUCTS, HERO_SLIDES, LOOKBOOK_SPOTS } from "@/lib/products";
 import { SlidersHorizontal, ArrowUpDown, ArrowRight, Shuffle } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useStore } from "@/context/StoreContext";
 
 export default function Home() {
+  const { products } = useStore();
   const { addToCart } = useCart();
   const [activeFilter, setActiveFilter] = useState("all");
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [sortBy, setSortBy] = useState("featured");
   const [randomSeed, setRandomSeed] = useState(0);
 
+  const catalog = products && products.length > 0 ? products : NOTICE_PRODUCTS;
+
   const handleShuffle = () => {
     setRandomSeed((prev) => prev + 1);
   };
 
-  const filteredProducts = NOTICE_PRODUCTS.filter((p) => {
+  const filteredProducts = catalog.filter((p) => {
     if (activeFilter === "all") return true;
     const lowerTitle = p.title.toLowerCase();
     const lowerType = (p.product_type || "").toLowerCase();

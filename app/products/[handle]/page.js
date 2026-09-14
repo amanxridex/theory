@@ -24,16 +24,10 @@ export async function generateMetadata({ params }) {
 
 export default async function ProductPage({ params }) {
   const { handle } = await params;
-  const product = NOTICE_PRODUCTS.find((p) => p.handle === handle);
-
-  if (!product) {
-    notFound();
-  }
+  const product = NOTICE_PRODUCTS.find((p) => p.handle === handle) || null;
 
   // Related products from same category or collection
-  const relatedProducts = NOTICE_PRODUCTS.filter(
-    (p) => p.id !== product.id
-  ).slice(0, 4);
+  const relatedProducts = NOTICE_PRODUCTS.slice(0, 4);
 
-  return <ProductDetailClient product={product} relatedProducts={relatedProducts} />;
+  return <ProductDetailClient product={product} relatedProducts={relatedProducts} handle={handle} />;
 }

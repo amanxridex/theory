@@ -1,5 +1,6 @@
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
+import { StoreProvider } from "@/context/StoreContext";
 import LayoutWrapper from "@/components/LayoutWrapper";
 
 export const metadata = {
@@ -29,9 +30,11 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="antialiased min-h-screen flex flex-col bg-[#fffdf8] text-[#121212]">
-        <CartProvider>
-          <LayoutWrapper>{children}</LayoutWrapper>
-        </CartProvider>
+        <StoreProvider>
+          <CartProvider>
+            <LayoutWrapper>{children}</LayoutWrapper>
+          </CartProvider>
+        </StoreProvider>
       </body>
     </html>
   );

@@ -109,6 +109,7 @@ export default function Footer() {
               <li><Link href="/blogs/news" className="hover:text-white transition-colors">Studio Journal</Link></li>
               <li><Link href="/pages/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
               <li><Link href="/pages/faq" className="hover:text-white transition-colors">FAQs & Care Guides</Link></li>
+              <li><Link href="/admin" className="text-emerald-400 hover:text-emerald-300 font-bold transition-colors">Shopify Admin Portal ↗</Link></li>
             </ul>
           </div>
 

@@ -6,19 +6,24 @@ import { NOTICE_PRODUCTS } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
 import { Search } from "lucide-react";
 
+import { useStore } from "@/context/StoreContext";
+
 function SearchContent() {
+  const { products } = useStore();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q") || "";
   const [query, setQuery] = useState(initialQuery);
 
+  const catalog = products && products.length > 0 ? products : NOTICE_PRODUCTS;
+
   const results = query.trim()
-    ? NOTICE_PRODUCTS.filter(
+    ? catalog.filter(
         (p) =>
           p.title.toLowerCase().includes(query.toLowerCase()) ||
-          p.tags.some((t) => t.toLowerCase().includes(query.toLowerCase())) ||
+          (p.tags && p.tags.some((t) => t.toLowerCase().includes(query.toLowerCase()))) ||
           (p.product_type && p.product_type.toLowerCase().includes(query.toLowerCase()))
       )
-    : NOTICE_PRODUCTS.slice(0, 12);
+    : catalog.slice(0, 12);
 
   return (
     <div className="bg-[#fffdf8] min-h-screen py-10 md:py-16">
