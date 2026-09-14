@@ -110,7 +110,7 @@ export default function AdminLayout({ children }) {
                 </span>
                 <span className="text-[10px] font-mono tracking-wider text-emerald-400 flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  Shopify Studio Pro
+                  Theory Admin Console
                 </span>
               </div>
             </Link>

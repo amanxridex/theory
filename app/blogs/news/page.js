@@ -39,7 +39,7 @@ export const BLOG_POSTS = [
     title: "Warm Earth & Glaze: The Organic Tactility of Modern Stoneware",
     date: "May 10, 2024",
     excerpt: "Deconstructing the fluid curves and hand-glazed finishes of our latest ceramic releases.",
-    image: "https://cdn.shopify.com/s/files/1/0826/5053/0110/files/04_6fa58dfc-06ea-452f-bdc7-ec5961ca39c0.jpg?v=1765797683&width=800",
+    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136",
     readTime: "3 min read",
     author: "The Cozy Theory Studio",
   },

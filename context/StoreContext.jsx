@@ -11,7 +11,7 @@ export const INITIAL_COLLECTIONS = [
     handle: "all-products",
     title: "All Objects",
     description: "Complete archive of artisanal homeware and living objects.",
-    image: "https://cdn.shopify.com/s/files/1/0593/5890/4514/files/TT-285_1.jpg?v=1733303728",
+    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136",
     itemCount: NOTICE_PRODUCTS.length,
   },
   {
@@ -19,7 +19,7 @@ export const INITIAL_COLLECTIONS = [
     handle: "everyday-ceramics",
     title: "Everyday Ceramics",
     description: "Handcrafted stoneware, daily mugs, and glazed bowls.",
-    image: "https://thehomedefiner.com/cdn/shop/files/TT-224_1.jpg?v=1733303649",
+    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product9-01.png?v=1784242846",
     itemCount: 158,
   },
   {
@@ -27,7 +27,7 @@ export const INITIAL_COLLECTIONS = [
     handle: "tableware",
     title: "Tableware & Dining",
     description: "Porcelain & stoneware dining plates, ramen bowls, and oil pourers.",
-    image: "https://thehomedefiner.com/cdn/shop/files/DD-96_1.jpg?v=1733303710",
+    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/TT75REDDIVIDEDBOWL.png?v=1788126151",
     itemCount: 82,
   },
   {
@@ -35,7 +35,7 @@ export const INITIAL_COLLECTIONS = [
     handle: "serveware",
     title: "Platters & Serveware",
     description: "Elevated ceramic serving trays, dip bowls, and cheese platters.",
-    image: "https://thehomedefiner.com/cdn/shop/files/TT-080_1.jpg?v=1733303512",
+    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/IMG_0517_ab4b2575-73cd-44f0-bef6-e22d87b409e1.jpg?v=1726212864",
     itemCount: 54,
   },
   {
@@ -43,7 +43,7 @@ export const INITIAL_COLLECTIONS = [
     handle: "home-linen",
     title: "Home Linen & Bedding",
     description: "Pure washed cotton bedsheets, quilted covers, and runners.",
-    image: "https://thehomedefiner.com/cdn/shop/files/THD383_1.jpg?v=1733303800",
+    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/DSC00422_eee0df88-82cb-49a4-818d-182c056960b2.jpg?v=1740976529",
     itemCount: 45,
   },
   {
@@ -51,7 +51,7 @@ export const INITIAL_COLLECTIONS = [
     handle: "vases-planters",
     title: "Vases & Planters",
     description: "Contemporary ceramic and stoneware vases for botanical stems.",
-    image: "https://thehomedefiner.com/cdn/shop/files/TT-16_1.jpg?v=1733303610",
+    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/ChatGPTImageJul18_2026_11_18_29PM.png?v=1784397111",
     itemCount: 42,
   },
   {
@@ -59,7 +59,7 @@ export const INITIAL_COLLECTIONS = [
     handle: "candles-holders",
     title: "Candles & Holders",
     description: "Sculptural candleholders and ambient t-light vessels.",
-    image: "https://thehomedefiner.com/cdn/shop/files/THD368_1.jpg?v=1733303740",
+    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/DSC07087_copy_ca9966aa-409f-4d01-a865-701ca110f64c.jpg?v=1726405433",
     itemCount: 28,
   },
   {
@@ -67,7 +67,7 @@ export const INITIAL_COLLECTIONS = [
     handle: "decorative-objects",
     title: "Decorative Objects",
     description: "Handcrafted figurines, bookends, and organic conversation pieces.",
-    image: "https://thehomedefiner.com/cdn/shop/files/THD082_1.jpg?v=1733303700",
+    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/ChatGPTImageJul18_2026_04_59_45PM.png?v=1784374314",
     itemCount: 40,
   },
   {
@@ -75,7 +75,7 @@ export const INITIAL_COLLECTIONS = [
     handle: "merry-bright",
     title: "Festive Accents",
     description: "Heirloom holiday figurines, winter village pieces, and seasonal tabletop items.",
-    image: "https://thehomedefiner.com/cdn/shop/files/THD107_1.jpg?v=1733303790",
+    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/ChatGPTImageSep13_2026_05_26_10PM.png?v=1789300631",
     itemCount: 385,
   },
 ];
@@ -208,7 +208,7 @@ export function StoreProvider({ children }) {
     }
   }, []);
 
-  // Live visitor fluctuation simulator (Shopify live pulse)
+  // Live visitor fluctuation simulator (Theory live pulse)
   useEffect(() => {
     const timer = setInterval(() => {
       setAnalytics((prev) => {
@@ -240,7 +240,7 @@ export function StoreProvider({ children }) {
       inventory: newProd.inventory !== undefined ? Number(newProd.inventory) : 25,
       images: Array.isArray(newProd.images) && newProd.images.length > 0
         ? newProd.images
-        : ["https://thehomedefiner.com/cdn/shop/files/TT-224_1.jpg?v=1733303649"],
+        : ["https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product9-01.png?v=1784242846"],
       tags: newProd.tags || ["New Drop", "Curated Living", newProd.product_type || "Homeware"],
       createdAt: new Date().toISOString(),
     };
@@ -283,7 +283,7 @@ export function StoreProvider({ children }) {
       handle: slug,
       title: newCol.title,
       description: newCol.description || "Curated seasonal collection by The Cozy Theory.",
-      image: newCol.image || "https://thehomedefiner.com/cdn/shop/files/TT-285_1.jpg?v=1733303728",
+      image: newCol.image || "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136",
       itemCount: 0,
       createdAt: new Date().toISOString(),
     };

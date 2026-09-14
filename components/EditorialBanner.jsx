@@ -32,8 +32,8 @@ export default function EditorialBanner() {
         <div className="lg:col-span-5 relative">
           <div className="aspect-[4/5] bg-neutral-900 border border-neutral-700 overflow-hidden relative group">
             <img
-              src="https://cdn.shopify.com/s/files/1/0593/5890/4514/files/TT-285_1.jpg?v=1733303728"
-              alt="Artisanal Handcrafted Vessel by The Cozy Theory"
+              src="https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136"
+              alt="Artisanal Handcrafted Ceramic Pitcher by The Cozy Theory"
               className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
               loading="lazy"
             />

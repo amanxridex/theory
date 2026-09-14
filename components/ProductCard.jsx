@@ -17,7 +17,7 @@ export default function ProductCard({ product, onQuickView }) {
     setTimeout(() => setIsAdded(false), 1500);
   };
 
-  const primaryImage = product.images[0] || "https://cdn.shopify.com/s/files/1/0593/5890/4514/files/TT-285_1.jpg?v=1733303728";
+  const primaryImage = product.images[0] || "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136";
   const secondaryImage = product.images[1] || primaryImage;
 
   const formattedPrice = Number(product.price).toLocaleString("en-IN", {

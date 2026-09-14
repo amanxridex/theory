@@ -49,7 +49,7 @@ export default function AboutPage() {
           <div className="lg:col-span-6">
             <div className="aspect-[4/5] bg-neutral-900 border border-[#e5e3dc] overflow-hidden">
               <img
-                src="https://cdn.shopify.com/s/files/1/0593/5890/4514/files/TT-285_1.jpg?v=1733303728"
+                src="https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136"
                 alt="The Cozy Theory artisanal ceramic vessel"
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
               />

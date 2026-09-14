@@ -34,8 +34,8 @@ export default function AddNewProductPage() {
     available: true,
     tags: "Curated Living, Artisanal Stoneware, New Drop",
     images: [
-      "https://thehomedefiner.com/cdn/shop/files/DD-96_1.jpg?v=1733303710",
-      "https://thehomedefiner.com/cdn/shop/files/DD-97_1.jpg?v=1733303680",
+      "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136",
+      "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product9-01.png?v=1784242846",
     ],
   });
 
@@ -98,11 +98,11 @@ export default function AddNewProductPage() {
 
   // Preset sample studio images to click-and-add
   const imagePresets = [
-    { title: "Floral Stoneware Bowl", url: "https://thehomedefiner.com/cdn/shop/files/DD-162_1.jpg?v=1733303750" },
-    { title: "Wabi-Sabi Ceramic Pitcher", url: "https://thehomedefiner.com/cdn/shop/files/TT-285_1.jpg?v=1733303728" },
-    { title: "Pure Washed Cotton Linen", url: "https://thehomedefiner.com/cdn/shop/files/THD383_1.jpg?v=1733303800" },
-    { title: "Minimal Stoneware Vase", url: "https://thehomedefiner.com/cdn/shop/files/TT-16_1.jpg?v=1733303610" },
-    { title: "Carved Wooden Platter", url: "https://thehomedefiner.com/cdn/shop/files/THD817_1.jpg?v=1733303730" },
+    { title: "Ceramic Pitcher", url: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136" },
+    { title: "Chicken Condiment Jar", url: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product9-01.png?v=1784242846" },
+    { title: "Bird Section Bowl", url: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/TT75REDDIVIDEDBOWL.png?v=1788126151" },
+    { title: "Washed Cotton Linen", url: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/DSC00422_eee0df88-82cb-49a4-818d-182c056960b2.jpg?v=1740976529" },
+    { title: "Sculptural Ceramic Vase", url: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/ChatGPTImageJul18_2026_11_18_29PM.png?v=1784397111" },
   ];
 
   return (
@@ -120,7 +120,7 @@ export default function AddNewProductPage() {
           </Link>
           <div>
             <span className="text-xs font-mono uppercase tracking-widest text-[#004fff] font-bold">
-              Shopify Product Studio
+              Theory Product Studio
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-0.5">
               Add New Product
@@ -201,7 +201,7 @@ export default function AddNewProductPage() {
                   sku: "TCT-NEW",
                   available: true,
                   tags: "New Drop",
-                  images: ["https://thehomedefiner.com/cdn/shop/files/TT-224_1.jpg?v=1733303649"],
+                  images: ["https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product9-01.png?v=1784242846"],
                 });
               }}
               className="px-4 py-2 bg-[#1b202c] hover:bg-[#252c3c] text-neutral-200 text-xs font-mono rounded-md transition-colors"
@@ -322,7 +322,7 @@ export default function AddNewProductPage() {
                   type="url"
                   value={newImageUrl}
                   onChange={(e) => setNewImageUrl(e.target.value)}
-                  placeholder="https://example.com/image.jpg"
+                  placeholder="Paste image URL here..."
                   className="flex-1 bg-[#1b202c] border border-[#2d3446] rounded-md px-3 py-2 text-xs font-mono text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#004fff]"
                 />
                 <button

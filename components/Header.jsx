@@ -166,16 +166,6 @@ export default function Header({
               <span className="hidden xl:inline">Account</span>
             </Link>
 
-            {/* Admin Portal Quick Link */}
-            <Link
-              href="/admin"
-              className="hidden sm:flex items-center gap-1.5 text-[11px] font-mono font-bold tracking-wider uppercase bg-[#121212] text-white hover:bg-[#004fff] px-2.5 py-1 rounded transition-colors"
-              aria-label="Shopify Admin Portal"
-            >
-              <span>Admin</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            </Link>
-
             <span className="hidden md:inline-block text-xs font-mono text-neutral-400">
               INR ₹
             </span>
@@ -317,7 +307,6 @@ export default function Header({
 
             {/* Studio Pages Links */}
             <div className="pt-4 border-t border-[#e5e3dc] space-y-2.5 text-xs font-mono uppercase text-neutral-500">
-              <div><Link href="/admin" onClick={() => setMobileMenuOpen(false)} className="hover:text-black flex items-center justify-between text-black font-bold bg-[#f1efe9] px-3 py-2 rounded"><span>⚡ Shopify Admin</span><span className="text-[10px] text-emerald-600 bg-emerald-100 px-1.5 py-0.5 rounded">NO LOGIN</span></Link></div>
               <div><Link href="/account" onClick={() => setMobileMenuOpen(false)} className="hover:text-black flex items-center gap-1.5"><User className="w-3.5 h-3.5" /> Collector Account</Link></div>
               <div><Link href="/cart" onClick={() => setMobileMenuOpen(false)} className="hover:text-black">Shopping Bag</Link></div>
               <div><Link href="/checkout" onClick={() => setMobileMenuOpen(false)} className="hover:text-black font-bold text-[#004fff]">Express Checkout →</Link></div>

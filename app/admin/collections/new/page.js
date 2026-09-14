@@ -21,7 +21,7 @@ export default function NewCollectionPage() {
     title: "",
     handle: "",
     description: "",
-    image: "https://thehomedefiner.com/cdn/shop/files/TT-285_1.jpg?v=1733303728",
+    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -65,7 +65,7 @@ export default function NewCollectionPage() {
           </Link>
           <div>
             <span className="text-xs font-mono uppercase tracking-widest text-[#004fff] font-bold">
-              Shopify Category Builder
+              Theory Category Builder
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-0.5">
               Create New Category
@@ -216,7 +216,7 @@ export default function NewCollectionPage() {
                   type="url"
                   value={formData.image}
                   onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  placeholder="https://example.com/banner.jpg"
+                  placeholder="Paste banner image URL here..."
                   className="w-full bg-[#1b202c] border border-[#2d3446] rounded-md px-3 py-2 text-xs font-mono text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#004fff]"
                 />
               </div>
@@ -227,9 +227,9 @@ export default function NewCollectionPage() {
                 </span>
                 <div className="flex flex-wrap gap-2 text-xs font-mono">
                   {[
-                    { label: "Stoneware Dining", url: "https://thehomedefiner.com/cdn/shop/files/DD-96_1.jpg?v=1733303710" },
-                    { label: "Terracotta Vessels", url: "https://thehomedefiner.com/cdn/shop/files/TT-285_1.jpg?v=1733303728" },
-                    { label: "Washed Cotton", url: "https://thehomedefiner.com/cdn/shop/files/THD383_1.jpg?v=1733303800" },
+                    { label: "Stoneware Dining", url: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/IMG_0517_ab4b2575-73cd-44f0-bef6-e22d87b409e1.jpg?v=1726212864" },
+                    { label: "Ceramic Pitcher", url: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136" },
+                    { label: "Washed Cotton", url: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/DSC00422_eee0df88-82cb-49a4-818d-182c056960b2.jpg?v=1740976529" },
                   ].map((p) => (
                     <button
                       key={p.label}
