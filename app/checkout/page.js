@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import { createOrder } from "@/lib/supabase";
+import { createOrder, validateDiscountCode } from "@/lib/supabase";
 import {
   ShieldCheck,
   Lock,
@@ -47,18 +47,20 @@ export default function CheckoutPage() {
   const discountAmount = (subtotal * discountApplied) / 100;
   const total = Math.max(0, subtotal - discountAmount + shippingFee);
 
-  const handleApplyDiscount = (e) => {
+  const handleApplyDiscount = async (e) => {
     e.preventDefault();
-    const code = discountCode.trim().toUpperCase();
-    if (code === "WELCOME10" || code === "COZY10") {
-      setDiscountApplied(10);
-      setDiscountMsg("10% Welcome Discount applied!");
-    } else if (code === "COZY20" || code === "FESTIVE20") {
-      setDiscountApplied(20);
-      setDiscountMsg("20% The Cozy Theory Collector Discount applied!");
+    const result = await validateDiscountCode(discountCode, subtotal);
+    if (result.valid) {
+      if (result.type === "percentage") {
+        setDiscountApplied(result.value);
+      } else {
+        const percentEquiv = Math.min(100, (result.value / (subtotal || 1)) * 100);
+        setDiscountApplied(percentEquiv);
+      }
+      setDiscountMsg(result.message);
     } else {
       setDiscountApplied(0);
-      setDiscountMsg("Invalid discount code. Try COZY10 or FESTIVE20");
+      setDiscountMsg(result.message);
     }
   };
 

@@ -3,15 +3,17 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
+import { subscribeNewsletter } from "@/lib/supabase";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
     if (email) {
       setSubscribed(true);
+      await subscribeNewsletter(email);
       setEmail("");
     }
   };

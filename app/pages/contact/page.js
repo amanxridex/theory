@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Mail, Phone, MapPin, Check } from "lucide-react";
+import { submitContactInquiry } from "@/lib/supabase";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -12,9 +13,10 @@ export default function ContactPage() {
     message: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
+    await submitContactInquiry(formData);
   };
 
   return (

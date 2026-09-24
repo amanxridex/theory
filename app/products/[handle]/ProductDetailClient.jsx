@@ -234,7 +234,7 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
                     id="gokwik-buy-now"
                     className="w-full py-4 bg-[#004fff] text-white text-xs font-mono font-bold tracking-widest uppercase hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 shadow-md"
                   >
-                    <span>⚡ Buy It Now (UPI / COD Express)</span>
+                    <span>⚡ Buy It Now (Cash on Delivery Express)</span>
                   </button>
                 )}
               </div>
