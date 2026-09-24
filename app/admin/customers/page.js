@@ -97,43 +97,43 @@ export default function AdminCustomersPage() {
     <div className="space-y-6">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#222733]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#e5e3dc]">
         <div>
           <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
-            <Link href="/admin" className="hover:text-white">Admin</Link>
+            <Link href="/admin" className="hover:text-black">Admin</Link>
             <span>/</span>
-            <span className="text-white">Collectors</span>
+            <span className="text-black font-semibold">Collectors</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-1">
-            Collectors & Customers ({customers.length})
+          <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212] mt-1">
+            Collectors &amp; Customers ({customers.length})
           </h1>
         </div>
 
-        <div className="text-xs font-mono text-neutral-400">
-          Total Lifetime Spend: <strong className="text-emerald-400">Rs. 61,200</strong>
+        <div className="text-xs font-mono text-neutral-500">
+          Total Lifetime Spend: <strong className="text-emerald-700 font-bold">Rs. 61,200</strong>
         </div>
       </div>
 
       {/* Search */}
-      <div className="p-4 bg-[#14171f] border border-[#222733] rounded-xl flex items-center justify-between">
+      <div className="p-4 bg-white border border-[#e5e3dc] rounded flex items-center justify-between shadow-xs">
         <div className="relative w-full max-w-md">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by collector name, email, or city..."
-            className="w-full bg-[#1b202c] border border-[#2c3344] rounded-md pl-9 pr-4 py-2 text-xs font-mono text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#004fff]"
+            className="w-full bg-[#f5f2eb] border border-[#e5e3dc] rounded pl-9 pr-4 py-2 text-xs font-mono text-black placeholder:text-neutral-500 focus:outline-none focus:border-black focus:bg-white"
           />
           <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-2.5" />
         </div>
       </div>
 
       {/* Customers Table */}
-      <div className="bg-[#14171f] border border-[#222733] rounded-xl overflow-hidden">
+      <div className="bg-white border border-[#e5e3dc] rounded overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-mono border-collapse">
             <thead>
-              <tr className="border-b border-[#222733] bg-[#11131a] text-neutral-400 uppercase text-[10px]">
+              <tr className="border-b border-[#e5e3dc] bg-[#faf8f5] text-neutral-600 uppercase text-[10px]">
                 <th className="py-3 px-4">Collector</th>
                 <th className="py-3 px-4">Location</th>
                 <th className="py-3 px-4">Orders</th>
@@ -142,39 +142,39 @@ export default function AdminCustomersPage() {
                 <th className="py-3 px-4 text-right">Last Order</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1e2330]">
+            <tbody className="divide-y divide-[#e5e3dc]">
               {filtered.map((c) => (
-                <tr key={c.id} className="hover:bg-[#181c26] transition-colors">
+                <tr key={c.id} className="hover:bg-[#faf8f5] transition-colors">
                   <td className="py-3.5 px-4">
-                    <div className="font-bold text-white">{c.name}</div>
+                    <div className="font-bold text-[#121212]">{c.name}</div>
                     <div className="text-[10px] text-neutral-500">{c.email}</div>
                   </td>
-                  <td className="py-3.5 px-4 text-neutral-300">
+                  <td className="py-3.5 px-4 text-neutral-600">
                     <div className="flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5 text-[#004fff]" />
                       <span>{c.city}</span>
                     </div>
                   </td>
-                  <td className="py-3.5 px-4 text-neutral-300">
+                  <td className="py-3.5 px-4 text-neutral-600">
                     {c.orders} orders
                   </td>
-                  <td className="py-3.5 px-4 font-bold text-white">
+                  <td className="py-3.5 px-4 font-bold text-[#121212]">
                     Rs. {c.totalSpent.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
                   </td>
                   <td className="py-3.5 px-4">
                     <span
                       className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                         c.tier.includes("Founding")
-                          ? "bg-purple-950 text-purple-400 border border-purple-800"
+                          ? "bg-purple-50 text-purple-800 border border-purple-200"
                           : c.tier.includes("VIP")
-                          ? "bg-amber-950 text-amber-400 border border-amber-800"
-                          : "bg-blue-950 text-blue-400 border border-blue-800"
+                          ? "bg-amber-50 text-amber-800 border border-amber-200"
+                          : "bg-blue-50 text-blue-800 border border-blue-200"
                       }`}
                     >
                       {c.tier}
                     </span>
                   </td>
-                  <td className="py-3.5 px-4 text-right text-neutral-400">
+                  <td className="py-3.5 px-4 text-right text-neutral-500">
                     {c.lastOrder}
                   </td>
                 </tr>

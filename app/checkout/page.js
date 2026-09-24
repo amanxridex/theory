@@ -219,7 +219,7 @@ export default function CheckoutPage() {
                   </div>
                   <div>
                     <label className="text-xs font-mono uppercase text-neutral-500 block mb-1">
-                      Mobile Number (for SMS Tracking) *
+                      Mobile Number *
                     </label>
                     <input
                       type="tel"
@@ -340,18 +340,7 @@ export default function CheckoutPage() {
                   </span>
                 </div>
 
-                {/* COD Announcement Notice */}
-                <div className="p-3.5 bg-amber-50 border border-amber-200 text-amber-950 text-xs font-mono flex items-start gap-3">
-                  <Banknote className="w-4 h-4 text-amber-700 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold">Cash on Delivery (COD) is currently active.</span>
-                    <p className="text-[11px] text-amber-800 mt-0.5 leading-relaxed">
-                      Pay via Cash or any UPI QR app upon delivery at your doorstep. Online prepaid gateway (Razorpay) will be activated in the next update.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="border border-[#e5e3dc] divide-y divide-[#e5e3dc] bg-white">
+                <div className="border border-[#e5e3dc] bg-white">
                   {/* Cash on Delivery (Enabled & Selected) */}
                   <label className="flex items-start gap-3 p-4 cursor-pointer bg-[#faf8f2] border-l-4 border-l-[#121212] transition-colors">
                     <input
@@ -369,38 +358,14 @@ export default function CheckoutPage() {
                           Cash on Delivery (COD)
                         </span>
                         <span className="text-[9px] font-mono uppercase bg-emerald-600 text-white font-bold px-1.5 py-0.5">
-                          Active
+                          Standard
                         </span>
                       </div>
                       <p className="text-[11px] font-mono text-neutral-600 mt-1">
-                        Pay with cash or UPI on delivery. Verified contactless or cash dispatch across all Indian pincodes.
+                        Pay with cash or UPI QR on delivery. Free, verified delivery across India.
                       </p>
                     </div>
                   </label>
-
-                  {/* Razorpay Online Option (Disabled / Coming Soon) */}
-                  <div className="p-4 bg-neutral-50/70 flex items-start gap-3 opacity-60 cursor-not-allowed">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      disabled
-                      className="accent-neutral-400 mt-0.5"
-                    />
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <CreditCard className="w-4 h-4 text-neutral-400" />
-                        <span className="text-xs font-mono font-bold uppercase text-neutral-500">
-                          Prepaid / UPI / Cards / NetBanking
-                        </span>
-                        <span className="text-[9px] font-mono uppercase bg-neutral-200 text-neutral-600 font-bold px-1.5 py-0.5">
-                          Razorpay (Coming Soon)
-                        </span>
-                      </div>
-                      <p className="text-[11px] font-mono text-neutral-500 mt-1">
-                        Razorpay payment gateway integration will be enabled soon. Please proceed with Cash on Delivery.
-                      </p>
-                    </div>
-                  </div>
                 </div>
               </div>
 

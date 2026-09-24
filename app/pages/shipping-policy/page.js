@@ -52,7 +52,7 @@ export default function ShippingPolicyPage() {
               4. Tracking & Delivery Confirmation
             </h2>
             <p>
-              Once your order dispatches, a real-time tracking number and courier tracking link will be sent via SMS and Email. You can monitor the package journey until it is safely received.
+              Once your order dispatches, you will receive a dispatch notification and live courier tracking link as your order leaves our house to reach your house. You can monitor the package journey until it is safely received.
             </p>
           </section>
         </div>

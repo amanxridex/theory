@@ -64,17 +64,21 @@ export default function AddNewProductPage() {
     }
   };
 
-  const handleRemoveImage = (index) => {
+  const handleRemoveImage = (indexToRemove) => {
     setFormData((prev) => ({
       ...prev,
-      images: prev.images.filter((_, idx) => idx !== index),
+      images: prev.images.filter((_, idx) => idx !== indexToRemove),
     }));
   };
 
   const handleSaveProduct = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     if (!formData.title.trim()) {
       alert("Please enter a product title.");
+      return;
+    }
+    if (formData.images.length === 0) {
+      alert("Please add at least one product image.");
       return;
     }
 
@@ -112,11 +116,11 @@ export default function AddNewProductPage() {
     <div className="space-y-6 max-w-5xl mx-auto">
       
       {/* Top Breadcrumb & Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#222733]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#e5e3dc]">
         <div className="flex items-center gap-3">
           <Link
             href="/admin/products"
-            className="p-2 bg-[#1b202c] hover:bg-[#232938] text-neutral-300 hover:text-white rounded-lg transition-colors"
+            className="p-2 bg-[#f5f2eb] hover:bg-[#ede9e0] text-neutral-700 hover:text-black rounded transition-colors border border-[#e5e3dc]"
             aria-label="Back to products list"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -125,7 +129,7 @@ export default function AddNewProductPage() {
             <span className="text-xs font-mono uppercase tracking-widest text-[#004fff] font-bold">
               Theory Product Studio
             </span>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-0.5">
+            <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212] mt-0.5">
               Add New Product
             </h1>
           </div>
@@ -134,14 +138,14 @@ export default function AddNewProductPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/admin/products"
-            className="px-4 py-2 bg-[#1b202c] hover:bg-[#232938] text-neutral-300 text-xs font-mono rounded-md transition-colors"
+            className="px-4 py-2 bg-[#f5f2eb] hover:bg-[#ede9e0] text-neutral-700 text-xs font-mono rounded border border-[#e5e3dc] transition-colors"
           >
             Discard
           </Link>
           <button
             onClick={handleSaveProduct}
             disabled={isSubmitting}
-            className="px-5 py-2 bg-[#004fff] hover:bg-blue-600 text-white text-xs font-bold font-mono uppercase tracking-wider rounded-md transition-colors shadow-sm disabled:opacity-50"
+            className="px-5 py-2 bg-[#121212] hover:bg-neutral-800 text-white text-xs font-bold font-mono uppercase tracking-wider rounded transition-colors shadow-sm disabled:opacity-50"
           >
             {isSubmitting ? "Publishing Object..." : "Save & Publish"}
           </button>
@@ -150,15 +154,15 @@ export default function AddNewProductPage() {
 
       {/* Success Notification Modal */}
       {createdProduct && (
-        <div className="p-6 bg-[#13231c] border border-emerald-700/60 rounded-xl space-y-4 animate-in fade-in">
+        <div className="p-6 bg-emerald-50 border border-emerald-300 rounded space-y-4 animate-in fade-in">
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-3">
-              <CheckCircle2 className="w-6 h-6 text-emerald-400 flex-shrink-0" />
+              <CheckCircle2 className="w-6 h-6 text-emerald-700 flex-shrink-0" />
               <div>
-                <h3 className="text-base font-bold text-white">
+                <h3 className="text-base font-bold text-emerald-950">
                   Product Successfully Published to THE COZY THEORY!
                 </h3>
-                <p className="text-xs font-mono text-emerald-300 mt-0.5">
+                <p className="text-xs font-mono text-emerald-800 mt-0.5">
                   &ldquo;{createdProduct.title}&rdquo; is now live and browseable on the customer storefront.
                 </p>
               </div>
@@ -166,7 +170,7 @@ export default function AddNewProductPage() {
 
             <button
               onClick={() => setCreatedProduct(null)}
-              className="text-xs font-mono text-neutral-400 hover:text-white"
+              className="text-xs font-mono text-neutral-500 hover:text-black"
             >
               Dismiss
             </button>
@@ -176,7 +180,7 @@ export default function AddNewProductPage() {
             <Link
               href={`/products/${createdProduct.handle}`}
               target="_blank"
-              className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono font-bold uppercase rounded-md transition-colors shadow"
+              className="flex items-center gap-1.5 px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-mono font-bold uppercase rounded transition-colors shadow"
             >
               <span>View Live Product Page ↗</span>
               <ExternalLink className="w-3.5 h-3.5" />
@@ -184,47 +188,24 @@ export default function AddNewProductPage() {
 
             <Link
               href="/admin/products"
-              className="px-4 py-2 bg-[#1b202c] hover:bg-[#252c3c] text-neutral-200 text-xs font-mono rounded-md transition-colors"
+              className="px-4 py-2 bg-white hover:bg-neutral-100 text-neutral-800 text-xs font-mono rounded border border-[#e5e3dc] transition-colors"
             >
               Back to Products List
             </Link>
-
-            <button
-              onClick={() => {
-                setCreatedProduct(null);
-                setFormData({
-                  title: "",
-                  handle: "",
-                  description: "",
-                  product_type: "Everyday Ceramics",
-                  price: "1650",
-                  compare_at_price: "2200",
-                  cost: "850",
-                  inventory: "25",
-                  sku: "TCT-NEW",
-                  available: true,
-                  tags: "New Drop",
-                  images: ["https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product9-01.png?v=1784242846"],
-                });
-              }}
-              className="px-4 py-2 bg-[#1b202c] hover:bg-[#252c3c] text-neutral-200 text-xs font-mono rounded-md transition-colors"
-            >
-              Add Another Product
-            </button>
           </div>
         </div>
       )}
 
-      {/* Main Grid: Form Left (7 Cols), Sidebar Right (5 Cols) */}
+      {/* Main Grid: Form Left (8 Cols), Sidebar Right (4 Cols) */}
       <form onSubmit={handleSaveProduct} className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Left Column: Title, Description, Media, Pricing */}
         <div className="lg:col-span-8 space-y-6">
           
           {/* Card: Title & Description */}
-          <div className="p-6 bg-[#14171f] border border-[#222733] rounded-xl space-y-4">
+          <div className="p-6 bg-white border border-[#e5e3dc] rounded space-y-4 shadow-xs">
             <div>
-              <label className="text-xs font-mono uppercase tracking-wider text-neutral-300 block mb-1.5">
+              <label className="text-xs font-mono uppercase tracking-wider text-neutral-600 block mb-1.5 font-semibold">
                 Product Title *
               </label>
               <input
@@ -233,28 +214,28 @@ export default function AddNewProductPage() {
                 value={formData.title}
                 onChange={(e) => handleTitleChange(e.target.value)}
                 placeholder="E.g. Scalloped Ceramic Serving Bowl in Olive Glaze"
-                className="w-full bg-[#1b202c] border border-[#2d3446] rounded-md px-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#004fff] transition-colors"
+                className="w-full bg-[#f5f2eb] border border-[#e5e3dc] rounded px-4 py-3 text-sm text-black placeholder:text-neutral-400 focus:outline-none focus:border-black focus:bg-white transition-colors"
               />
             </div>
 
             <div>
-              <label className="text-xs font-mono uppercase tracking-wider text-neutral-300 block mb-1.5">
+              <label className="text-xs font-mono uppercase tracking-wider text-neutral-600 block mb-1.5 font-semibold">
                 Custom URL Handle / Slug
               </label>
-              <div className="flex items-center bg-[#1b202c] border border-[#2d3446] rounded-md px-3 text-xs font-mono text-neutral-400">
+              <div className="flex items-center bg-[#f5f2eb] border border-[#e5e3dc] rounded px-3 text-xs font-mono text-neutral-500">
                 <span>/products/</span>
                 <input
                   type="text"
                   value={formData.handle}
                   onChange={(e) => setFormData({ ...formData, handle: e.target.value })}
                   placeholder="scalloped-ceramic-serving-bowl"
-                  className="w-full bg-transparent py-2.5 text-white focus:outline-none pl-1"
+                  className="w-full bg-transparent py-2.5 text-black focus:outline-none pl-1"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-xs font-mono uppercase tracking-wider text-neutral-300 block mb-1.5">
+              <label className="text-xs font-mono uppercase tracking-wider text-neutral-600 block mb-1.5 font-semibold">
                 Description & Craftsmanship Details
               </label>
               <textarea
@@ -262,23 +243,23 @@ export default function AddNewProductPage() {
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Describe the tactile texture, artisanal stoneware material, glaze finish, and ritual purpose of this piece..."
-                className="w-full bg-[#1b202c] border border-[#2d3446] rounded-md p-4 text-xs font-mono text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#004fff] transition-colors leading-relaxed"
+                className="w-full bg-[#f5f2eb] border border-[#e5e3dc] rounded p-4 text-xs font-mono text-black placeholder:text-neutral-400 focus:outline-none focus:border-black focus:bg-white transition-colors leading-relaxed"
               />
             </div>
           </div>
 
           {/* Card: Media & Images */}
-          <div className="p-6 bg-[#14171f] border border-[#222733] rounded-xl space-y-5">
+          <div className="p-6 bg-white border border-[#e5e3dc] rounded space-y-5 shadow-xs">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+                <h2 className="text-sm font-bold uppercase tracking-wider text-[#121212]">
                   Media & Product Imagery
                 </h2>
-                <p className="text-xs text-neutral-400 font-mono">
+                <p className="text-xs text-neutral-500 font-mono">
                   Primary photo appears in grid, secondary photo on hover flip
                 </p>
               </div>
-              <span className="text-xs font-mono text-neutral-400">
+              <span className="text-xs font-mono text-neutral-500">
                 {formData.images.length} Images
               </span>
             </div>
@@ -288,26 +269,26 @@ export default function AddNewProductPage() {
               {formData.images.map((img, idx) => (
                 <div
                   key={idx}
-                  className="relative aspect-square rounded-lg border border-[#282f40] bg-[#1a1f2b] overflow-hidden group"
+                  className="relative aspect-square rounded border border-[#e5e3dc] bg-neutral-100 overflow-hidden group"
                 >
                   <img src={img} alt="" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                     <button
                       type="button"
                       onClick={() => handleRemoveImage(idx)}
-                      className="p-1.5 bg-rose-600 hover:bg-rose-500 text-white rounded-md"
+                      className="p-1.5 bg-rose-600 hover:bg-rose-500 text-white rounded"
                       title="Remove image"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                   {idx === 0 && (
-                    <span className="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 bg-[#004fff] text-white text-[9px] font-mono font-bold rounded uppercase">
+                    <span className="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 bg-[#121212] text-white text-[9px] font-mono font-bold rounded uppercase">
                       Primary
                     </span>
                   )}
                   {idx === 1 && (
-                    <span className="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 bg-[#252c3c] text-white text-[9px] font-mono font-bold rounded uppercase">
+                    <span className="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 bg-neutral-700 text-white text-[9px] font-mono font-bold rounded uppercase">
                       Hover Flip
                     </span>
                   )}
@@ -316,8 +297,8 @@ export default function AddNewProductPage() {
             </div>
 
             {/* Add Image by URL Input */}
-            <div className="pt-3 border-t border-[#222733] space-y-3">
-              <label className="text-xs font-mono uppercase tracking-wider text-neutral-300 block">
+            <div className="pt-3 border-t border-[#e5e3dc] space-y-3">
+              <label className="text-xs font-mono uppercase tracking-wider text-neutral-600 block font-semibold">
                 Add Image from URL
               </label>
               <div className="flex gap-2">
@@ -326,12 +307,12 @@ export default function AddNewProductPage() {
                   value={newImageUrl}
                   onChange={(e) => setNewImageUrl(e.target.value)}
                   placeholder="Paste image URL here..."
-                  className="flex-1 bg-[#1b202c] border border-[#2d3446] rounded-md px-3 py-2 text-xs font-mono text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#004fff]"
+                  className="flex-1 bg-[#f5f2eb] border border-[#e5e3dc] rounded px-3 py-2 text-xs font-mono text-black placeholder:text-neutral-400 focus:outline-none focus:border-black focus:bg-white"
                 />
                 <button
                   type="button"
                   onClick={handleAddImage}
-                  className="px-4 py-2 bg-[#222836] hover:bg-[#2c3447] text-white rounded-md text-xs font-mono transition-colors"
+                  className="px-4 py-2 bg-[#121212] hover:bg-neutral-800 text-white rounded text-xs font-mono transition-colors"
                 >
                   Add Media
                 </button>
@@ -339,7 +320,7 @@ export default function AddNewProductPage() {
 
               {/* Presets picker */}
               <div className="pt-2">
-                <span className="text-[10px] font-mono uppercase text-neutral-400 block mb-2">
+                <span className="text-[10px] font-mono uppercase text-neutral-500 block mb-2 font-semibold">
                   Or pick sample studio image:
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -352,7 +333,7 @@ export default function AddNewProductPage() {
                           setFormData((prev) => ({ ...prev, images: [...prev.images, preset.url] }));
                         }
                       }}
-                      className="px-2.5 py-1 bg-[#1b202c] hover:bg-[#252c3c] border border-[#2d3446] rounded text-[11px] font-mono text-neutral-300 transition-colors"
+                      className="px-2.5 py-1 bg-[#f5f2eb] hover:bg-[#ede9e0] border border-[#e5e3dc] rounded text-[11px] font-mono text-neutral-800 transition-colors"
                     >
                       + {preset.title}
                     </button>
@@ -363,54 +344,54 @@ export default function AddNewProductPage() {
           </div>
 
           {/* Card: Pricing */}
-          <div className="p-6 bg-[#14171f] border border-[#222733] rounded-xl space-y-4">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+          <div className="p-6 bg-white border border-[#e5e3dc] rounded space-y-4 shadow-xs">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#121212]">
               Pricing (INR ₹)
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="text-xs font-mono uppercase tracking-wider text-neutral-300 block mb-1.5">
+                <label className="text-xs font-mono uppercase tracking-wider text-neutral-600 block mb-1.5 font-semibold">
                   Price (Selling) *
                 </label>
-                <div className="flex items-center bg-[#1b202c] border border-[#2d3446] rounded-md px-3 text-xs font-mono text-white">
+                <div className="flex items-center bg-[#f5f2eb] border border-[#e5e3dc] rounded px-3 text-xs font-mono text-black">
                   <span className="text-neutral-500">₹</span>
                   <input
                     type="number"
                     required
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                    className="w-full bg-transparent py-2.5 pl-2 text-white focus:outline-none font-bold"
+                    className="w-full bg-transparent py-2.5 pl-2 text-black focus:outline-none font-bold"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-mono uppercase tracking-wider text-neutral-300 block mb-1.5">
+                <label className="text-xs font-mono uppercase tracking-wider text-neutral-600 block mb-1.5 font-semibold">
                   Compare-at Price
                 </label>
-                <div className="flex items-center bg-[#1b202c] border border-[#2d3446] rounded-md px-3 text-xs font-mono text-white">
+                <div className="flex items-center bg-[#f5f2eb] border border-[#e5e3dc] rounded px-3 text-xs font-mono text-black">
                   <span className="text-neutral-500">₹</span>
                   <input
                     type="number"
                     value={formData.compare_at_price}
                     onChange={(e) => setFormData({ ...formData, compare_at_price: e.target.value })}
-                    className="w-full bg-transparent py-2.5 pl-2 text-neutral-400 focus:outline-none"
+                    className="w-full bg-transparent py-2.5 pl-2 text-neutral-600 focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-mono uppercase tracking-wider text-neutral-300 block mb-1.5">
+                <label className="text-xs font-mono uppercase tracking-wider text-neutral-600 block mb-1.5 font-semibold">
                   Cost per Item
                 </label>
-                <div className="flex items-center bg-[#1b202c] border border-[#2d3446] rounded-md px-3 text-xs font-mono text-white">
+                <div className="flex items-center bg-[#f5f2eb] border border-[#e5e3dc] rounded px-3 text-xs font-mono text-black">
                   <span className="text-neutral-500">₹</span>
                   <input
                     type="number"
                     value={formData.cost}
                     onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
-                    className="w-full bg-transparent py-2.5 pl-2 text-neutral-400 focus:outline-none"
+                    className="w-full bg-transparent py-2.5 pl-2 text-neutral-600 focus:outline-none"
                   />
                 </div>
               </div>
@@ -418,9 +399,9 @@ export default function AddNewProductPage() {
 
             {/* Profit margin summary */}
             {formData.price && formData.cost && (
-              <div className="p-3 bg-[#181d28] border border-[#262c3a] rounded-lg text-xs font-mono flex justify-between items-center text-neutral-400">
+              <div className="p-3 bg-[#faf8f5] border border-[#e5e3dc] rounded text-xs font-mono flex justify-between items-center text-neutral-600">
                 <span>Calculated Profit Margin:</span>
-                <span className="text-emerald-400 font-bold">
+                <span className="text-emerald-700 font-bold">
                   ₹{(Number(formData.price) - Number(formData.cost)).toFixed(2)} ({(((Number(formData.price) - Number(formData.cost)) / Number(formData.price)) * 100).toFixed(1)}%)
                 </span>
               </div>
@@ -433,24 +414,24 @@ export default function AddNewProductPage() {
         <div className="lg:col-span-4 space-y-6">
           
           {/* Card: Status & Visibility */}
-          <div className="p-6 bg-[#14171f] border border-[#222733] rounded-xl space-y-4">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+          <div className="p-6 bg-white border border-[#e5e3dc] rounded space-y-4 shadow-xs">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#121212]">
               Status & Publishing
             </h2>
 
             <div className="space-y-3">
-              <label className="flex items-center gap-3 p-3 bg-[#1b202c] border border-[#2d3446] rounded-lg cursor-pointer">
+              <label className="flex items-center gap-3 p-3 bg-[#faf8f5] border border-[#e5e3dc] rounded cursor-pointer">
                 <input
                   type="checkbox"
                   checked={formData.available}
                   onChange={(e) => setFormData({ ...formData, available: e.target.checked })}
-                  className="accent-[#004fff] w-4 h-4"
+                  className="accent-[#121212] w-4 h-4"
                 />
                 <div>
-                  <div className="text-xs font-bold text-white uppercase font-mono">
+                  <div className="text-xs font-bold text-[#121212] uppercase font-mono">
                     {formData.available ? "Active & In Stock" : "Draft / Out of Stock"}
                   </div>
-                  <div className="text-[11px] text-neutral-400">
+                  <div className="text-[11px] text-neutral-500">
                     Live on customer catalog and discoverable in search
                   </div>
                 </div>
@@ -459,27 +440,27 @@ export default function AddNewProductPage() {
           </div>
 
           {/* Card: Category & Collection */}
-          <div className="p-6 bg-[#14171f] border border-[#222733] rounded-xl space-y-4">
+          <div className="p-6 bg-white border border-[#e5e3dc] rounded space-y-4 shadow-xs">
             <div className="flex items-center justify-between">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-[#121212]">
                 Category Selection
               </h2>
-              <Link href="/admin/collections/new" className="text-xs font-mono text-[#004fff] hover:underline">
+              <Link href="/admin/collections/new" className="text-xs font-mono text-[#004fff] font-bold hover:underline">
                 + New
               </Link>
             </div>
 
             <div>
-              <label className="text-xs font-mono uppercase text-neutral-400 block mb-1.5">
+              <label className="text-xs font-mono uppercase text-neutral-600 block mb-1.5 font-semibold">
                 Primary Product Type *
               </label>
               <select
                 value={formData.product_type}
                 onChange={(e) => setFormData({ ...formData, product_type: e.target.value })}
-                className="w-full bg-[#1b202c] border border-[#2d3446] rounded-md px-3 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-[#004fff]"
+                className="w-full bg-[#f5f2eb] border border-[#e5e3dc] rounded px-3 py-2.5 text-xs font-mono text-black focus:outline-none focus:border-black focus:bg-white"
               >
                 {collections.map((col) => (
-                  <option key={col.id} value={col.title} className="bg-[#1b202c]">
+                  <option key={col.id} value={col.title}>
                     {col.title}
                   </option>
                 ))}
@@ -487,7 +468,7 @@ export default function AddNewProductPage() {
             </div>
 
             <div>
-              <label className="text-xs font-mono uppercase text-neutral-400 block mb-1.5">
+              <label className="text-xs font-mono uppercase text-neutral-600 block mb-1.5 font-semibold">
                 Studio Tags (Comma separated)
               </label>
               <input
@@ -495,38 +476,38 @@ export default function AddNewProductPage() {
                 value={formData.tags}
                 onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
                 placeholder="Curated Living, Ceramic, Stoneware"
-                className="w-full bg-[#1b202c] border border-[#2d3446] rounded-md px-3 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-[#004fff]"
+                className="w-full bg-[#f5f2eb] border border-[#e5e3dc] rounded px-3 py-2.5 text-xs font-mono text-black focus:outline-none focus:border-black focus:bg-white"
               />
             </div>
           </div>
 
           {/* Card: Inventory */}
-          <div className="p-6 bg-[#14171f] border border-[#222733] rounded-xl space-y-4">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+          <div className="p-6 bg-white border border-[#e5e3dc] rounded space-y-4 shadow-xs">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#121212]">
               Inventory & Tracking
             </h2>
 
             <div>
-              <label className="text-xs font-mono uppercase text-neutral-400 block mb-1.5">
+              <label className="text-xs font-mono uppercase text-neutral-600 block mb-1.5 font-semibold">
                 Quantity Available in Studio
               </label>
               <input
                 type="number"
                 value={formData.inventory}
                 onChange={(e) => setFormData({ ...formData, inventory: e.target.value })}
-                className="w-full bg-[#1b202c] border border-[#2d3446] rounded-md px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-[#004fff]"
+                className="w-full bg-[#f5f2eb] border border-[#e5e3dc] rounded px-3 py-2 text-xs font-mono text-black focus:outline-none focus:border-black focus:bg-white"
               />
             </div>
 
             <div>
-              <label className="text-xs font-mono uppercase text-neutral-400 block mb-1.5">
+              <label className="text-xs font-mono uppercase text-neutral-600 block mb-1.5 font-semibold">
                 SKU (Stock Keeping Unit)
               </label>
               <input
                 type="text"
                 value={formData.sku}
                 onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
-                className="w-full bg-[#1b202c] border border-[#2d3446] rounded-md px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-[#004fff]"
+                className="w-full bg-[#f5f2eb] border border-[#e5e3dc] rounded px-3 py-2 text-xs font-mono text-black focus:outline-none focus:border-black focus:bg-white"
               />
             </div>
           </div>
@@ -536,7 +517,7 @@ export default function AddNewProductPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3 bg-[#004fff] hover:bg-blue-600 text-white text-xs font-bold font-mono uppercase tracking-widest rounded-lg transition-colors shadow-lg disabled:opacity-50"
+              className="w-full py-3 bg-[#121212] hover:bg-neutral-800 text-white text-xs font-bold font-mono uppercase tracking-widest rounded transition-colors shadow-sm disabled:opacity-50"
             >
               {isSubmitting ? "Publishing..." : "Save Product to Catalog"}
             </button>

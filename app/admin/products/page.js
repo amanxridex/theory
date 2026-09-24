@@ -58,14 +58,14 @@ export default function AdminProductsPage() {
     <div className="space-y-6">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#222733]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#e5e3dc]">
         <div>
           <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
-            <Link href="/admin" className="hover:text-white">Admin</Link>
+            <Link href="/admin" className="hover:text-black">Admin</Link>
             <span>/</span>
-            <span className="text-white">Catalog</span>
+            <span className="text-black font-semibold">Catalog</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-1">
+          <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212] mt-1">
             Products ({products.length})
           </h1>
         </div>
@@ -73,7 +73,7 @@ export default function AdminProductsPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/admin/products/new"
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#004fff] hover:bg-blue-600 text-white rounded-md text-xs font-medium transition-colors shadow-sm"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#121212] hover:bg-neutral-800 text-white rounded text-xs font-mono uppercase font-bold transition-all shadow-sm"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Add New Product</span>
@@ -82,7 +82,7 @@ export default function AdminProductsPage() {
       </div>
 
       {/* Filters Bar */}
-      <div className="p-4 bg-[#14171f] border border-[#222733] rounded-xl flex flex-col md:flex-row gap-4 items-center justify-between">
+      <div className="p-4 bg-white border border-[#e5e3dc] rounded flex flex-col md:flex-row gap-4 items-center justify-between shadow-xs">
         
         {/* Search input */}
         <div className="relative w-full md:w-80">
@@ -94,7 +94,7 @@ export default function AdminProductsPage() {
               setPage(1);
             }}
             placeholder="Search by title, SKU, or tags..."
-            className="w-full bg-[#1b202c] border border-[#2c3344] rounded-md pl-9 pr-4 py-2 text-xs font-mono text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#004fff]"
+            className="w-full bg-[#f5f2eb] border border-[#e5e3dc] rounded pl-9 pr-4 py-2 text-xs font-mono text-black placeholder:text-neutral-500 focus:outline-none focus:border-black focus:bg-white"
           />
           <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-2.5" />
         </div>
@@ -102,40 +102,40 @@ export default function AdminProductsPage() {
         {/* Category & Status Selectors */}
         <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
           
-          <div className="flex items-center gap-1.5 bg-[#1b202c] border border-[#2c3344] px-3 py-1.5 rounded-md text-xs font-mono">
-            <Layers className="w-3.5 h-3.5 text-neutral-400" />
+          <div className="flex items-center gap-1.5 bg-[#f5f2eb] border border-[#e5e3dc] px-3 py-1.5 rounded text-xs font-mono">
+            <Layers className="w-3.5 h-3.5 text-neutral-500" />
             <select
               value={categoryFilter}
               onChange={(e) => {
                 setCategoryFilter(e.target.value);
                 setPage(1);
               }}
-              className="bg-transparent text-neutral-300 focus:outline-none cursor-pointer"
+              className="bg-transparent text-neutral-800 focus:outline-none cursor-pointer"
               aria-label="Filter by Category"
             >
-              <option value="all" className="bg-[#1b202c]">All Categories</option>
+              <option value="all">All Categories</option>
               {collections.map((c) => (
-                <option key={c.id} value={c.title} className="bg-[#1b202c]">
+                <option key={c.id} value={c.title}>
                   {c.title}
                 </option>
               ))}
             </select>
           </div>
 
-          <div className="flex items-center gap-1.5 bg-[#1b202c] border border-[#2c3344] px-3 py-1.5 rounded-md text-xs font-mono">
-            <SlidersHorizontal className="w-3.5 h-3.5 text-neutral-400" />
+          <div className="flex items-center gap-1.5 bg-[#f5f2eb] border border-[#e5e3dc] px-3 py-1.5 rounded text-xs font-mono">
+            <SlidersHorizontal className="w-3.5 h-3.5 text-neutral-500" />
             <select
               value={statusFilter}
               onChange={(e) => {
                 setStatusFilter(e.target.value);
                 setPage(1);
               }}
-              className="bg-transparent text-neutral-300 focus:outline-none cursor-pointer"
+              className="bg-transparent text-neutral-800 focus:outline-none cursor-pointer"
               aria-label="Filter by Status"
             >
-              <option value="all" className="bg-[#1b202c]">All Inventory</option>
-              <option value="in-stock" className="bg-[#1b202c]">In Stock</option>
-              <option value="sold-out" className="bg-[#1b202c]">Sold Out</option>
+              <option value="all">All Inventory</option>
+              <option value="in-stock">In Stock</option>
+              <option value="sold-out">Sold Out</option>
             </select>
           </div>
 
@@ -143,11 +143,11 @@ export default function AdminProductsPage() {
       </div>
 
       {/* Products Table */}
-      <div className="bg-[#14171f] border border-[#222733] rounded-xl overflow-hidden">
+      <div className="bg-white border border-[#e5e3dc] rounded overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-mono border-collapse">
             <thead>
-              <tr className="border-b border-[#222733] bg-[#11131a] text-neutral-400 uppercase text-[10px]">
+              <tr className="border-b border-[#e5e3dc] bg-[#faf8f5] text-neutral-600 uppercase text-[10px]">
                 <th className="py-3 px-4 w-14">Media</th>
                 <th className="py-3 px-4">Product Name</th>
                 <th className="py-3 px-4">Category</th>
@@ -157,58 +157,58 @@ export default function AdminProductsPage() {
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1e2330]">
+            <tbody className="divide-y divide-[#e5e3dc]">
               {paginated.map((product) => (
-                <tr key={product.id} className="hover:bg-[#181c26] transition-colors group">
+                <tr key={product.id} className="hover:bg-[#faf8f5] transition-colors group">
                   <td className="py-3 px-4">
                     <img
                       src={product.images[0]}
                       alt={product.title}
-                      className="w-10 h-12 object-cover rounded border border-[#282f40] bg-[#1a1f2b]"
+                      className="w-10 h-12 object-cover rounded border border-[#e5e3dc] bg-neutral-100"
                     />
                   </td>
                   <td className="py-3 px-4">
-                    <div className="font-bold text-white group-hover:text-[#004fff] transition-colors line-clamp-1 max-w-sm">
+                    <div className="font-bold text-[#121212] group-hover:text-[#004fff] transition-colors line-clamp-1 max-w-sm">
                       {product.title}
                     </div>
                     <div className="text-[10px] text-neutral-500 font-mono">
                       Handle: {product.handle}
                     </div>
                   </td>
-                  <td className="py-3 px-4 text-neutral-300">
+                  <td className="py-3 px-4 text-neutral-600">
                     {product.product_type || "Everyday Homeware"}
                   </td>
                   <td className="py-3 px-4">
                     <span
                       className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                         product.available
-                          ? "bg-emerald-950 text-emerald-400 border border-emerald-800"
-                          : "bg-rose-950 text-rose-400 border border-rose-800"
+                          ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
+                          : "bg-rose-50 text-rose-800 border border-rose-200"
                       }`}
                     >
                       {product.available ? "Active" : "Draft / Out"}
                     </span>
                   </td>
-                  <td className="py-3 px-4 text-neutral-300">
+                  <td className="py-3 px-4 text-neutral-600">
                     {product.inventory !== undefined ? `${product.inventory} in stock` : "25 in stock"}
                   </td>
-                  <td className="py-3 px-4 font-bold text-white whitespace-nowrap">
+                  <td className="py-3 px-4 font-bold text-[#121212] whitespace-nowrap">
                     Rs. {Number(product.price).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
                   </td>
                   <td className="py-3 px-4 text-right whitespace-nowrap space-x-2">
                     <Link
                       href={`/products/${product.handle}`}
                       target="_blank"
-                      className="p-1.5 bg-[#1b202c] hover:bg-[#232938] text-neutral-300 hover:text-white rounded inline-flex items-center gap-1 transition-colors"
+                      className="p-1.5 bg-[#f5f2eb] hover:bg-[#eae6dd] text-black rounded inline-flex items-center gap-1 transition-colors border border-[#e5e3dc]"
                       title="View live on customer storefront"
                     >
                       <Eye className="w-3.5 h-3.5" />
-                      <span className="text-[11px]">View ↗</span>
+                      <span className="text-[11px] font-semibold">View ↗</span>
                     </Link>
 
                     <button
                       onClick={() => handleDelete(product.id, product.title)}
-                      className="p-1.5 bg-[#261519] hover:bg-[#3d1a22] text-rose-400 hover:text-rose-300 rounded inline-flex items-center gap-1 transition-colors"
+                      className="p-1.5 text-neutral-400 hover:text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-200 rounded inline-flex items-center gap-1 transition-colors"
                       title="Delete Product"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -230,7 +230,7 @@ export default function AdminProductsPage() {
 
         {/* Pagination Bar */}
         {totalPages > 1 && (
-          <div className="p-4 border-t border-[#222733] flex items-center justify-between text-xs font-mono text-neutral-400">
+          <div className="p-4 border-t border-[#e5e3dc] flex items-center justify-between text-xs font-mono text-neutral-500 bg-[#faf8f5]">
             <div>
               Showing {(page - 1) * itemsPerPage + 1} to {Math.min(page * itemsPerPage, filteredProducts.length)} of {filteredProducts.length} objects
             </div>
@@ -238,17 +238,17 @@ export default function AdminProductsPage() {
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
-                className="px-3 py-1.5 bg-[#1b202c] border border-[#2c3344] rounded text-white disabled:opacity-30 transition-opacity"
+                className="px-3 py-1.5 bg-white border border-[#e5e3dc] rounded text-black disabled:opacity-30 transition-opacity"
               >
                 Previous
               </button>
-              <span className="px-2 font-bold text-white">
+              <span className="px-2 font-bold text-black">
                 {page} / {totalPages}
               </span>
               <button
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}
-                className="px-3 py-1.5 bg-[#1b202c] border border-[#2c3344] rounded text-white disabled:opacity-30 transition-opacity"
+                className="px-3 py-1.5 bg-white border border-[#e5e3dc] rounded text-black disabled:opacity-30 transition-opacity"
               >
                 Next
               </button>

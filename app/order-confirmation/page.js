@@ -27,8 +27,8 @@ function ConfirmationContent() {
           <h1 className="text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#121212]">
             Thank You For Your Order
           </h1>
-          <p className="text-xs md:text-sm font-mono text-neutral-600 max-w-md mx-auto">
-            Your pieces have been allocated. A confirmation email and SMS dispatch link will be transmitted shortly.
+          <p className="text-xs md:text-sm font-mono text-neutral-700 max-w-lg mx-auto bg-amber-50/70 border border-amber-200/80 p-3 rounded-sm leading-relaxed">
+            Order placed! You&apos;ll get a dispatch message as order leaves our house to reach your house.
           </p>
         </div>
 

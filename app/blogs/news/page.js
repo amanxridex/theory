@@ -45,7 +45,14 @@ export const BLOG_POSTS = [
   },
 ];
 
-export default function BlogNewsPage() {
+import { getBlogPosts } from "@/lib/supabase";
+
+export const revalidate = 60; // Revalidate every minute
+
+export default async function BlogNewsPage() {
+  const dbPosts = await getBlogPosts();
+  const posts = dbPosts && dbPosts.length > 0 ? dbPosts : BLOG_POSTS;
+
   return (
     <div className="bg-[#fffdf8] min-h-screen py-12 md:py-20">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 space-y-12">
@@ -65,7 +72,7 @@ export default function BlogNewsPage() {
 
         {/* Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {BLOG_POSTS.map((post) => (
+          {posts.map((post) => (
             <Link
               key={post.handle}
               href={`/blogs/news/${post.handle}`}
@@ -73,7 +80,7 @@ export default function BlogNewsPage() {
             >
               <div className="aspect-[16/10] bg-neutral-900 overflow-hidden relative">
                 <img
-                  src={post.image}
+                  src={post.image || "https://cdn.shopify.com/s/files/1/0826/5053/0110/files/06_f701ce34-3d80-4167-87f5-e3dd0ec7dc5f.jpg?v=1765797590&width=800"}
                   alt={post.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -82,13 +89,21 @@ export default function BlogNewsPage() {
               <div className="space-y-2 flex-1 flex flex-col justify-between">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-[11px] font-mono text-neutral-400">
-                    <span>{post.date}</span>
-                    <span>{post.readTime}</span>
+                    <span>
+                      {post.created_at
+                        ? new Date(post.created_at).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          })
+                        : post.date || "Recent"}
+                    </span>
+                    <span>{post.read_time || post.readTime || "4 min read"}</span>
                   </div>
                   <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-[#121212] group-hover:underline">
                     {post.title}
                   </h2>
-                  <p className="text-xs md:text-sm text-neutral-600 font-normal leading-relaxed">
+                  <p className="text-xs md:text-sm text-neutral-600 font-normal leading-relaxed line-clamp-3">
                     {post.excerpt}
                   </p>
                 </div>
@@ -106,3 +121,4 @@ export default function BlogNewsPage() {
     </div>
   );
 }
+

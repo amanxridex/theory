@@ -2,16 +2,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { BLOG_POSTS } from "../page";
+import { getBlogPostByHandle, getBlogPosts } from "@/lib/supabase";
 
-export async function generateStaticParams() {
-  return BLOG_POSTS.map((post) => ({
-    handle: post.handle,
-  }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const { handle } = await params;
-  const post = BLOG_POSTS.find((p) => p.handle === handle);
+  const dbPost = await getBlogPostByHandle(handle);
+  const post = dbPost || BLOG_POSTS.find((p) => p.handle === handle);
   if (!post) return { title: "Article Not Found | The Cozy Theory" };
   return {
     title: `${post.title} | The Cozy Theory Journal`,
@@ -21,11 +19,23 @@ export async function generateMetadata({ params }) {
 
 export default async function BlogPostPage({ params }) {
   const { handle } = await params;
-  const post = BLOG_POSTS.find((p) => p.handle === handle);
+  const dbPost = await getBlogPostByHandle(handle);
+  const post = dbPost || BLOG_POSTS.find((p) => p.handle === handle);
 
   if (!post) {
     notFound();
   }
+
+  const formattedDate = post.created_at
+    ? new Date(post.created_at).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })
+    : post.date || "Recent";
+
+  // Split content by paragraphs if text
+  const paragraphs = post.content ? post.content.split("\n\n").filter(Boolean) : [];
 
   return (
     <article className="bg-[#fffdf8] min-h-screen py-12 md:py-20">
@@ -43,11 +53,11 @@ export default async function BlogPostPage({ params }) {
         {/* Article Header */}
         <div className="space-y-4 pb-6 border-b border-[#e5e3dc]">
           <div className="flex items-center gap-3 text-xs font-mono text-neutral-500">
-            <span>{post.date}</span>
+            <span>{formattedDate}</span>
             <span>•</span>
-            <span>{post.readTime}</span>
+            <span>{post.read_time || post.readTime || "4 min read"}</span>
             <span>•</span>
-            <span className="text-black font-semibold">{post.author}</span>
+            <span className="text-black font-semibold">{post.author || "Derek Martin"}</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-[#121212] leading-[1.05]">
@@ -58,7 +68,7 @@ export default async function BlogPostPage({ params }) {
         {/* Featured Image */}
         <div className="aspect-[16/9] bg-neutral-900 border border-[#e5e3dc] overflow-hidden">
           <img
-            src={post.image}
+            src={post.image || "https://cdn.shopify.com/s/files/1/0826/5053/0110/files/06_f701ce34-3d80-4167-87f5-e3dd0ec7dc5f.jpg?v=1765797590&width=800"}
             alt={post.title}
             className="w-full h-full object-cover"
           />
@@ -66,25 +76,34 @@ export default async function BlogPostPage({ params }) {
 
         {/* Article Body Copy */}
         <div className="text-sm md:text-base leading-relaxed space-y-6 text-neutral-800 font-normal">
-          <p className="text-base md:text-lg font-medium text-neutral-900 leading-relaxed">
-            {post.excerpt}
-          </p>
+          {post.excerpt && (
+            <p className="text-base md:text-lg font-medium text-neutral-900 leading-relaxed border-l-2 border-black pl-4 py-1 italic">
+              {post.excerpt}
+            </p>
+          )}
 
-          <p>
-            When we first began exploring the industrial topography of Mumbai, we noticed how physical forms shape our subconscious memory of place. The Marine Drive tetrapods, cast in thousands of tons of concrete, resist the Arabian Sea&apos;s relentless monsoon swells. They do not bend; they absorb and disperse energy.
-          </p>
-
-          <p>
-            Bringing this brutalist architectural principle into interior spaces was an exercise in tactile balance. We downscaled the geometry into hand-poured concrete and solid milled brass, preserving the brutalist honesty of the original maritime design while turning it into an undeniable tabletop monolith.
-          </p>
-
-          <blockquote className="p-6 bg-[#f7f5ef] border-l-4 border-[#121212] font-mono text-xs md:text-sm text-neutral-700 italic">
-            &ldquo;An object in your living room should not seek approval. It should stand with authority and invite conversation.&rdquo;
-          </blockquote>
-
-          <p>
-            Each piece is individually numbered and finished with archival coatings to ensure it endures the test of time, collecting its own unique patina and history in your gallery space.
-          </p>
+          {paragraphs.length > 0 ? (
+            paragraphs.map((p, idx) => (
+              <p key={idx} className="leading-relaxed whitespace-pre-line">
+                {p}
+              </p>
+            ))
+          ) : (
+            <>
+              <p>
+                When we first began exploring the industrial topography of Mumbai, we noticed how physical forms shape our subconscious memory of place. The Marine Drive tetrapods, cast in thousands of tons of concrete, resist the Arabian Sea&apos;s relentless monsoon swells. They do not bend; they absorb and disperse energy.
+              </p>
+              <p>
+                Bringing this brutalist architectural principle into interior spaces was an exercise in tactile balance. We downscaled the geometry into hand-poured concrete and solid milled brass, preserving the brutalist honesty of the original maritime design while turning it into an undeniable tabletop monolith.
+              </p>
+              <blockquote className="p-6 bg-[#f7f5ef] border-l-4 border-[#121212] font-mono text-xs md:text-sm text-neutral-700 italic">
+                &ldquo;An object in your living room should not seek approval. It should stand with authority and invite conversation.&rdquo;
+              </blockquote>
+              <p>
+                Each piece is individually numbered and finished with archival coatings to ensure it endures the test of time, collecting its own unique patina and history in your gallery space.
+              </p>
+            </>
+          )}
         </div>
 
         {/* Article Footer CTA */}

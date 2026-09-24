@@ -98,21 +98,21 @@ export default function AdminDiscountsPage() {
     <div className="space-y-6 max-w-5xl mx-auto">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#222733]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#e5e3dc]">
         <div>
           <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
-            <Link href="/admin" className="hover:text-white">Admin</Link>
+            <Link href="/admin" className="hover:text-black">Admin</Link>
             <span>/</span>
-            <span className="text-white">Promotions</span>
+            <span className="text-black font-semibold">Promotions</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mt-1">
-            Discount Codes & Coupons
+          <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212] mt-1">
+            Discount Codes &amp; Coupons
           </h1>
         </div>
 
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-1.5 px-4 py-2 bg-[#004fff] hover:bg-blue-600 text-white rounded-md text-xs font-medium transition-colors shadow-sm"
+          className="flex items-center gap-1.5 px-4 py-2 bg-[#121212] hover:bg-neutral-800 text-white rounded text-xs font-mono uppercase font-bold transition-all shadow-sm"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>Create Discount Code</span>
@@ -120,16 +120,16 @@ export default function AdminDiscountsPage() {
       </div>
 
       {/* Coupons List */}
-      <div className="bg-[#14171f] border border-[#222733] rounded-xl overflow-hidden">
-        <div className="p-4 border-b border-[#222733] flex justify-between items-center text-xs font-mono text-neutral-400">
+      <div className="bg-white border border-[#e5e3dc] rounded overflow-hidden shadow-xs">
+        <div className="p-4 border-b border-[#e5e3dc] bg-[#faf8f5] flex justify-between items-center text-xs font-mono text-neutral-600">
           <span>Active Checkout Coupons ({coupons.length})</span>
-          <span className="text-emerald-400">Tested & Functional in Checkout</span>
+          <span className="text-emerald-700 font-semibold">Active in Checkout</span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-mono border-collapse">
             <thead>
-              <tr className="border-b border-[#222733] bg-[#11131a] text-neutral-400 uppercase text-[10px]">
+              <tr className="border-b border-[#e5e3dc] bg-[#faf8f5] text-neutral-600 uppercase text-[10px]">
                 <th className="py-3 px-4">Coupon Code</th>
                 <th className="py-3 px-4">Discount Value</th>
                 <th className="py-3 px-4">Type</th>
@@ -139,27 +139,27 @@ export default function AdminDiscountsPage() {
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1e2330]">
+            <tbody className="divide-y divide-[#e5e3dc]">
               {coupons.map((c) => (
-                <tr key={c.code} className="hover:bg-[#181c26] transition-colors">
-                  <td className="py-3.5 px-4 font-bold text-white flex items-center gap-2">
+                <tr key={c.code} className="hover:bg-[#faf8f5] transition-colors">
+                  <td className="py-3.5 px-4 font-bold text-[#121212] flex items-center gap-2">
                     <Tag className="w-3.5 h-3.5 text-[#004fff]" />
                     <span>{c.code}</span>
                   </td>
-                  <td className="py-3.5 px-4 text-emerald-400 font-bold">
+                  <td className="py-3.5 px-4 text-emerald-700 font-bold">
                     {c.discount}
                   </td>
-                  <td className="py-3.5 px-4 text-neutral-300">
+                  <td className="py-3.5 px-4 text-neutral-600">
                     {c.type}
                   </td>
-                  <td className="py-3.5 px-4 text-neutral-400">
+                  <td className="py-3.5 px-4 text-neutral-500">
                     {c.minOrder}
                   </td>
-                  <td className="py-3.5 px-4 text-neutral-300">
+                  <td className="py-3.5 px-4 text-neutral-600">
                     {c.uses} used
                   </td>
                   <td className="py-3.5 px-4">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-800">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
                       {c.status}
                     </span>
                   </td>
@@ -167,9 +167,9 @@ export default function AdminDiscountsPage() {
                     <button
                       onClick={() => {
                         navigator.clipboard.writeText(c.code);
-                        alert(`Copied "${c.code}" to clipboard! Test it on /checkout.`);
+                        alert(`Copied "${c.code}" to clipboard!`);
                       }}
-                      className="px-2 py-1 bg-[#1b202c] hover:bg-[#252c3c] text-neutral-300 hover:text-white rounded text-[11px] inline-flex items-center gap-1 transition-colors"
+                      className="px-2 py-1 bg-[#f5f2eb] hover:bg-[#eae6dd] text-black border border-[#e5e3dc] rounded text-[11px] font-semibold inline-flex items-center gap-1 transition-colors"
                     >
                       <Copy className="w-3 h-3" />
                       <span>Copy</span>
@@ -184,13 +184,13 @@ export default function AdminDiscountsPage() {
 
       {/* Modal for Creating Discount */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#14171f] border border-[#2d3446] rounded-xl w-full max-w-md p-6 space-y-5 shadow-2xl">
-            <h3 className="text-base font-bold text-white">Create New Discount Code</h3>
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-[#e5e3dc] rounded w-full max-w-md p-6 space-y-5 shadow-2xl">
+            <h3 className="text-base font-bold uppercase text-[#121212]">Create New Discount Code</h3>
 
             <form onSubmit={handleCreateCoupon} className="space-y-4">
               <div>
-                <label className="text-xs font-mono uppercase text-neutral-300 block mb-1">
+                <label className="text-xs font-mono uppercase text-neutral-600 block mb-1 font-semibold">
                   Coupon Code *
                 </label>
                 <input
@@ -199,12 +199,12 @@ export default function AdminDiscountsPage() {
                   value={newCode}
                   onChange={(e) => setNewCode(e.target.value)}
                   placeholder="E.g. FESTIVE25"
-                  className="w-full bg-[#1b202c] border border-[#2d3446] rounded-md px-3 py-2.5 text-xs font-mono text-white uppercase focus:outline-none focus:border-[#004fff]"
+                  className="w-full bg-[#f5f2eb] border border-[#e5e3dc] rounded px-3 py-2.5 text-xs font-mono text-black uppercase focus:outline-none focus:border-black focus:bg-white"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-mono uppercase text-neutral-300 block mb-1">
+                <label className="text-xs font-mono uppercase text-neutral-600 block mb-1 font-semibold">
                   Percentage Value (%)
                 </label>
                 <input
@@ -213,7 +213,7 @@ export default function AdminDiscountsPage() {
                   max={90}
                   value={newDiscount}
                   onChange={(e) => setNewDiscount(e.target.value)}
-                  className="w-full bg-[#1b202c] border border-[#2d3446] rounded-md px-3 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-[#004fff]"
+                  className="w-full bg-[#f5f2eb] border border-[#e5e3dc] rounded px-3 py-2.5 text-xs font-mono text-black focus:outline-none focus:border-black focus:bg-white"
                 />
               </div>
 
@@ -221,13 +221,13 @@ export default function AdminDiscountsPage() {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 bg-[#1b202c] hover:bg-[#232938] text-neutral-300 text-xs font-mono rounded-md"
+                  className="px-4 py-2 bg-[#f5f2eb] hover:bg-[#ede9e0] text-neutral-700 text-xs font-mono rounded border border-[#e5e3dc]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#004fff] hover:bg-blue-600 text-white text-xs font-bold font-mono uppercase rounded-md"
+                  className="px-4 py-2 bg-[#121212] hover:bg-neutral-800 text-white text-xs font-bold font-mono uppercase rounded transition-colors"
                 >
                   Save Code
                 </button>
