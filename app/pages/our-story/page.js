@@ -85,7 +85,7 @@ export default function OurStoryPage() {
             <div className="relative group">
               <div className="aspect-[4/5] bg-[#faf8f2] border border-[#e5e3dc] overflow-hidden p-4 shadow-sm">
                 <img
-                  src="/products/drive/TT-176 Tulip Garden Ceramic Vase  Planter.png"
+                  src="/products/drive/TT-176 Tulip Garden Ceramic Vase  Planter.webp"
                   alt="The Cozy Theory Ceramic Vase in natural light"
                   className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:contrast-100 transition-all duration-700"
                 />
@@ -179,7 +179,7 @@ export default function OurStoryPage() {
             <div className="relative group">
               <div className="aspect-[4/5] bg-[#faf8f2] border border-[#e5e3dc] overflow-hidden p-4 shadow-sm">
                 <img
-                  src="/products/drive/Pomegranate Ceramic Vase.png"
+                  src="/products/drive/Pomegranate Ceramic Vase.webp"
                   alt="The Cozy Theory artisanal ceramic vessel"
                   className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:contrast-100 transition-all duration-700"
                 />
