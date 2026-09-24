@@ -39,7 +39,13 @@ function ConfirmationContent() {
             <span className="font-bold text-black">{orderId}</span>
           </div>
           <div className="flex justify-between items-center pb-3 border-b border-[#e5e3dc]">
-            <span className="text-neutral-500">Total Charged:</span>
+            <span className="text-neutral-500">Payment Mode:</span>
+            <span className="font-bold text-amber-900 bg-amber-100 px-2 py-0.5 border border-amber-300">
+              Cash on Delivery (COD)
+            </span>
+          </div>
+          <div className="flex justify-between items-center pb-3 border-b border-[#e5e3dc]">
+            <span className="text-neutral-500">Amount Payable on Arrival:</span>
             <span className="font-bold text-black">Rs. {Number(amount).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
           </div>
           <div className="flex justify-between items-center pb-3 border-b border-[#e5e3dc]">

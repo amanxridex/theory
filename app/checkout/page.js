@@ -37,7 +37,7 @@ export default function CheckoutPage() {
     pincode: "",
   });
 
-  const [paymentMethod, setPaymentMethod] = useState("upi"); // upi, card, cod, netbanking
+  const [paymentMethod, setPaymentMethod] = useState("cod"); // COD only active for now
   const [discountCode, setDiscountCode] = useState("");
   const [discountApplied, setDiscountApplied] = useState(0); // in percent or flat amount
   const [discountMsg, setDiscountMsg] = useState("");
@@ -90,21 +90,21 @@ export default function CheckoutPage() {
         shipping_cost: shippingFee,
         discount: discountAmount,
         total: total,
-        payment_method: paymentMethod.toUpperCase(),
-        payment_status: paymentMethod === "cod" ? "pending" : "paid",
+        payment_method: "Cash on Delivery (COD)",
+        payment_status: "pending",
         fulfillment_status: "Unfulfilled",
       };
 
       const placedOrder = await createOrder(orderData);
       clearCart();
       setIsProcessing(false);
-      router.push(`/order-confirmation?order_id=${placedOrder.id}&amount=${total}`);
+      router.push(`/order-confirmation?order_id=${placedOrder.id}&amount=${total}&payment=cod`);
     } catch (err) {
       console.error("Order error:", err);
       setIsProcessing(false);
       const fallbackOrderId = "TCT-" + Math.floor(100000 + Math.random() * 900000);
       clearCart();
-      router.push(`/order-confirmation?order_id=${fallbackOrderId}&amount=${total}`);
+      router.push(`/order-confirmation?order_id=${fallbackOrderId}&amount=${total}&payment=cod`);
     }
   };
 
@@ -312,79 +312,76 @@ export default function CheckoutPage() {
 
               {/* Step 3: Payment Method */}
               <div className="space-y-4 pt-4 border-t border-[#e5e3dc]">
-                <h2 className="text-sm font-bold uppercase tracking-wider font-mono text-[#121212]">
-                  3. Select Payment Method
-                </h2>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-sm font-bold uppercase tracking-wider font-mono text-[#121212]">
+                    3. Payment Method
+                  </h2>
+                  <span className="text-[10px] font-mono font-bold uppercase text-emerald-800 bg-emerald-100 px-2 py-0.5 border border-emerald-300">
+                    COD Active
+                  </span>
+                </div>
+
+                {/* COD Announcement Notice */}
+                <div className="p-3.5 bg-amber-50 border border-amber-200 text-amber-950 text-xs font-mono flex items-start gap-3">
+                  <Banknote className="w-4 h-4 text-amber-700 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-bold">Cash on Delivery (COD) is currently active.</span>
+                    <p className="text-[11px] text-amber-800 mt-0.5 leading-relaxed">
+                      Pay via Cash or any UPI QR app upon delivery at your doorstep. Online prepaid gateway (Razorpay) will be activated in the next update.
+                    </p>
+                  </div>
+                </div>
 
                 <div className="border border-[#e5e3dc] divide-y divide-[#e5e3dc] bg-white">
-                  
-                  {/* UPI Option */}
-                  <label className="flex items-center gap-3 p-4 cursor-pointer hover:bg-[#f7f5ef] transition-colors">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="upi"
-                      checked={paymentMethod === "upi"}
-                      onChange={() => setPaymentMethod("upi")}
-                      className="accent-[#121212]"
-                    />
-                    <div className="flex items-center gap-2 flex-1">
-                      <QrCode className="w-4 h-4 text-[#121212]" />
-                      <span className="text-xs font-mono font-bold uppercase">UPI (GPay / PhonePe / Paytm / BHIM)</span>
-                    </div>
-                    <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 border border-emerald-200">
-                      Fastest & Zero Fees
-                    </span>
-                  </label>
-
-                  {/* Cards Option */}
-                  <label className="flex items-center gap-3 p-4 cursor-pointer hover:bg-[#f7f5ef] transition-colors">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="card"
-                      checked={paymentMethod === "card"}
-                      onChange={() => setPaymentMethod("card")}
-                      className="accent-[#121212]"
-                    />
-                    <div className="flex items-center gap-2 flex-1">
-                      <CreditCard className="w-4 h-4 text-[#121212]" />
-                      <span className="text-xs font-mono font-bold uppercase">Credit / Debit Card (Visa / Mastercard / RuPay)</span>
-                    </div>
-                  </label>
-
-                  {/* Net Banking */}
-                  <label className="flex items-center gap-3 p-4 cursor-pointer hover:bg-[#f7f5ef] transition-colors">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="netbanking"
-                      checked={paymentMethod === "netbanking"}
-                      onChange={() => setPaymentMethod("netbanking")}
-                      className="accent-[#121212]"
-                    />
-                    <div className="flex items-center gap-2 flex-1">
-                      <ShieldCheck className="w-4 h-4 text-[#121212]" />
-                      <span className="text-xs font-mono font-bold uppercase">Net Banking (All Indian Banks)</span>
-                    </div>
-                  </label>
-
-                  {/* Cash on Delivery */}
-                  <label className="flex items-center gap-3 p-4 cursor-pointer hover:bg-[#f7f5ef] transition-colors">
+                  {/* Cash on Delivery (Enabled & Selected) */}
+                  <label className="flex items-start gap-3 p-4 cursor-pointer bg-[#faf8f2] border-l-4 border-l-[#121212] transition-colors">
                     <input
                       type="radio"
                       name="paymentMethod"
                       value="cod"
-                      checked={paymentMethod === "cod"}
-                      onChange={() => setPaymentMethod("cod")}
-                      className="accent-[#121212]"
+                      checked={true}
+                      readOnly
+                      className="accent-[#121212] mt-0.5"
                     />
-                    <div className="flex items-center gap-2 flex-1">
-                      <Banknote className="w-4 h-4 text-[#121212]" />
-                      <span className="text-xs font-mono font-bold uppercase">Cash on Delivery (Pay upon arrival)</span>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <Banknote className="w-4 h-4 text-[#121212]" />
+                        <span className="text-xs font-mono font-bold uppercase text-black">
+                          Cash on Delivery (COD)
+                        </span>
+                        <span className="text-[9px] font-mono uppercase bg-emerald-600 text-white font-bold px-1.5 py-0.5">
+                          Active
+                        </span>
+                      </div>
+                      <p className="text-[11px] font-mono text-neutral-600 mt-1">
+                        Pay with cash or UPI on delivery. Verified contactless or cash dispatch across all Indian pincodes.
+                      </p>
                     </div>
                   </label>
 
+                  {/* Razorpay Online Option (Disabled / Coming Soon) */}
+                  <div className="p-4 bg-neutral-50/70 flex items-start gap-3 opacity-60 cursor-not-allowed">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      disabled
+                      className="accent-neutral-400 mt-0.5"
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <CreditCard className="w-4 h-4 text-neutral-400" />
+                        <span className="text-xs font-mono font-bold uppercase text-neutral-500">
+                          Prepaid / UPI / Cards / NetBanking
+                        </span>
+                        <span className="text-[9px] font-mono uppercase bg-neutral-200 text-neutral-600 font-bold px-1.5 py-0.5">
+                          Razorpay (Coming Soon)
+                        </span>
+                      </div>
+                      <p className="text-[11px] font-mono text-neutral-500 mt-1">
+                        Razorpay payment gateway integration will be enabled soon. Please proceed with Cash on Delivery.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -396,9 +393,12 @@ export default function CheckoutPage() {
                   className="w-full py-4 bg-[#121212] text-[#fffdf8] text-xs font-mono font-bold tracking-widest uppercase hover:bg-neutral-800 transition-colors shadow-lg flex items-center justify-center gap-2"
                 >
                   {isProcessing ? (
-                    <span>Processing Order Transmission...</span>
+                    <span className="flex items-center gap-2">
+                      <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                      Confirming COD Order & Saving to Database...
+                    </span>
                   ) : (
-                    <span>Complete Order • Rs. {total.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
+                    <span>Confirm COD Order • Rs. {total.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
                   )}
                 </button>
               </div>
