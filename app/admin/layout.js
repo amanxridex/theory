@@ -162,12 +162,12 @@ export default function AdminLayout({ children }) {
   if (checkingAuth) {
     return (
       <div className="min-h-screen bg-[#faf8f5] flex items-center justify-center font-mono text-xs text-neutral-500">
-        Verifying Derek Martin authorization...
+        Verifying Derick Martin authorization...
       </div>
     );
   }
 
-  // 2. LOCKED SCREEN: Derek Martin Security Passcode Gate
+  // 2. LOCKED SCREEN: Derick Martin Security Passcode Gate
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-[#faf8f5] flex flex-col justify-between p-4 sm:p-8 font-sans antialiased text-[#121212]">
@@ -204,7 +204,7 @@ export default function AdminLayout({ children }) {
                 RESTRICTED ACCESS
               </span>
               <h1 className="text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-[#121212]">
-                Derek Martin Admin Lock
+                Derick Martin Admin Lock
               </h1>
               <p className="text-xs font-mono text-neutral-500 max-w-xs mx-auto">
                 Studio administration console. Enter your master owner passcode to unlock.
@@ -403,14 +403,14 @@ export default function AdminLayout({ children }) {
 
         </div>
 
-        {/* Sidebar Footer with Derek Martin as Owner & Lock Action */}
+        {/* Sidebar Footer with Derick Martin as Owner & Lock Action */}
         <div className="p-4 border-t border-[#e5e3dc] flex items-center justify-between text-xs font-mono text-neutral-600 bg-[#faf8f5]">
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="w-8 h-8 rounded bg-[#121212] text-white flex items-center justify-center font-bold text-xs tracking-wider shadow-sm flex-shrink-0">
               DM
             </div>
             <div className="min-w-0">
-              <div className="text-[#121212] font-bold truncate">Derek Martin</div>
+              <div className="text-[#121212] font-bold truncate">Derick Martin</div>
               <div className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold truncate">Founder &amp; Owner</div>
             </div>
           </div>

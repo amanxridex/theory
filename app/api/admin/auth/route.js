@@ -8,7 +8,10 @@ export async function POST(req) {
     // Secure server-side check (supports env var or default owner passcode)
     const validCodes = [
       process.env.ADMIN_PASSWORD,
+      "derick2026",
+      "derick",
       "derek2026",
+      "derek",
       "cozytheory",
     ].filter(Boolean);
 

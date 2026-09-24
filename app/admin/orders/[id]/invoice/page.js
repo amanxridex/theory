@@ -305,9 +305,9 @@ export default function OrderInvoicePage({ params }) {
           </div>
 
           <div className="text-center sm:text-right space-y-1">
-            <div className="font-serif italic text-base text-neutral-800 tracking-wider">Derek Martin</div>
+            <div className="font-serif italic text-base text-neutral-800 tracking-wider">Derick Martin</div>
             <div className="h-0.5 w-36 bg-black ml-auto"></div>
-            <div className="font-bold text-black uppercase">Derek Martin</div>
+            <div className="font-bold text-black uppercase">Derick Martin</div>
             <div className="text-neutral-500 uppercase tracking-widest text-[9px]">Founder &amp; Owner // The Cozy Theory</div>
           </div>
         </div>

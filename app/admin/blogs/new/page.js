@@ -16,7 +16,7 @@ export default function NewBlogPostPage() {
     content: "",
     image: "https://cdn.shopify.com/s/files/1/0826/5053/0110/files/06_f701ce34-3d80-4167-87f5-e3dd0ec7dc5f.jpg?v=1765797590&width=800",
     read_time: "4 min read",
-    author: "Derek Martin",
+    author: "Derick Martin",
     published: true,
   });
 

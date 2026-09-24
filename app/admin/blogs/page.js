@@ -54,7 +54,7 @@ export default function AdminBlogsPage() {
             Studio Journal ({posts.length})
           </h1>
           <p className="text-xs font-mono text-neutral-500 mt-0.5">
-            Real articles published to the public journal, managed by Derek Martin.
+            Real articles published to the public journal, managed by Derick Martin.
           </p>
         </div>
 
@@ -137,7 +137,7 @@ export default function AdminBlogsPage() {
                     </p>
 
                     <div className="text-[10px] font-mono text-neutral-400">
-                      Slug: /{post.handle} • Author: {post.author || "Derek Martin"}
+                      Slug: /{post.handle} • Author: {post.author || "Derick Martin"}
                     </div>
                   </div>
                 </div>

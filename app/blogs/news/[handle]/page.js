@@ -57,7 +57,7 @@ export default async function BlogPostPage({ params }) {
             <span>•</span>
             <span>{post.read_time || post.readTime || "4 min read"}</span>
             <span>•</span>
-            <span className="text-black font-semibold">{post.author || "Derek Martin"}</span>
+            <span className="text-black font-semibold">{post.author || "Derick Martin"}</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-[#121212] leading-[1.05]">

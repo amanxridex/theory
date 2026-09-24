@@ -57,7 +57,7 @@ export default function AdminDashboardPage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-mono uppercase tracking-widest text-[#004fff] font-bold">
-              THE COZY THEORY CONTROL CENTER // DEREK MARTIN
+              THE COZY THEORY CONTROL CENTER // DERICK MARTIN
             </span>
             <span className="text-xs font-mono text-neutral-400">•</span>
             <span className="text-xs font-mono text-emerald-700 font-semibold flex items-center gap-1">
