@@ -14,6 +14,7 @@ import {
   getCustomers as dbGetCustomers,
   getDiscounts as dbGetDiscounts,
   getDbMetrics,
+  getRealAnalytics,
 } from "@/lib/supabase";
 
 const StoreContext = createContext(null);
@@ -217,6 +218,16 @@ export function StoreProvider({ children }) {
           averageOrderValue: mtrRes.averageOrderValue,
         }));
       }
+
+      const trafficRes = await getRealAnalytics();
+      if (trafficRes) {
+        setAnalytics((prev) => ({
+          ...prev,
+          activeVisitors: trafficRes.activeVisitors,
+          todayVisitors: Math.max(trafficRes.todayVisitors, 1),
+          todaySessions: Math.max(trafficRes.todayPageViews, 1),
+        }));
+      }
     } catch (err) {
       console.error("Failed to load initial Supabase data:", err);
     } finally {
@@ -228,19 +239,23 @@ export function StoreProvider({ children }) {
     refreshData();
   }, [refreshData]);
 
-  // Live visitor fluctuation simulator (Theory live pulse)
+  // Live visitor tracking pulse from real Supabase events
   useEffect(() => {
-    const timer = setInterval(() => {
-      setAnalytics((prev) => {
-        const delta = Math.floor(Math.random() * 5) - 2;
-        const newActive = Math.max(12, Math.min(48, prev.activeVisitors + delta));
-        return {
-          ...prev,
-          activeVisitors: newActive,
-          todayVisitors: prev.todayVisitors + (Math.random() > 0.6 ? 1 : 0),
-        };
-      });
-    }, 4000);
+    const timer = setInterval(async () => {
+      try {
+        const traffic = await getRealAnalytics();
+        if (traffic) {
+          setAnalytics((prev) => ({
+            ...prev,
+            activeVisitors: traffic.activeVisitors,
+            todayVisitors: Math.max(traffic.todayVisitors, 1),
+            todaySessions: Math.max(traffic.todayPageViews, 1),
+          }));
+        }
+      } catch (e) {
+        // silent
+      }
+    }, 15000);
     return () => clearInterval(timer);
   }, []);
 

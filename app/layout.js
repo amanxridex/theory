@@ -2,6 +2,7 @@ import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { StoreProvider } from "@/context/StoreContext";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://thecozytheory.playstax.xyz"),
@@ -100,6 +101,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="antialiased min-h-screen flex flex-col bg-[#fffdf8] text-[#121212]">
         <StoreProvider>
+          <AnalyticsTracker />
           <CartProvider>
             <LayoutWrapper>{children}</LayoutWrapper>
           </CartProvider>
