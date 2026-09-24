@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "THE COZY THEORY — Artisanal Objects For Warm Living";
+export const alt = "THE COZY THEORY — Stay Cozy, Stay You";
 export const size = {
   width: 1200,
   height: 630,
@@ -58,7 +58,7 @@ export default async function OpenGraphImage() {
               color: "#a3a3a3",
             }}
           >
-            CURATED LIVING & ARTISANAL OBJECTS
+            STAY COZY, STAY YOU
           </span>
         </div>
 

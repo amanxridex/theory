@@ -140,7 +140,7 @@ export default function Header({
                 <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#004fff] inline-block -mt-2 sm:-mt-3 flex-shrink-0"></span>
               </div>
               <span className="hidden sm:block text-[8px] font-mono tracking-[0.22em] text-neutral-500 uppercase -mt-0.5">
-                Objects For Warm Living
+                Stay Cozy, Stay You
               </span>
             </Link>
           </div>
@@ -209,12 +209,17 @@ export default function Header({
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2"
+              className="flex flex-col"
             >
-              <span className="font-extrabold tracking-[-0.03em] text-lg uppercase font-sans text-[#121212]">
-                THE COZY THEORY
+              <div className="flex items-center gap-2">
+                <span className="font-extrabold tracking-[-0.03em] text-lg uppercase font-sans text-[#121212]">
+                  THE COZY THEORY
+                </span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#004fff] inline-block -mt-1"></span>
+              </div>
+              <span className="text-[8px] font-mono tracking-[0.2em] text-neutral-500 uppercase -mt-0.5">
+                Stay Cozy, Stay You
               </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#004fff] inline-block -mt-2"></span>
             </Link>
             <button
               onClick={() => setMobileMenuOpen(false)}
@@ -324,7 +329,7 @@ export default function Header({
               <span className="font-bold text-black">INR (₹)</span>
             </div>
             <p className="text-[11px] text-neutral-500 leading-relaxed">
-              The Cozy Theory crafts artisanal homeware, everyday ceramics, and pure linen for warm living spaces.
+              Stay cozy, stay you. The Cozy Theory crafts artisanal homeware, everyday ceramics, and pure linen for warm living spaces.
             </p>
           </div>
         </div>

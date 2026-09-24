@@ -25,11 +25,16 @@ export default function Footer() {
           
           {/* Brand Philosophy */}
           <div className="lg:col-span-6 space-y-5">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <span className="font-extrabold tracking-[-0.04em] text-2xl sm:text-3xl uppercase font-sans">
-                THE COZY THEORY
+            <Link href="/" className="inline-flex flex-col gap-1 group">
+              <div className="flex items-center gap-2">
+                <span className="font-extrabold tracking-[-0.04em] text-2xl sm:text-3xl uppercase font-sans">
+                  THE COZY THEORY
+                </span>
+                <span className="w-2.5 h-2.5 rounded-full bg-[#004fff] inline-block -mt-3"></span>
+              </div>
+              <span className="text-[10px] font-mono tracking-[0.25em] text-blue-400 uppercase font-bold">
+                Stay Cozy, Stay You
               </span>
-              <span className="w-2.5 h-2.5 rounded-full bg-[#004fff] inline-block -mt-3"></span>
             </Link>
             <p className="text-xs md:text-sm text-neutral-400 leading-relaxed max-w-xl font-normal">
               The Cozy Theory is an artisanal design and homeware studio crafting objects that transform your living space into a sanctuary of warmth, texture, and individual expression. We believe in everyday rituals elevated by honest materials.

@@ -88,7 +88,7 @@ export default function QuickViewModal({ product, isOpen, onClose, onAddToCart }
             </div>
 
             <p className="text-xs text-neutral-600 leading-relaxed font-normal">
-              Artisanal homeware crafted for warm, deliberate living. Hand-finished stoneware and tactile textures that bring character to your space.
+              Artisanal homeware crafted to stay cozy, stay you. Hand-finished stoneware and tactile textures that bring character to your space.
             </p>
 
             {/* Quantity Selector */}

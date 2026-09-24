@@ -1,6 +1,6 @@
 export default function AnnouncementBar() {
   const announcements = [
-    "THE COZY THEORY // OBJECTS FOR WARM & DELIBERATE LIVING",
+    "THE COZY THEORY // STAY COZY, STAY YOU",
     "•",
     "ARTISANAL HOMEWARE & TEXTILES",
     "•",
@@ -8,7 +8,7 @@ export default function AnnouncementBar() {
     "•",
     "HANDCRAFTED CERAMICS & STONEWARE",
     "•",
-    "THE COZY THEORY // WARM LIVING ACCENTS",
+    "THE COZY THEORY // STAY COZY, STAY YOU",
     "•",
     "DISPATCHES WITHIN 24–48 HOURS ACROSS INDIA",
     "•",

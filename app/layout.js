@@ -6,17 +6,18 @@ import LayoutWrapper from "@/components/LayoutWrapper";
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://thecozytheory.playstax.xyz"),
   title: {
-    default: "THE COZY THEORY — Objects For Warm & Deliberate Living",
+    default: "THE COZY THEORY — Stay Cozy, Stay You",
     template: "%s | THE COZY THEORY",
   },
   description:
-    "The Cozy Theory crafts artisanal homeware, handcrafted everyday ceramics, tableware, and pure washed cotton linen for spaces that celebrate texture, warmth, and individuality.",
+    "Stay cozy, stay you. The Cozy Theory crafts artisanal homeware, handcrafted everyday ceramics, tableware, and pure washed cotton linen for spaces that celebrate texture, warmth, and individuality.",
   applicationName: "THE COZY THEORY",
   authors: [{ name: "The Cozy Theory Studio" }],
   creator: "The Cozy Theory",
   publisher: "THE COZY THEORY",
   keywords: [
     "The Cozy Theory",
+    "Stay Cozy Stay You",
     "Artisanal Ceramics",
     "Handcrafted Tableware",
     "Stoneware Ceramics",
@@ -31,24 +32,24 @@ export const metadata = {
     locale: "en_IN",
     url: "https://thecozytheory.playstax.xyz",
     siteName: "THE COZY THEORY",
-    title: "THE COZY THEORY — Objects For Warm & Deliberate Living",
+    title: "THE COZY THEORY — Stay Cozy, Stay You",
     description:
-      "Handcrafted everyday ceramics, stoneware tableware, sculptural vessels, and washed cotton bedding. Elevated living objects for deliberate rituals.",
+      "Stay cozy, stay you. Handcrafted everyday ceramics, stoneware tableware, sculptural vessels, and washed cotton bedding. Elevated living objects for deliberate rituals.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "THE COZY THEORY — Artisanal Objects For Warm Living",
+        alt: "THE COZY THEORY — Stay Cozy, Stay You",
         type: "image/jpeg",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "THE COZY THEORY — Objects For Warm & Deliberate Living",
+    title: "THE COZY THEORY — Stay Cozy, Stay You",
     description:
-      "Handcrafted everyday ceramics, stoneware tableware, sculptural vessels, and washed cotton bedding.",
+      "Stay cozy, stay you. Handcrafted everyday ceramics, stoneware tableware, sculptural vessels, and washed cotton bedding.",
     images: ["/og-image.jpg"],
     creator: "@thecozytheory",
   },
@@ -69,10 +70,10 @@ export default function RootLayout({ children }) {
     <html lang="en" className="scroll-smooth">
       <head>
         {/* OpenGraph & Social Sharing Meta Tags */}
-        <meta property="og:title" content="THE COZY THEORY — Objects For Warm & Deliberate Living" />
+        <meta property="og:title" content="THE COZY THEORY — Stay Cozy, Stay You" />
         <meta
           property="og:description"
-          content="Handcrafted everyday ceramics, stoneware tableware, sculptural vessels, and washed cotton bedding. Elevated living objects for deliberate rituals."
+          content="Stay cozy, stay you. Handcrafted everyday ceramics, stoneware tableware, sculptural vessels, and washed cotton bedding. Elevated living objects for deliberate rituals."
         />
         <meta property="og:url" content="https://thecozytheory.playstax.xyz" />
         <meta property="og:image" content="https://thecozytheory.playstax.xyz/og-image.jpg" />
@@ -83,10 +84,10 @@ export default function RootLayout({ children }) {
         <meta property="og:site_name" content="THE COZY THEORY" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="THE COZY THEORY — Objects For Warm & Deliberate Living" />
+        <meta name="twitter:title" content="THE COZY THEORY — Stay Cozy, Stay You" />
         <meta
           name="twitter:description"
-          content="Handcrafted everyday ceramics, stoneware tableware, sculptural vessels, and washed cotton bedding."
+          content="Stay cozy, stay you. Handcrafted everyday ceramics, stoneware tableware, sculptural vessels, and washed cotton bedding."
         />
         <meta name="twitter:image" content="https://thecozytheory.playstax.xyz/og-image.jpg" />
 

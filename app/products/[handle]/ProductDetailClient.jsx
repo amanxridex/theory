@@ -259,7 +259,7 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
                 {openAccordion === "details" && (
                   <div className="mt-3 text-xs text-neutral-600 leading-relaxed font-normal space-y-2">
                     <p>
-                      The Cozy Theory crafts artisanal objects, everyday ceramics, and pure linens for warm, deliberate living. Designed with organic balances and tactile finishes to bring character to every room.
+                      The Cozy Theory crafts artisanal objects, everyday ceramics, and pure linens to stay cozy, stay you. Designed with organic balances and tactile finishes to bring character to every room.
                     </p>
                     <p>
                       Each piece undergoes meticulous hand-crafting and quality inspection in our studio, ensuring every surface reflects warmth and elegance.
