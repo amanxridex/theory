@@ -1,22 +1,23 @@
 export default function AnnouncementBar() {
   const announcements = [
-    "THE COZY THEORY // STAY COZY, STAY YOU",
+    "FREE SHIPPING ABOVE 9999/-",
     "•",
-    "ARTISANAL HOMEWARE & TEXTILES",
+    "50% REFUND IF DAMAGED",
     "•",
-    "FREE EXPRESS SHIPPING ON ORDERS ABOVE RS. 2,999",
-    "•",
-    "HANDCRAFTED CERAMICS & STONEWARE",
+    "RS. 500 OFF ABOVE 5,999/-",
     "•",
     "THE COZY THEORY // STAY COZY, STAY YOU",
     "•",
-    "DISPATCHES WITHIN 24–48 HOURS ACROSS INDIA",
+    "FREE SHIPPING ABOVE 9999/-",
     "•",
-    "NEW CURATED SEASONAL ARRIVALS",
+    "50% REFUND IF DAMAGED",
     "•",
-    "PURE WASHED COTTON HOME LINEN",
+    "RS. 500 OFF ABOVE 5,999/-",
+    "•",
+    "HANDCRAFTED ARTISANAL HOMEWARE",
     "•",
   ];
+
 
   return (
     <aside aria-label="Announcement" className="w-full bg-[#004fff] text-white text-[11px] md:text-xs tracking-[0.15em] uppercase py-2.5 overflow-hidden select-none z-30 relative shadow-sm">

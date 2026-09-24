@@ -24,7 +24,7 @@ export default function ShippingPolicyPage() {
             </h2>
             <p>
               We provide express domestic delivery across all serviceable pin codes in India.
-              Orders above Rs. 2,999 qualify for complimentary express shipping. For orders below Rs. 2,999, a standard nominal shipping charge of Rs. 99 is applied at checkout.
+              Orders above Rs. 9,999 qualify for complimentary express shipping. For orders below Rs. 9,999, a standard nominal shipping charge of Rs. 99 is applied at checkout. In the rare event of transit mishap, we provide a 50% refund if damaged.
             </p>
           </section>
 

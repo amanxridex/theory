@@ -17,7 +17,7 @@ export default function FAQPage() {
     },
     {
       q: "Are shipping costs included?",
-      a: "Orders above Rs. 2,999 qualify for complimentary express delivery across India. For orders below Rs. 2,999, a flat shipping fee of Rs. 99 applies at checkout.",
+      a: "Orders above Rs. 9,999 qualify for complimentary express delivery across India. For orders below Rs. 9,999, a flat shipping fee of Rs. 99 applies at checkout. Plus, enjoy Rs. 500 off on orders above Rs. 5,999.",
     },
     {
       q: "How should I care for handcrafted ceramics and pottery?",
@@ -25,7 +25,7 @@ export default function FAQPage() {
     },
     {
       q: "What is the return and replacement policy?",
-      a: "We offer a 7-day hassle-free replacement guarantee if an item arrives damaged in transit. Simply email photo proof of the packaging and item to hello@thecozytheory.com to receive an immediate replacement.",
+      a: "We provide a 50% refund if any object arrives damaged in transit. Simply email photo proof of the package to hello@thecozytheory.com to receive your immediate refund.",
     },
     {
       q: "How do I care for pure cotton bedsheets and linen?",
@@ -33,7 +33,7 @@ export default function FAQPage() {
     },
     {
       q: "What payment methods are supported at checkout?",
-      a: "We support UPI (Google Pay, PhonePe, Paytm, BHIM), Credit/Debit Cards (Visa, Mastercard, RuPay), Net Banking across all Indian banks, and Cash on Delivery (COD).",
+      a: "We currently support Cash on Delivery (COD) across all serviceable pin codes in India. Pay with complete peace of mind when the package arrives at your doorstep.",
     },
   ];
 

@@ -325,9 +325,10 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
                 </button>
                 {openAccordion === "shipping" && (
                   <div className="mt-3 text-xs text-neutral-600 leading-relaxed space-y-1">
-                    <p>• Complimentary express domestic delivery across India on orders above Rs. 2,999.</p>
-                    <p>• Dispatches within 2 business days via BlueDart / Delhivery.</p>
-                    <p>• Hassle-free 7-day replacement policy for damaged in-transit goods.</p>
+                    <p>• Complimentary express domestic delivery across India on orders above Rs. 9,999.</p>
+                    <p>• Enjoy Rs. 500 off on orders above Rs. 5,999.</p>
+                    <p>• In the rare event of transit mishap, 50% refund provided if damaged.</p>
+                    <p>• Dispatches within 24–48 hours via express courier.</p>
                   </div>
                 )}
               </div>
