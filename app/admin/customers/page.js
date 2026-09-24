@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useStore } from "@/context/StoreContext";
 import { Users, Search, MapPin, Mail, Award, ArrowRight } from "lucide-react";
 
 export default function AdminCustomersPage() {
+  const { customers: dbCustomers } = useStore();
   const [search, setSearch] = useState("");
 
-  const customers = [
+  const defaultCustomers = [
     {
       id: "cust-01",
       name: "Aarav Mehta",
@@ -69,6 +71,20 @@ export default function AdminCustomersPage() {
       lastOrder: "3 days ago",
     },
   ];
+
+  const customers =
+    dbCustomers && dbCustomers.length > 0
+      ? dbCustomers.map((c) => ({
+          id: c.id,
+          name: c.name,
+          email: c.email,
+          city: c.city || "India",
+          orders: c.orders_count || 1,
+          totalSpent: parseFloat(c.total_spent) || 0,
+          tier: (parseFloat(c.total_spent) || 0) > 10000 ? "VIP Collector" : "Studio Member",
+          lastOrder: "Recent",
+        }))
+      : defaultCustomers;
 
   const filtered = customers.filter(
     (c) =>

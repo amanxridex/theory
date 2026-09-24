@@ -79,6 +79,10 @@ export function CartProvider({ children }) {
     setItems((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const clearCart = () => {
+    setItems([]);
+  };
+
   const totalCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const subtotal = items.reduce(
@@ -93,6 +97,7 @@ export function CartProvider({ children }) {
         addToCart,
         updateQuantity,
         removeItem,
+        clearCart,
         totalCount,
         subtotal,
         isCartOpen,

@@ -36,7 +36,7 @@ export default function NewCollectionPage() {
     }));
   };
 
-  const handleSaveCollection = (e) => {
+  const handleSaveCollection = async (e) => {
     e.preventDefault();
     if (!formData.title.trim()) {
       alert("Please enter a category title.");
@@ -44,11 +44,14 @@ export default function NewCollectionPage() {
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      const saved = addCollection(formData);
+    try {
+      const saved = await addCollection(formData);
       setIsSubmitting(false);
       setCreatedCollection(saved);
-    }, 500);
+    } catch (err) {
+      console.error(err);
+      setIsSubmitting(false);
+    }
   };
 
   return (

@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useStore } from "@/context/StoreContext";
+import { supabase } from "@/lib/supabase";
 import { Tag, Plus, CheckCircle2, Copy } from "lucide-react";
 
 export default function AdminDiscountsPage() {
+  const { discounts: storeDiscounts } = useStore();
   const [coupons, setCoupons] = useState([
     {
-      code: "WELCOME10",
+      code: "COZY10",
       discount: "10% OFF",
       type: "Percentage",
       status: "Active",
@@ -16,7 +19,7 @@ export default function AdminDiscountsPage() {
       minOrder: "₹0.00",
     },
     {
-      code: "COZY20",
+      code: "FESTIVE20",
       discount: "20% OFF",
       type: "Percentage",
       status: "Active",
@@ -25,37 +28,69 @@ export default function AdminDiscountsPage() {
       minOrder: "₹2,500.00",
     },
     {
-      code: "STUDIO500",
+      code: "THEORY500",
       discount: "₹500 OFF",
       type: "Flat Amount",
       status: "Active",
       uses: 19,
       appliesTo: "Ceramics & Stoneware",
-      minOrder: "₹3,999.00",
+      minOrder: "₹3,000.00",
     },
   ]);
+
+  useEffect(() => {
+    if (storeDiscounts && storeDiscounts.length > 0) {
+      const formatted = storeDiscounts.map((d) => ({
+        code: d.code,
+        discount: d.type === "percentage" ? `${d.value}% OFF` : `₹${d.value} OFF`,
+        type: d.type === "percentage" ? "Percentage" : "Flat Amount",
+        status: d.status || "Active",
+        uses: d.usage_count || 0,
+        appliesTo: "All Products",
+        minOrder: `₹${d.min_requirement || 0}`,
+      }));
+      setCoupons(formatted);
+    }
+  }, [storeDiscounts]);
 
   const [newCode, setNewCode] = useState("");
   const [newDiscount, setNewDiscount] = useState("15");
   const [showModal, setShowModal] = useState(false);
 
-  const handleCreateCoupon = (e) => {
+  const handleCreateCoupon = async (e) => {
     e.preventDefault();
     if (newCode.trim()) {
-      setCoupons([
-        {
-          code: newCode.trim().toUpperCase(),
-          discount: `${newDiscount}% OFF`,
-          type: "Percentage",
-          status: "Active",
-          uses: 0,
-          appliesTo: "All Products",
-          minOrder: "₹0.00",
-        },
-        ...coupons,
-      ]);
+      const upper = newCode.trim().toUpperCase();
+      const val = parseFloat(newDiscount) || 15;
+      const newCouponItem = {
+        code: upper,
+        discount: `${val}% OFF`,
+        type: "Percentage",
+        status: "Active",
+        uses: 0,
+        appliesTo: "All Products",
+        minOrder: "₹0.00",
+      };
+
+      setCoupons([newCouponItem, ...coupons]);
       setNewCode("");
       setShowModal(false);
+
+      try {
+        await supabase.from("discounts").upsert([
+          {
+            id: "disc_" + Date.now(),
+            code: upper,
+            type: "percentage",
+            value: val,
+            min_requirement: 0,
+            status: "active",
+            usage_count: 0,
+          },
+        ]);
+      } catch (err) {
+        console.error("Failed to save discount to DB:", err);
+      }
     }
   };
 

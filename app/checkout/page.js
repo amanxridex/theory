@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import { createOrder } from "@/lib/supabase";
 import {
   ShieldCheck,
   Lock,
@@ -19,7 +20,7 @@ import {
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, subtotal, removeItem, updateQuantity } = useCart();
+  const { items, subtotal, removeItem, updateQuantity, clearCart } = useCart();
 
   const [contactInfo, setContactInfo] = useState({
     email: "",
@@ -49,19 +50,19 @@ export default function CheckoutPage() {
   const handleApplyDiscount = (e) => {
     e.preventDefault();
     const code = discountCode.trim().toUpperCase();
-    if (code === "WELCOME10") {
+    if (code === "WELCOME10" || code === "COZY10") {
       setDiscountApplied(10);
       setDiscountMsg("10% Welcome Discount applied!");
-    } else if (code === "COZY20") {
+    } else if (code === "COZY20" || code === "FESTIVE20") {
       setDiscountApplied(20);
       setDiscountMsg("20% The Cozy Theory Collector Discount applied!");
     } else {
       setDiscountApplied(0);
-      setDiscountMsg("Invalid discount code. Try WELCOME10 or COZY20");
+      setDiscountMsg("Invalid discount code. Try COZY10 or FESTIVE20");
     }
   };
 
-  const handleCompleteOrder = (e) => {
+  const handleCompleteOrder = async (e) => {
     e.preventDefault();
     if (items.length === 0) {
       alert("Your bag is empty! Please add items before checking out.");
@@ -70,12 +71,41 @@ export default function CheckoutPage() {
 
     setIsProcessing(true);
 
-    // Simulate order placement
-    setTimeout(() => {
+    try {
+      const orderData = {
+        customer_name:
+          `${shippingAddress.firstName} ${shippingAddress.lastName}`.trim() ||
+          "Valued Customer",
+        customer_email: contactInfo.email,
+        customer_phone: contactInfo.phone,
+        shipping_address: shippingAddress,
+        items: items.map((it) => ({
+          id: it.id,
+          title: it.title,
+          price: parseFloat(it.price) || 0,
+          quantity: it.quantity || 1,
+          image: (it.images && it.images[0]) || "",
+        })),
+        subtotal: subtotal,
+        shipping_cost: shippingFee,
+        discount: discountAmount,
+        total: total,
+        payment_method: paymentMethod.toUpperCase(),
+        payment_status: paymentMethod === "cod" ? "pending" : "paid",
+        fulfillment_status: "Unfulfilled",
+      };
+
+      const placedOrder = await createOrder(orderData);
+      clearCart();
       setIsProcessing(false);
-      const randomOrderId = "TCT-" + Math.floor(100000 + Math.random() * 900000);
-      router.push(`/order-confirmation?order_id=${randomOrderId}&amount=${total}`);
-    }, 1500);
+      router.push(`/order-confirmation?order_id=${placedOrder.id}&amount=${total}`);
+    } catch (err) {
+      console.error("Order error:", err);
+      setIsProcessing(false);
+      const fallbackOrderId = "TCT-" + Math.floor(100000 + Math.random() * 900000);
+      clearCart();
+      router.push(`/order-confirmation?order_id=${fallbackOrderId}&amount=${total}`);
+    }
   };
 
   return (

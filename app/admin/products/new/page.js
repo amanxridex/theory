@@ -71,7 +71,7 @@ export default function AddNewProductPage() {
     }));
   };
 
-  const handleSaveProduct = (e) => {
+  const handleSaveProduct = async (e) => {
     e.preventDefault();
     if (!formData.title.trim()) {
       alert("Please enter a product title.");
@@ -80,20 +80,23 @@ export default function AddNewProductPage() {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    try {
       const tagList = formData.tags
         .split(",")
         .map((t) => t.trim())
         .filter(Boolean);
 
-      const saved = addProduct({
+      const saved = await addProduct({
         ...formData,
         tags: tagList,
       });
 
       setIsSubmitting(false);
       setCreatedProduct(saved);
-    }, 600);
+    } catch (err) {
+      console.error(err);
+      setIsSubmitting(false);
+    }
   };
 
   // Preset sample studio images to click-and-add

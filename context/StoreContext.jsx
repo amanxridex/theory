@@ -1,7 +1,20 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
-import { NOTICE_PRODUCTS } from "@/lib/products";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { NOTICE_PRODUCTS, CATEGORIES_LIST } from "@/lib/products";
+import {
+  getProducts,
+  getCategories,
+  getOrders,
+  createProduct as dbCreateProduct,
+  updateProduct as dbUpdateProduct,
+  deleteProduct as dbDeleteProduct,
+  createCategory as dbCreateCategory,
+  updateOrderStatus as dbUpdateOrderStatus,
+  getCustomers as dbGetCustomers,
+  getDiscounts as dbGetDiscounts,
+  getDbMetrics,
+} from "@/lib/supabase";
 
 const StoreContext = createContext(null);
 
@@ -10,6 +23,7 @@ export const INITIAL_COLLECTIONS = [
     id: "col-all",
     handle: "all-products",
     title: "All Objects",
+    label: "All Objects",
     description: "Complete archive of artisanal homeware and living objects.",
     image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136",
     itemCount: NOTICE_PRODUCTS.length,
@@ -18,6 +32,7 @@ export const INITIAL_COLLECTIONS = [
     id: "col-ceramics",
     handle: "everyday-ceramics",
     title: "Everyday Ceramics",
+    label: "Everyday Ceramics",
     description: "Handcrafted stoneware, daily mugs, and glazed bowls.",
     image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product9-01.png?v=1784242846",
     itemCount: 158,
@@ -26,6 +41,7 @@ export const INITIAL_COLLECTIONS = [
     id: "col-tableware",
     handle: "tableware",
     title: "Tableware & Dining",
+    label: "Tableware & Dining",
     description: "Porcelain & stoneware dining plates, ramen bowls, and oil pourers.",
     image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/TT75REDDIVIDEDBOWL.png?v=1788126151",
     itemCount: 82,
@@ -34,6 +50,7 @@ export const INITIAL_COLLECTIONS = [
     id: "col-serveware",
     handle: "serveware",
     title: "Platters & Serveware",
+    label: "Platters & Serveware",
     description: "Elevated ceramic serving trays, dip bowls, and cheese platters.",
     image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/IMG_0517_ab4b2575-73cd-44f0-bef6-e22d87b409e1.jpg?v=1726212864",
     itemCount: 54,
@@ -42,6 +59,7 @@ export const INITIAL_COLLECTIONS = [
     id: "col-linen",
     handle: "home-linen",
     title: "Home Linen & Bedding",
+    label: "Home Linen & Bedding",
     description: "Pure washed cotton bedsheets, quilted covers, and runners.",
     image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/DSC00422_eee0df88-82cb-49a4-818d-182c056960b2.jpg?v=1740976529",
     itemCount: 45,
@@ -50,6 +68,7 @@ export const INITIAL_COLLECTIONS = [
     id: "col-vases",
     handle: "vases-planters",
     title: "Vases & Planters",
+    label: "Vases & Planters",
     description: "Contemporary ceramic and stoneware vases for botanical stems.",
     image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/ChatGPTImageJul18_2026_11_18_29PM.png?v=1784397111",
     itemCount: 42,
@@ -58,6 +77,7 @@ export const INITIAL_COLLECTIONS = [
     id: "col-candles",
     handle: "candles-holders",
     title: "Candles & Holders",
+    label: "Candles & Holders",
     description: "Sculptural candleholders and ambient t-light vessels.",
     image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/DSC07087_copy_ca9966aa-409f-4d01-a865-701ca110f64c.jpg?v=1726405433",
     itemCount: 28,
@@ -66,6 +86,7 @@ export const INITIAL_COLLECTIONS = [
     id: "col-decor",
     handle: "decorative-objects",
     title: "Decorative Objects",
+    label: "Decorative Objects",
     description: "Handcrafted figurines, bookends, and organic conversation pieces.",
     image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/ChatGPTImageJul18_2026_04_59_45PM.png?v=1784374314",
     itemCount: 40,
@@ -74,139 +95,138 @@ export const INITIAL_COLLECTIONS = [
     id: "col-festive",
     handle: "merry-bright",
     title: "Festive Accents",
+    label: "Festive Accents",
     description: "Heirloom holiday figurines, winter village pieces, and seasonal tabletop items.",
     image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/ChatGPTImageSep13_2026_05_26_10PM.png?v=1789300631",
     itemCount: 385,
   },
 ];
 
-export const INITIAL_ORDERS = [
-  {
-    id: "TCT-894120",
+function normalizeOrder(o) {
+  const customerName = o.customer_name || o.customer?.name || "Customer";
+  const customerEmail = o.customer_email || o.customer?.email || "";
+  const city = o.shipping_address?.city || o.customer?.city || "India";
+  const items = Array.isArray(o.items) ? o.items : [];
+  const itemsCount = o.itemsCount || items.reduce((s, it) => s + (it.quantity || 1), 0);
+  const total = parseFloat(o.total) || 0;
+  const fulfillmentStatus = o.fulfillment_status || o.fulfillmentStatus || "Unfulfilled";
+  const financialStatus =
+    o.payment_status === "paid"
+      ? `Paid (${o.payment_method || "Online"})`
+      : o.financialStatus || "COD Pending";
+  const date = o.created_at
+    ? new Date(o.created_at).toLocaleString("en-IN", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : o.date || "Recent";
+
+  return {
+    ...o,
+    id: o.id,
     customer: {
-      name: "Aarav Mehta",
-      email: "aarav.mehta@gmail.com",
-      city: "Mumbai, MH",
+      name: customerName,
+      email: customerEmail,
+      city: city,
+      phone: o.customer_phone || "",
     },
-    total: 3130,
-    itemsCount: 2,
-    financialStatus: "Paid (UPI)",
-    fulfillmentStatus: "Dispatched",
-    date: "Sep 14, 2026, 02:15 PM",
-    items: [
-      { title: "TT-251 Ceramic Chicken Condiment Jar", price: 1450, quantity: 1 },
-      { title: "Pure Washed Cotton Queen Bedsheet", price: 1680, quantity: 1 },
-    ],
-  },
-  {
-    id: "TCT-894088",
-    customer: {
-      name: "Diya Narang",
-      email: "diya.narang@outlook.com",
-      city: "Bengaluru, KA",
-    },
-    total: 4250,
-    itemsCount: 3,
-    financialStatus: "Paid (Cards)",
-    fulfillmentStatus: "Unfulfilled",
-    date: "Sep 14, 2026, 01:42 PM",
-    items: [
-      { title: "DD-97 Ceramic Floral Baking & Serving Dish", price: 1850, quantity: 1 },
-      { title: "TT-285 Ceramic Water Pitcher Vintage Floral", price: 2400, quantity: 1 },
-    ],
-  },
-  {
-    id: "TCT-893954",
-    customer: {
-      name: "Rohan Varma",
-      email: "rohan.v@gmail.com",
-      city: "New Delhi, DL",
-    },
-    total: 2800,
-    itemsCount: 1,
-    financialStatus: "COD Pending",
-    fulfillmentStatus: "Dispatched",
-    date: "Sep 14, 2026, 11:20 AM",
-    items: [
-      { title: "Pure Washed Cotton King Bedsheet (Ed. 43)", price: 2800, quantity: 1 },
-    ],
-  },
-  {
-    id: "TCT-893812",
-    customer: {
-      name: "Ananya Deshmukh",
-      email: "ananya.d@gmail.com",
-      city: "Pune, MH",
-    },
-    total: 5600,
-    itemsCount: 4,
-    financialStatus: "Paid (UPI)",
-    fulfillmentStatus: "Delivered",
-    date: "Sep 13, 2026, 06:45 PM",
-    items: [
-      { title: "THD070 Red Floral Ceramic Ginger Jar with Lid", price: 2800, quantity: 2 },
-    ],
-  },
-  {
-    id: "TCT-893701",
-    customer: {
-      name: "Vikram Sengupta",
-      email: "vikram.s@yahoo.co.in",
-      city: "Kolkata, WB",
-    },
-    total: 1950,
-    itemsCount: 2,
-    financialStatus: "Paid (UPI)",
-    fulfillmentStatus: "Delivered",
-    date: "Sep 13, 2026, 03:10 PM",
-    items: [
-      { title: "TT- 16 Pink Tulip Ceramic Flower Vase", price: 1950, quantity: 1 },
-    ],
-  },
-];
+    customer_name: customerName,
+    customer_email: customerEmail,
+    items,
+    itemsCount,
+    total,
+    financialStatus,
+    fulfillmentStatus,
+    fulfillment_status: fulfillmentStatus,
+    date,
+    created_at: o.created_at,
+  };
+}
 
 export function StoreProvider({ children }) {
   const [products, setProducts] = useState(NOTICE_PRODUCTS);
   const [collections, setCollections] = useState(INITIAL_COLLECTIONS);
-  const [orders, setOrders] = useState(INITIAL_ORDERS);
+  const [orders, setOrders] = useState([]);
+  const [customers, setCustomers] = useState([]);
+  const [discounts, setDiscounts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isDbConnected, setIsDbConnected] = useState(true);
+
   const [analytics, setAnalytics] = useState({
     activeVisitors: 24,
     todayVisitors: 1428,
     todaySessions: 2190,
     conversionRate: 3.42,
-    averageOrderValue: 3120,
-    totalSales: 486240,
-    totalOrders: 156,
+    averageOrderValue: 2484,
+    totalSales: 12418,
+    totalOrders: 5,
   });
 
-  // Load custom stored products and collections on mount
-  useEffect(() => {
+  // Load from Supabase on mount
+  const refreshData = useCallback(async () => {
     try {
-      const storedCustomProds = localStorage.getItem("tct_custom_products");
-      if (storedCustomProds) {
-        const custom = JSON.parse(storedCustomProds);
-        if (Array.isArray(custom) && custom.length > 0) {
-          // Prepend newly added custom products
-          setProducts([...custom, ...NOTICE_PRODUCTS]);
-        }
+      setLoading(true);
+      const [prodRes, catRes, ordRes, custRes, discRes, mtrRes] = await Promise.all([
+        getProducts({ limit: 1000 }),
+        getCategories(),
+        getOrders(),
+        dbGetCustomers(),
+        dbGetDiscounts(),
+        getDbMetrics(),
+      ]);
+
+      if (prodRes && prodRes.products && prodRes.products.length > 0) {
+        setProducts(prodRes.products);
+        setIsDbConnected(prodRes.fromDb);
       }
 
-      const storedCustomCols = localStorage.getItem("tct_custom_collections");
-      if (storedCustomCols) {
-        const customC = JSON.parse(storedCustomCols);
-        if (Array.isArray(customC) && customC.length > 0) {
-          setCollections([...INITIAL_COLLECTIONS, ...customC]);
-        }
+      if (catRes && catRes.length > 0) {
+        // Merge or set collections
+        const formattedCats = catRes.map((c) => ({
+          id: c.id || c.handle,
+          handle: c.handle,
+          title: c.label || c.name || c.title,
+          label: c.label || c.name || c.title,
+          description: c.description || "",
+          image: c.image_url || c.image || "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136",
+          itemCount: 0,
+        }));
+        setCollections(formattedCats);
       }
 
-      const storedOrders = localStorage.getItem("tct_orders");
-      if (storedOrders) {
-        setOrders(JSON.parse(storedOrders));
+      if (ordRes && ordRes.length > 0) {
+        setOrders(ordRes.map(normalizeOrder));
       }
-    } catch (e) {
-      console.error("Failed to load stored store data", e);
+
+      if (custRes) {
+        setCustomers(custRes);
+      }
+
+      if (discRes) {
+        setDiscounts(discRes);
+      }
+
+      if (mtrRes) {
+        setAnalytics((prev) => ({
+          ...prev,
+          totalSales: mtrRes.totalSales,
+          totalOrders: mtrRes.totalOrders,
+          averageOrderValue: mtrRes.averageOrderValue,
+        }));
+      }
+    } catch (err) {
+      console.error("Failed to load initial Supabase data:", err);
+    } finally {
+      setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    refreshData();
+  }, [refreshData]);
 
   // Live visitor fluctuation simulator (Theory live pulse)
   useEffect(() => {
@@ -224,95 +244,109 @@ export function StoreProvider({ children }) {
     return () => clearInterval(timer);
   }, []);
 
-  // Add new product
-  const addProduct = (newProd) => {
-    const slug = newProd.handle || newProd.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-    const productWithDefaults = {
-      id: Date.now(),
-      handle: slug,
-      title: newProd.title,
-      body_html: newProd.description || newProd.body_html || "Artisanal piece curated by The Cozy Theory studio.",
-      vendor: newProd.vendor || "The Cozy Theory",
-      product_type: newProd.product_type || "Everyday Ceramics",
-      price: String(newProd.price || "1450.00"),
-      compare_at_price: newProd.compare_at_price ? String(newProd.compare_at_price) : null,
-      available: newProd.available !== undefined ? newProd.available : true,
-      inventory: newProd.inventory !== undefined ? Number(newProd.inventory) : 25,
-      images: Array.isArray(newProd.images) && newProd.images.length > 0
-        ? newProd.images
-        : ["https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product9-01.png?v=1784242846"],
-      tags: newProd.tags || ["New Drop", "Curated Living", newProd.product_type || "Homeware"],
-      createdAt: new Date().toISOString(),
-    };
-
-    setProducts((prev) => {
-      const updated = [productWithDefaults, ...prev];
-      // Save custom products separately in localStorage
-      try {
-        const existingCustom = JSON.parse(localStorage.getItem("tct_custom_products") || "[]");
-        localStorage.setItem("tct_custom_products", JSON.stringify([productWithDefaults, ...existingCustom]));
-      } catch (e) {
-        console.error(e);
-      }
-      return updated;
-    });
-
-    return productWithDefaults;
+  // Add new product (syncs directly to Supabase)
+  const addProduct = async (newProd) => {
+    try {
+      const created = await dbCreateProduct(newProd);
+      setProducts((prev) => [created, ...prev]);
+      return created;
+    } catch (err) {
+      console.error("Failed to insert product into DB, adding to local state:", err);
+      const slug =
+        newProd.handle ||
+        newProd.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      const fallbackProd = {
+        id: Date.now(),
+        handle: slug,
+        title: newProd.title,
+        description: newProd.description || "",
+        product_type: newProd.product_type || "Homeware",
+        price: parseFloat(newProd.price || 0),
+        compare_at_price: newProd.compare_at_price ? parseFloat(newProd.compare_at_price) : null,
+        available: newProd.available !== false,
+        inventory_quantity: 25,
+        images: Array.isArray(newProd.images) ? newProd.images : [],
+        tags: newProd.tags || [],
+      };
+      setProducts((prev) => [fallbackProd, ...prev]);
+      return fallbackProd;
+    }
   };
 
-  // Delete product
-  const deleteProduct = (id) => {
-    setProducts((prev) => {
-      const updated = prev.filter((p) => p.id !== id);
-      try {
-        const existingCustom = JSON.parse(localStorage.getItem("tct_custom_products") || "[]");
-        const filteredCustom = existingCustom.filter((p) => p.id !== id);
-        localStorage.setItem("tct_custom_products", JSON.stringify(filteredCustom));
-      } catch (e) {
-        console.error(e);
-      }
-      return updated;
-    });
+  // Delete product (syncs to Supabase)
+  const deleteProduct = async (id) => {
+    setProducts((prev) => prev.filter((p) => p.id !== id));
+    try {
+      await dbDeleteProduct(id);
+    } catch (err) {
+      console.error("Failed to delete from DB:", err);
+    }
   };
 
-  // Add new collection
-  const addCollection = (newCol) => {
-    const slug = newCol.handle || newCol.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-    const collectionObject = {
-      id: "col-" + Date.now(),
-      handle: slug,
-      title: newCol.title,
-      description: newCol.description || "Curated seasonal collection by The Cozy Theory.",
-      image: newCol.image || "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136",
-      itemCount: 0,
-      createdAt: new Date().toISOString(),
-    };
-
-    setCollections((prev) => {
-      const updated = [...prev, collectionObject];
-      try {
-        const existing = JSON.parse(localStorage.getItem("tct_custom_collections") || "[]");
-        localStorage.setItem("tct_custom_collections", JSON.stringify([...existing, collectionObject]));
-      } catch (e) {
-        console.error(e);
-      }
-      return updated;
-    });
-
-    return collectionObject;
+  // Update product (syncs to Supabase)
+  const updateProduct = async (id, updates) => {
+    setProducts((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, ...updates } : p))
+    );
+    try {
+      await dbUpdateProduct(id, updates);
+    } catch (err) {
+      console.error("Failed to update in DB:", err);
+    }
   };
 
-  // Update order status (Fulfill / Dispatch / Deliver)
-  const updateOrderStatus = (orderId, newStatus) => {
-    setOrders((prev) => {
-      const updated = prev.map((o) => (o.id === orderId ? { ...o, fulfillmentStatus: newStatus } : o));
-      try {
-        localStorage.setItem("tct_orders", JSON.stringify(updated));
-      } catch (e) {
-        console.error(e);
-      }
-      return updated;
-    });
+  // Add new collection (syncs to Supabase)
+  const addCollection = async (newCol) => {
+    try {
+      const created = await dbCreateCategory(newCol);
+      const formatted = {
+        id: created.id,
+        handle: created.handle,
+        title: created.label,
+        label: created.label,
+        description: created.description,
+        image: created.image_url,
+        itemCount: 0,
+      };
+      setCollections((prev) => [...prev, formatted]);
+      return formatted;
+    } catch (err) {
+      console.error("Failed to insert collection in DB:", err);
+      const slug =
+        newCol.handle ||
+        newCol.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      const fallbackCol = {
+        id: "col-" + Date.now(),
+        handle: slug,
+        title: newCol.title,
+        label: newCol.title,
+        description: newCol.description || "",
+        image: newCol.image || "",
+        itemCount: 0,
+      };
+      setCollections((prev) => [...prev, fallbackCol]);
+      return fallbackCol;
+    }
+  };
+
+  // Update order status (syncs to Supabase)
+  const updateOrderStatus = async (orderId, newStatus) => {
+    setOrders((prev) =>
+      prev.map((o) =>
+        o.id === orderId
+          ? {
+              ...o,
+              fulfillmentStatus: newStatus,
+              fulfillment_status: newStatus,
+            }
+          : o
+      )
+    );
+    try {
+      await dbUpdateOrderStatus(orderId, newStatus);
+    } catch (err) {
+      console.error("Failed to update order status in DB:", err);
+    }
   };
 
   return (
@@ -321,9 +355,15 @@ export function StoreProvider({ children }) {
         products,
         collections,
         orders,
+        customers,
+        discounts,
         analytics,
+        loading,
+        isDbConnected,
+        refreshData,
         addProduct,
         deleteProduct,
+        updateProduct,
         addCollection,
         updateOrderStatus,
       }}
@@ -336,14 +376,19 @@ export function StoreProvider({ children }) {
 export function useStore() {
   const context = useContext(StoreContext);
   if (!context) {
-    // Graceful fallback if invoked outside provider
     return {
       products: NOTICE_PRODUCTS,
       collections: INITIAL_COLLECTIONS,
-      orders: INITIAL_ORDERS,
-      analytics: { activeVisitors: 24, todayVisitors: 1428, totalSales: 486240 },
+      orders: [],
+      customers: [],
+      discounts: [],
+      analytics: { activeVisitors: 24, todayVisitors: 1428, totalSales: 12418, totalOrders: 5 },
+      loading: false,
+      isDbConnected: true,
+      refreshData: () => {},
       addProduct: () => {},
       deleteProduct: () => {},
+      updateProduct: () => {},
       addCollection: () => {},
       updateOrderStatus: () => {},
     };

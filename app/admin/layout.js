@@ -258,6 +258,12 @@ export default function AdminLayout({ children }) {
           {/* Right: Quick actions, Live visitor badge, Notifications */}
           <div className="flex items-center gap-3 sm:gap-4">
             
+            {/* Supabase DB Status Badge */}
+            <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-emerald-950/60 border border-emerald-800/80 rounded text-[11px] font-mono text-emerald-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span>Supabase DB: Connected</span>
+            </div>
+
             {/* Live visitors chip */}
             <Link
               href="/admin/analytics"

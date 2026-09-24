@@ -1,4 +1,5 @@
 import { NOTICE_PRODUCTS } from "@/lib/products";
+import { getProducts } from "@/lib/supabase";
 import CollectionClient from "./CollectionClient";
 
 export async function generateStaticParams() {
@@ -46,5 +47,6 @@ export async function generateMetadata({ params }) {
 
 export default async function CollectionPage({ params }) {
   const { handle } = await params;
-  return <CollectionClient handle={handle} allProducts={NOTICE_PRODUCTS} />;
+  const { products } = await getProducts({ limit: 1000 });
+  return <CollectionClient handle={handle} allProducts={products || NOTICE_PRODUCTS} />;
 }

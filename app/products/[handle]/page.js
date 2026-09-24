@@ -1,4 +1,5 @@
 import { NOTICE_PRODUCTS } from "@/lib/products";
+import { getProductByHandle } from "@/lib/supabase";
 import ProductDetailClient from "./ProductDetailClient";
 import { notFound } from "next/navigation";
 
@@ -10,7 +11,10 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { handle } = await params;
-  const product = NOTICE_PRODUCTS.find((p) => p.handle === handle);
+  let product = await getProductByHandle(handle);
+  if (!product) {
+    product = NOTICE_PRODUCTS.find((p) => p.handle === handle);
+  }
   if (!product) return { title: "Product Not Found | The Cozy Theory" };
 
   const priceFormatted = Number(product.price).toLocaleString("en-IN", {
@@ -50,7 +54,10 @@ export async function generateMetadata({ params }) {
 
 export default async function ProductPage({ params }) {
   const { handle } = await params;
-  const product = NOTICE_PRODUCTS.find((p) => p.handle === handle) || null;
+  let product = await getProductByHandle(handle);
+  if (!product) {
+    product = NOTICE_PRODUCTS.find((p) => p.handle === handle) || null;
+  }
 
   // Related products from same category or collection
   const relatedProducts = NOTICE_PRODUCTS.slice(0, 4);
