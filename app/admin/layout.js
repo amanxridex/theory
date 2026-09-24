@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
@@ -23,6 +23,14 @@ import {
   Home,
   Store,
   FileText,
+  Lock,
+  Unlock,
+  KeyRound,
+  ShieldCheck,
+  Eye,
+  EyeOff,
+  LogOut,
+  ArrowRight,
 } from "lucide-react";
 
 export default function AdminLayout({ children }) {
@@ -30,6 +38,72 @@ export default function AdminLayout({ children }) {
   const { analytics, orders } = useStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [adminSearch, setAdminSearch] = useState("");
+
+  // Admin Lock & Security State
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
+  const [passcode, setPasscode] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [unlocking, setUnlocking] = useState(false);
+
+  useEffect(() => {
+    try {
+      const stored =
+        sessionStorage.getItem("tct_admin_auth") ||
+        localStorage.getItem("tct_admin_auth");
+      if (stored === "true") {
+        setIsAuthenticated(true);
+      }
+    } catch (e) {
+      // localStorage not accessible
+    } finally {
+      setCheckingAuth(false);
+    }
+  }, []);
+
+  const handleUnlock = (e) => {
+    if (e) e.preventDefault();
+    setErrorMsg("");
+    setUnlocking(true);
+
+    const input = passcode.trim();
+    // Valid passcodes for Derek Martin
+    const validCodes = [
+      "derek2026",
+      "cozytheory",
+      "derek",
+      process.env.NEXT_PUBLIC_ADMIN_PASSWORD,
+    ].filter(Boolean);
+
+    setTimeout(() => {
+      if (validCodes.includes(input) || input.toLowerCase() === "derek2026") {
+        setIsAuthenticated(true);
+        try {
+          sessionStorage.setItem("tct_admin_auth", "true");
+          localStorage.setItem("tct_admin_auth", "true");
+          document.cookie = "tct_admin_auth=true; path=/; max-age=86400; SameSite=Lax";
+        } catch (err) {
+          // ignore
+        }
+        setPasscode("");
+      } else {
+        setErrorMsg("Access Denied: Invalid security passcode for Derek Martin.");
+      }
+      setUnlocking(false);
+    }, 300);
+  };
+
+  const handleLockConsole = () => {
+    setIsAuthenticated(false);
+    try {
+      sessionStorage.removeItem("tct_admin_auth");
+      localStorage.removeItem("tct_admin_auth");
+      document.cookie = "tct_admin_auth=; path=/; max-age=0";
+    } catch (err) {
+      // ignore
+    }
+  };
 
   const pendingOrdersCount = orders.filter((o) => o.fulfillmentStatus === "Unfulfilled").length;
 
@@ -86,6 +160,128 @@ export default function AdminLayout({ children }) {
     return pathname.startsWith(item.href);
   };
 
+  // 1. Initial auth check loader
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen bg-[#faf8f5] flex items-center justify-center font-mono text-xs text-neutral-500">
+        Verifying Derek Martin authorization...
+      </div>
+    );
+  }
+
+  // 2. LOCKED SCREEN: Derek Martin Security Passcode Gate
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#faf8f5] flex flex-col justify-between p-4 sm:p-8 font-sans antialiased text-[#121212]">
+        
+        {/* Top Header */}
+        <div className="flex items-center justify-between max-w-5xl w-full mx-auto">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-7 h-7 bg-[#121212] text-white rounded flex items-center justify-center font-black text-xs">
+              TCT
+            </div>
+            <span className="font-extrabold text-sm tracking-tight uppercase">THE COZY THEORY</span>
+          </Link>
+
+          <Link
+            href="/"
+            className="text-xs font-mono uppercase text-neutral-500 hover:text-black transition-colors flex items-center gap-1.5"
+          >
+            <span>Return to Store</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        {/* Lock Card Container */}
+        <div className="w-full max-w-md mx-auto my-12 bg-white border border-[#e5e3dc] rounded p-8 sm:p-10 shadow-sm space-y-6">
+          
+          {/* Avatar & Header */}
+          <div className="text-center space-y-3">
+            <div className="w-14 h-14 bg-[#121212] text-white rounded-full flex items-center justify-center font-extrabold text-lg mx-auto shadow-sm">
+              DM
+            </div>
+
+            <div className="space-y-1">
+              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#004fff] font-bold block">
+                RESTRICTED ACCESS
+              </span>
+              <h1 className="text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-[#121212]">
+                Derek Martin Admin Lock
+              </h1>
+              <p className="text-xs font-mono text-neutral-500 max-w-xs mx-auto">
+                Studio administration console. Enter your master owner passcode to unlock.
+              </p>
+            </div>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleUnlock} className="space-y-4 pt-2">
+            <div>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1.5 font-semibold">
+                Owner Security Passcode
+              </label>
+
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  autoFocus
+                  value={passcode}
+                  onChange={(e) => setPasscode(e.target.value)}
+                  placeholder="Enter passcode..."
+                  className="w-full bg-[#f5f2eb] border border-[#e5e3dc] rounded pl-9 pr-10 py-2.5 text-sm font-mono text-black placeholder:text-neutral-400 focus:outline-none focus:border-black focus:bg-white transition-colors"
+                />
+                <KeyRound className="w-4 h-4 text-neutral-400 absolute left-3 top-3" />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="p-1.5 text-neutral-400 hover:text-black absolute right-2 top-2"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+
+              {errorMsg && (
+                <p className="text-xs font-mono text-rose-600 mt-2 bg-rose-50 border border-rose-200 p-2 rounded">
+                  {errorMsg}
+                </p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              disabled={unlocking}
+              className="w-full py-3 bg-[#121212] hover:bg-neutral-800 text-white rounded text-xs font-mono uppercase font-bold tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
+            >
+              <Unlock className="w-4 h-4" />
+              <span>{unlocking ? "Verifying..." : "Unlock Studio Console"}</span>
+            </button>
+          </form>
+
+          {/* Security Note & Hint */}
+          <div className="pt-4 border-t border-[#e5e3dc] text-center space-y-2">
+            <div className="flex items-center justify-center gap-1.5 text-[11px] font-mono text-neutral-500">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Protected by The Cozy Theory Studio Auth</span>
+            </div>
+            <p className="text-[10px] font-mono text-neutral-400">
+              Studio Owner Passcode: <span className="font-bold text-neutral-700 bg-[#f5f2eb] px-1.5 py-0.5 rounded border border-[#e5e3dc]">derek2026</span>
+            </p>
+          </div>
+
+        </div>
+
+        {/* Footer */}
+        <div className="text-center text-xs font-mono text-neutral-400">
+          The Cozy Theory Studio &copy; {new Date().getFullYear()} • Lower Parel, Mumbai
+        </div>
+
+      </div>
+    );
+  }
+
+  // 3. UNLOCKED VIEW: Full White Theme Admin Console
   return (
     <div className="min-h-screen bg-[#faf8f5] text-[#121212] flex font-sans antialiased selection:bg-neutral-200">
       
@@ -213,7 +409,7 @@ export default function AdminLayout({ children }) {
 
         </div>
 
-        {/* Sidebar Footer with Derek Martin as Owner */}
+        {/* Sidebar Footer with Derek Martin as Owner & Lock Action */}
         <div className="p-4 border-t border-[#e5e3dc] flex items-center justify-between text-xs font-mono text-neutral-600 bg-[#faf8f5]">
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="w-8 h-8 rounded bg-[#121212] text-white flex items-center justify-center font-bold text-xs tracking-wider shadow-sm flex-shrink-0">
@@ -224,13 +420,23 @@ export default function AdminLayout({ children }) {
               <div className="text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">Founder &amp; Owner</div>
             </div>
           </div>
-          <Link
-            href="/"
-            className="p-1.5 hover:text-black text-neutral-400 hover:bg-[#ede9e0] rounded transition-colors flex-shrink-0"
-            title="Return to Customer Storefront"
-          >
-            <Home className="w-4 h-4" />
-          </Link>
+          
+          <div className="flex items-center gap-1">
+            <button
+              onClick={handleLockConsole}
+              className="p-1.5 hover:text-rose-600 text-neutral-400 hover:bg-rose-50 rounded transition-colors flex-shrink-0"
+              title="Lock Admin Console"
+            >
+              <Lock className="w-4 h-4" />
+            </button>
+            <Link
+              href="/"
+              className="p-1.5 hover:text-black text-neutral-400 hover:bg-[#ede9e0] rounded transition-colors flex-shrink-0"
+              title="Return to Customer Storefront"
+            >
+              <Home className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </aside>
 
@@ -262,7 +468,7 @@ export default function AdminLayout({ children }) {
             </div>
           </div>
 
-          {/* Right: Quick actions, Live visitor badge, Notifications */}
+          {/* Right: Quick actions, Live visitor badge, Lock button */}
           <div className="flex items-center gap-3 sm:gap-4">
             
             {/* Supabase DB Status Badge */}
@@ -289,14 +495,13 @@ export default function AdminLayout({ children }) {
               <span className="hidden sm:inline">Add Product</span>
             </Link>
 
-            {/* Notifications */}
+            {/* Lock Console Button */}
             <button
-              onClick={() => alert("All systems operational. Telemetry live.")}
-              className="p-2 text-neutral-500 hover:text-black hover:bg-[#f0ede6] rounded transition-colors relative"
-              aria-label="Notifications"
+              onClick={handleLockConsole}
+              className="p-2 text-neutral-500 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors"
+              title="Lock Admin Console"
             >
-              <Bell className="w-4 h-4" />
-              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#004fff]"></span>
+              <Lock className="w-4 h-4" />
             </button>
 
             {/* Storefront preview */}
@@ -321,4 +526,3 @@ export default function AdminLayout({ children }) {
     </div>
   );
 }
-

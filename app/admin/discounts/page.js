@@ -8,50 +8,39 @@ import { Tag, Plus, CheckCircle2, Copy } from "lucide-react";
 
 export default function AdminDiscountsPage() {
   const { discounts: storeDiscounts } = useStore();
-  const [coupons, setCoupons] = useState([
-    {
-      code: "COZY10",
-      discount: "10% OFF",
-      type: "Percentage",
-      status: "Active",
-      uses: 48,
-      appliesTo: "Entire Order",
-      minOrder: "₹0.00",
-    },
-    {
-      code: "FESTIVE20",
-      discount: "20% OFF",
-      type: "Percentage",
-      status: "Active",
-      uses: 32,
-      appliesTo: "Collector Orders",
-      minOrder: "₹2,500.00",
-    },
-    {
-      code: "THEORY500",
-      discount: "₹500 OFF",
-      type: "Flat Amount",
-      status: "Active",
-      uses: 19,
-      appliesTo: "Ceramics & Stoneware",
-      minOrder: "₹3,000.00",
-    },
-  ]);
+  const [coupons, setCoupons] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (storeDiscounts && storeDiscounts.length > 0) {
-      const formatted = storeDiscounts.map((d) => ({
-        code: d.code,
-        discount: d.type === "percentage" ? `${d.value}% OFF` : `₹${d.value} OFF`,
-        type: d.type === "percentage" ? "Percentage" : "Flat Amount",
-        status: d.status || "Active",
-        uses: d.usage_count || 0,
-        appliesTo: "All Products",
-        minOrder: `₹${d.min_requirement || 0}`,
-      }));
-      setCoupons(formatted);
+    async function loadDiscounts() {
+      try {
+        const { data, error } = await supabase
+          .from("discounts")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (!error && data) {
+          const formatted = data.map((d) => ({
+            code: d.code,
+            discount: d.type === "percentage" ? `${d.value}% OFF` : `₹${d.value} OFF`,
+            type: d.type === "percentage" ? "Percentage" : "Flat Amount",
+            status: d.status || "Active",
+            uses: d.usage_count || 0,
+            appliesTo: "All Products",
+            minOrder: `₹${d.min_requirement || 0}`,
+          }));
+          setCoupons(formatted);
+        }
+      } catch (err) {
+        console.error("Error loading discounts from DB:", err);
+      } finally {
+        setLoading(false);
+      }
     }
+
+    loadDiscounts();
   }, [storeDiscounts]);
+
 
   const [newCode, setNewCode] = useState("");
   const [newDiscount, setNewDiscount] = useState("15");

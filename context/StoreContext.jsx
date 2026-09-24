@@ -157,26 +157,31 @@ export function StoreProvider({ children }) {
   const [isDbConnected, setIsDbConnected] = useState(true);
 
   const [analytics, setAnalytics] = useState({
-    activeVisitors: 24,
-    todayVisitors: 1428,
-    todaySessions: 2190,
-    conversionRate: 3.42,
-    averageOrderValue: 2484,
-    totalSales: 12418,
-    totalOrders: 5,
+    activeVisitors: 1,
+    todayVisitors: 0,
+    todaySessions: 0,
+    todayPageViews: 0,
+    conversionRate: 0,
+    averageOrderValue: 0,
+    totalSales: 0,
+    totalOrders: 0,
+    topPages: [],
+    devices: { mobilePct: 0, desktopPct: 0, tabletPct: 0, mobileCount: 0, desktopCount: 0, tabletCount: 0 },
+    sources: [],
   });
 
   // Load from Supabase on mount
   const refreshData = useCallback(async () => {
     try {
       setLoading(true);
-      const [prodRes, catRes, ordRes, custRes, discRes, mtrRes] = await Promise.all([
+      const [prodRes, catRes, ordRes, custRes, discRes, mtrRes, trafficRes] = await Promise.all([
         getProducts({ limit: 1000 }),
         getCategories(),
         getOrders(),
         dbGetCustomers(),
         dbGetDiscounts(),
         getDbMetrics(),
+        getRealAnalytics(),
       ]);
 
       if (prodRes && prodRes.products && prodRes.products.length > 0) {
@@ -185,7 +190,6 @@ export function StoreProvider({ children }) {
       }
 
       if (catRes && catRes.length > 0) {
-        // Merge or set collections
         const formattedCats = catRes.map((c) => ({
           id: c.id || c.handle,
           handle: c.handle,
@@ -198,7 +202,7 @@ export function StoreProvider({ children }) {
         setCollections(formattedCats);
       }
 
-      if (ordRes && ordRes.length > 0) {
+      if (ordRes) {
         setOrders(ordRes.map(normalizeOrder));
       }
 
@@ -210,24 +214,20 @@ export function StoreProvider({ children }) {
         setDiscounts(discRes);
       }
 
-      if (mtrRes) {
-        setAnalytics((prev) => ({
-          ...prev,
-          totalSales: mtrRes.totalSales,
-          totalOrders: mtrRes.totalOrders,
-          averageOrderValue: mtrRes.averageOrderValue,
-        }));
-      }
-
-      const trafficRes = await getRealAnalytics();
-      if (trafficRes) {
-        setAnalytics((prev) => ({
-          ...prev,
-          activeVisitors: trafficRes.activeVisitors,
-          todayVisitors: Math.max(trafficRes.todayVisitors, 1),
-          todaySessions: Math.max(trafficRes.todayPageViews, 1),
-        }));
-      }
+      setAnalytics({
+        totalSales: mtrRes?.totalSales || 0,
+        totalOrders: mtrRes?.totalOrders || (ordRes ? ordRes.length : 0),
+        averageOrderValue: mtrRes?.averageOrderValue || 0,
+        unfulfilledOrders: mtrRes?.unfulfilledOrders || 0,
+        conversionRate: mtrRes?.conversionRate || 0,
+        activeVisitors: trafficRes?.activeVisitors || 1,
+        todayVisitors: trafficRes?.todayVisitors || 0,
+        todayPageViews: trafficRes?.todayPageViews || 0,
+        todaySessions: trafficRes?.todaySessions || 0,
+        topPages: trafficRes?.topPages || [],
+        devices: trafficRes?.devices || { mobilePct: 0, desktopPct: 0, tabletPct: 0, mobileCount: 0, desktopCount: 0, tabletCount: 0 },
+        sources: trafficRes?.sources || [],
+      });
     } catch (err) {
       console.error("Failed to load initial Supabase data:", err);
     } finally {
@@ -248,16 +248,21 @@ export function StoreProvider({ children }) {
           setAnalytics((prev) => ({
             ...prev,
             activeVisitors: traffic.activeVisitors,
-            todayVisitors: Math.max(traffic.todayVisitors, 1),
-            todaySessions: Math.max(traffic.todayPageViews, 1),
+            todayVisitors: traffic.todayVisitors,
+            todayPageViews: traffic.todayPageViews,
+            todaySessions: traffic.todaySessions,
+            topPages: traffic.topPages,
+            devices: traffic.devices,
+            sources: traffic.sources,
           }));
         }
       } catch (e) {
-        // silent
+        // Silently handle
       }
     }, 15000);
     return () => clearInterval(timer);
   }, []);
+
 
   // Add new product (syncs directly to Supabase)
   const addProduct = async (newProd) => {
