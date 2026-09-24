@@ -275,19 +275,43 @@ export default function CollectionClient({ handle, allProducts }) {
         </div>
 
         {filteredProducts.length === 0 && (
-          <div className="py-24 text-center space-y-4">
-            <p className="text-xl font-bold uppercase tracking-tight">
-              No objects found in this category
-            </p>
-            <p className="text-xs font-mono text-neutral-500">
-              Try adjusting your filters or browse the complete studio collection.
-            </p>
-            <button
-              onClick={() => setActiveCategory("all")}
-              className="px-6 py-3 bg-[#121212] text-[#fffdf8] text-xs font-mono uppercase tracking-widest"
-            >
-              Reset Filters
-            </button>
+          <div className="py-12 sm:py-16 text-center space-y-8">
+            <div className="max-w-md mx-auto space-y-3">
+              <span className="text-[10px] font-mono tracking-widest uppercase text-[#004fff] font-bold">
+                STUDIO PRODUCTION // ARRIVING SOON
+              </span>
+              <p className="text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-[#121212]">
+                New Creations in Craft
+              </p>
+              <p className="text-xs font-mono text-neutral-500 leading-relaxed">
+                New artisanal releases for this category are currently being shaped in our studio workshop. In the meantime, explore our available handcrafted living pieces below.
+              </p>
+              <div className="pt-2">
+                <Link
+                  href="/collections/all-products"
+                  className="inline-block px-5 py-2.5 bg-[#121212] text-[#fffdf8] text-xs font-mono uppercase tracking-widest font-bold hover:bg-neutral-800 transition-colors"
+                >
+                  View All Available Objects
+                </Link>
+              </div>
+            </div>
+
+            {/* Available Curated Pieces */}
+            <div className="text-left pt-8 border-t border-[#e5e3dc] space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono uppercase tracking-wider font-bold text-neutral-700">
+                  Available Handcrafted Objects
+                </span>
+                <span className="text-[11px] font-mono text-neutral-400">
+                  {activeCatalog.length} pieces in stock
+                </span>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+                {activeCatalog.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </div>

@@ -61,8 +61,8 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
       })
     : null;
 
-  const handleAddToCart = () => {
-    addToCart(product, quantity);
+  const handleAddToCart = (e) => {
+    addToCart(product, quantity, e);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
@@ -97,6 +97,7 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
           {/* Main Large Image Display */}
           <div className="w-full aspect-square bg-[#f7f5ef] border border-[#e5e3dc] overflow-hidden relative group">
             <img
+              id="main-product-image"
               src={product.images[selectedImage] || product.images[0]}
               alt={product.title}
               className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"

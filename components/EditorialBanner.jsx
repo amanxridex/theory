@@ -30,10 +30,10 @@ export default function EditorialBanner() {
 
         {/* Right Feature Showcase Box */}
         <div className="lg:col-span-5 relative">
-          <div className="aspect-[4/5] bg-neutral-900 border border-neutral-700 overflow-hidden relative group">
+          <Link href="/products/tt-251-ceramic-chicken-condiment-jar-with-spoon" className="block aspect-[4/5] bg-neutral-900 border border-neutral-700 overflow-hidden relative group">
             <img
-              src="https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136"
-              alt="Artisanal Handcrafted Ceramic Pitcher by The Cozy Theory"
+              src="https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product9-01.png?v=1784242846"
+              alt="TT-251 Ceramic Chicken Condiment Jar with Spoon"
               className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
               loading="lazy"
             />
@@ -42,10 +42,10 @@ export default function EditorialBanner() {
                 Spotlight Object
               </span>
               <p className="text-xs font-mono font-bold uppercase text-white">
-                Artisanal Stoneware Vessel: Hand-Glazed Floral
+                TT-251 Ceramic Chicken Condiment Jar with Spoon
               </p>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </section>

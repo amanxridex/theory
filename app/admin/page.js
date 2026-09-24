@@ -302,7 +302,72 @@ export default function AdminDashboardPage() {
           </Link>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Mobile Recent Orders Cards */}
+        <div className="block md:hidden space-y-3">
+          {orders.slice(0, 5).map((order) => (
+            <div
+              key={order.id}
+              className="bg-[#faf8f5] border border-[#e5e3dc] rounded p-3.5 space-y-2.5 font-mono text-xs"
+            >
+              <div className="flex items-center justify-between border-b border-[#e5e3dc] pb-2">
+                <span className="font-extrabold text-[#121212]">#{order.id}</span>
+                <span
+                  className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                    order.fulfillmentStatus === "Delivered"
+                      ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
+                      : order.fulfillmentStatus === "Dispatched"
+                      ? "bg-blue-50 text-blue-800 border border-blue-200"
+                      : "bg-amber-50 text-amber-800 border border-amber-200"
+                  }`}
+                >
+                  {order.fulfillmentStatus}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between text-neutral-600 text-[11px]">
+                <span className="font-semibold text-black">{order.customer?.name} ({order.customer?.city || "India"})</span>
+                <span>Rs. {Number(order.total).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
+              </div>
+
+              <div className="flex items-center justify-between pt-1 border-t border-[#e5e3dc]">
+                <span className="text-[10px] text-neutral-400">{order.date}</span>
+                <div className="flex items-center gap-1.5">
+                  {order.fulfillmentStatus === "Unfulfilled" && (
+                    <button
+                      onClick={() => updateOrderStatus(order.id, "Dispatched")}
+                      className="px-2.5 py-1 bg-[#121212] hover:bg-neutral-800 text-white rounded text-[10px] font-bold"
+                    >
+                      Dispatch
+                    </button>
+                  )}
+                  {order.fulfillmentStatus === "Dispatched" && (
+                    <button
+                      onClick={() => updateOrderStatus(order.id, "Delivered")}
+                      className="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-[10px] font-bold"
+                    >
+                      Deliver
+                    </button>
+                  )}
+                  <Link
+                    href={`/admin/orders/${order.id}/invoice`}
+                    className="px-2 py-1 bg-[#f5f2eb] hover:bg-[#eae6dd] border border-[#e5e3dc] text-black font-semibold rounded text-[10px]"
+                  >
+                    Slip 🖨️
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {orders.length === 0 && (
+            <div className="py-8 text-center text-neutral-500 font-mono text-xs">
+              No orders in database yet.
+            </div>
+          )}
+        </div>
+
+        {/* Desktop Recent Orders Table */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left text-xs font-mono border-collapse">
             <thead>
               <tr className="border-b border-[#e5e3dc] bg-[#faf8f5] text-neutral-600 uppercase text-[10px]">

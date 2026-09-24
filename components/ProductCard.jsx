@@ -12,7 +12,7 @@ export default function ProductCard({ product, onQuickView }) {
   const handleAdd = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(product);
+    addToCart(product, 1, e);
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 1500);
   };

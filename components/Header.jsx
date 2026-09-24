@@ -172,8 +172,10 @@ export default function Header({
 
             {/* Shopping Bag Button with Badge */}
             <button
+              id="header-cart-btn"
+              data-cart-target="true"
               onClick={onOpenCart}
-              className="flex items-center gap-1.5 sm:gap-2 py-1.5 px-2.5 sm:px-3 rounded-full hover:bg-neutral-100 transition-colors"
+              className="flex items-center gap-1.5 sm:gap-2 py-1.5 px-2.5 sm:px-3 rounded-full hover:bg-neutral-100 transition-colors relative"
               aria-label="View Shopping Bag"
             >
               <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-[#121212] stroke-[1.6]" />
