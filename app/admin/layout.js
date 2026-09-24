@@ -59,36 +59,37 @@ export default function AdminLayout({ children }) {
     }
   }, []);
 
-  const handleUnlock = (e) => {
+  const handleUnlock = async (e) => {
     if (e) e.preventDefault();
     setErrorMsg("");
     setUnlocking(true);
 
-    const input = passcode.trim();
-    // Valid passcodes for Derek Martin
-    const validCodes = [
-      "derek2026",
-      "cozytheory",
-      "derek",
-      process.env.NEXT_PUBLIC_ADMIN_PASSWORD,
-    ].filter(Boolean);
+    try {
+      const res = await fetch("/api/admin/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ passcode }),
+      });
 
-    setTimeout(() => {
-      if (validCodes.includes(input) || input.toLowerCase() === "derek2026") {
+      const data = await res.json();
+
+      if (res.ok && data.success) {
         setIsAuthenticated(true);
         try {
           sessionStorage.setItem("tct_admin_auth", "true");
           localStorage.setItem("tct_admin_auth", "true");
-          document.cookie = "tct_admin_auth=true; path=/; max-age=86400; SameSite=Lax";
         } catch (err) {
           // ignore
         }
         setPasscode("");
       } else {
-        setErrorMsg("Access Denied: Invalid security passcode for Derek Martin.");
+        setErrorMsg(data.error || "Access Denied: Invalid security passcode.");
       }
+    } catch (err) {
+      setErrorMsg("Authentication error. Please try again.");
+    } finally {
       setUnlocking(false);
-    }, 300);
+    }
   };
 
   const handleLockConsole = () => {
@@ -256,15 +257,12 @@ export default function AdminLayout({ children }) {
             </button>
           </form>
 
-          {/* Security Note & Hint */}
-          <div className="pt-4 border-t border-[#e5e3dc] text-center space-y-2">
+          {/* Security Note */}
+          <div className="pt-4 border-t border-[#e5e3dc] text-center">
             <div className="flex items-center justify-center gap-1.5 text-[11px] font-mono text-neutral-500">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
               <span>Protected by The Cozy Theory Studio Auth</span>
             </div>
-            <p className="text-[10px] font-mono text-neutral-400">
-              Studio Owner Passcode: <span className="font-bold text-neutral-700 bg-[#f5f2eb] px-1.5 py-0.5 rounded border border-[#e5e3dc]">derek2026</span>
-            </p>
           </div>
 
         </div>
