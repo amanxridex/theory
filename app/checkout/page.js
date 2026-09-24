@@ -96,6 +96,23 @@ export default function CheckoutPage() {
       };
 
       const placedOrder = await createOrder(orderData);
+
+      // Auto-save account session for first-time customer
+      try {
+        localStorage.setItem(
+          "cozy_user",
+          JSON.stringify({
+            id: "cust-" + contactInfo.phone.replace(/\D/g, ""),
+            name: orderData.customer_name,
+            phone: contactInfo.phone.replace(/\D/g, ""),
+            email: contactInfo.email,
+            city: shippingAddress.city,
+          })
+        );
+      } catch (e) {
+        console.error(e);
+      }
+
       clearCart();
       setIsProcessing(false);
       router.push(`/order-confirmation?order_id=${placedOrder.id}&amount=${total}&payment=cod`);
