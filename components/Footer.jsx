@@ -112,6 +112,7 @@ export default function Footer() {
               Studio
             </div>
             <ul className="space-y-2 text-neutral-300">
+              <li><Link href="/pages/our-story" className="hover:text-white transition-colors">Our Story</Link></li>
               <li><Link href="/pages/about-us" className="hover:text-white transition-colors">About The Cozy Theory</Link></li>
               <li><Link href="/blogs/news" className="hover:text-white transition-colors">Studio Journal</Link></li>
               <li><Link href="/pages/contact" className="hover:text-white transition-colors">Contact Us</Link></li>

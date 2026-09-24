@@ -317,6 +317,7 @@ export default function Header({
               <div><Link href="/account" onClick={() => setMobileMenuOpen(false)} className="hover:text-black flex items-center gap-1.5"><User className="w-3.5 h-3.5" /> Collector Account</Link></div>
               <div><Link href="/cart" onClick={() => setMobileMenuOpen(false)} className="hover:text-black">Shopping Bag</Link></div>
               <div><Link href="/checkout" onClick={() => setMobileMenuOpen(false)} className="hover:text-black font-bold text-[#004fff]">Express Checkout →</Link></div>
+              <div><Link href="/pages/our-story" onClick={() => setMobileMenuOpen(false)} className="hover:text-black">Our Story</Link></div>
               <div><Link href="/pages/about-us" onClick={() => setMobileMenuOpen(false)} className="hover:text-black">About The Cozy Theory</Link></div>
               <div><Link href="/pages/contact" onClick={() => setMobileMenuOpen(false)} className="hover:text-black">Contact Studio</Link></div>
               <div><Link href="/pages/faq" onClick={() => setMobileMenuOpen(false)} className="hover:text-black">FAQs</Link></div>
