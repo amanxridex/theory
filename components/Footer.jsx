@@ -125,7 +125,7 @@ export default function Footer() {
             </div>
             <ul className="space-y-2 text-neutral-300">
               <li><Link href="/pages/shipping-policy" className="hover:text-white transition-colors">Shipping Policy</Link></li>
-              <li><Link href="/pages/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link></li>
+              <li><Link href="/pages/terms-and-conditions" className="hover:text-white transition-colors">Terms and Conditions</Link></li>
               <li><Link href="/pages/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               <li><Link href="/pages/pricing-policy" className="hover:text-white transition-colors">Pricing & GST</Link></li>
             </ul>
