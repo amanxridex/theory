@@ -51,7 +51,7 @@ export default function AdminBlogsPage() {
             <span className="text-black font-semibold">Editorial &amp; Blog</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212] mt-1">
-            Studio Journal ({posts.length})
+            Journal Articles ({posts.length})
           </h1>
           <p className="text-xs font-mono text-neutral-500 mt-0.5">
             Real articles published to the public journal, managed by Derick Martin.
@@ -81,7 +81,7 @@ export default function AdminBlogsPage() {
       <div className="bg-white border border-[#e5e3dc] rounded shadow-xs overflow-hidden">
         {loading ? (
           <div className="p-16 text-center font-mono text-xs text-neutral-500">
-            Loading Studio Journal articles from Supabase...
+            Loading Journal articles from Supabase...
           </div>
         ) : posts.length === 0 ? (
           <div className="p-16 text-center space-y-3 font-mono">
@@ -122,7 +122,7 @@ export default function AdminBlogsPage() {
                               month: "short",
                               year: "numeric",
                             })
-                          : "Studio Archive"}
+                          : "Journal Archive"}
                       </span>
                       <span>•</span>
                       <span>{post.read_time || "4 min read"}</span>

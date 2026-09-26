@@ -16,6 +16,8 @@ import {
   Sparkles,
   ExternalLink,
 } from "lucide-react";
+import { DEFAULT_PRODUCT_SECTIONS, serializeProductSections } from "@/lib/productSections";
+import ProductSectionsEditor from "@/components/admin/ProductSectionsEditor";
 
 export default function AddNewProductPage() {
   const router = useRouter();
@@ -42,6 +44,7 @@ export default function AddNewProductPage() {
   const [newImageUrl, setNewImageUrl] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createdProduct, setCreatedProduct] = useState(null);
+  const [sections, setSections] = useState(DEFAULT_PRODUCT_SECTIONS);
 
   // Auto-generate slug when title changes (if handle hasn't been manually detached)
   const handleTitleChange = (val) => {
@@ -90,8 +93,14 @@ export default function AddNewProductPage() {
         .map((t) => t.trim())
         .filter(Boolean);
 
+      const encodedDescription = serializeProductSections(
+        formData.description,
+        sections
+      );
+
       const saved = await addProduct({
         ...formData,
+        description: encodedDescription,
         tags: tagList,
       });
 
@@ -127,7 +136,7 @@ export default function AddNewProductPage() {
           </Link>
           <div>
             <span className="text-xs font-mono uppercase tracking-widest text-[#004fff] font-bold">
-              Theory Product Studio
+              Catalog Management
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212] mt-0.5">
               Add New Product
@@ -247,6 +256,9 @@ export default function AddNewProductPage() {
               />
             </div>
           </div>
+
+          {/* Card: 4 Product Accordion Sections (Object Details, Material & Dimensions, Care, Shipping) */}
+          <ProductSectionsEditor sections={sections} onChange={setSections} />
 
           {/* Card: Media & Images */}
           <div className="p-6 bg-white border border-[#e5e3dc] rounded space-y-5 shadow-xs">
@@ -469,7 +481,7 @@ export default function AddNewProductPage() {
 
             <div>
               <label className="text-xs font-mono uppercase text-neutral-600 block mb-1.5 font-semibold">
-                Studio Tags (Comma separated)
+                Product Tags (Comma separated)
               </label>
               <input
                 type="text"
@@ -489,7 +501,7 @@ export default function AddNewProductPage() {
 
             <div>
               <label className="text-xs font-mono uppercase text-neutral-600 block mb-1.5 font-semibold">
-                Quantity Available in Studio
+                Stock Inventory Quantity
               </label>
               <input
                 type="number"

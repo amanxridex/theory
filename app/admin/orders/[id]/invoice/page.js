@@ -146,10 +146,9 @@ export default function OrderInvoicePage({ params }) {
               </span>
             </div>
             <p className="text-[11px] text-neutral-600 leading-relaxed max-w-sm">
-              Studio &amp; Foundry: Studio 402, Sun Mill Compound<br />
-              Lower Parel West, Mumbai, MH - 400013, India<br />
-              GSTIN: <strong>27AABCT9821K1ZZ</strong> | PAN: AABCT9821K<br />
-              Direct Studio Support: +91 98200 45678
+              Registered Office: Building No. 3/435, KARIKODE<br />
+              MULANTHURUTHY, Kanayannur, Ernakulam, Kerala - 682314, India<br />
+              Customer Support: +91-7558085343 | thecozytheory.store@gmail.com
             </p>
           </div>
 
@@ -262,12 +261,12 @@ export default function OrderInvoicePage({ params }) {
           
           {/* Notes & Bank Details */}
           <div className="space-y-2 text-[10px] text-neutral-500 max-w-sm">
-            <span className="font-bold text-black uppercase">Declaration &amp; Studio Policy:</span>
+            <span className="font-bold text-black uppercase">Declaration &amp; Policy:</span>
             <p className="leading-relaxed">
-              We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct. Handcrafted ceramics and brass monoliths should be unboxed with care.
+              We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct. Handcrafted ceramics and homeware pieces should be unboxed with care.
             </p>
             <p className="font-bold text-neutral-700">
-              Dispatched with love from The Cozy Theory Studio.
+              Dispatched with love from The Cozy Theory.
             </p>
           </div>
 

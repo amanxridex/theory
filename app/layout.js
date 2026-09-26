@@ -13,7 +13,7 @@ export const metadata = {
   description:
     "Stay cozy, stay you. The Cozy Theory crafts artisanal homeware, handcrafted everyday ceramics, tableware, and pure washed cotton linen for spaces that celebrate texture, warmth, and individuality.",
   applicationName: "THE COZY THEORY",
-  authors: [{ name: "The Cozy Theory Studio" }],
+  authors: [{ name: "The Cozy Theory" }],
   creator: "The Cozy Theory",
   publisher: "THE COZY THEORY",
   keywords: [
@@ -26,7 +26,7 @@ export const metadata = {
     "Pure Cotton Bedsheets",
     "Sculptural Vases",
     "Warm Living",
-    "Studio Homeware India",
+    "Artisanal Homeware India",
   ],
   openGraph: {
     type: "website",

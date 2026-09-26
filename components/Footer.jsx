@@ -4,8 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import { subscribeNewsletter } from "@/lib/supabase";
+import { useStore } from "@/context/StoreContext";
 
 export default function Footer() {
+  const { storeSettings } = useStore();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
@@ -22,7 +24,7 @@ export default function Footer() {
     <footer className="bg-[#121212] text-[#fffdf8] pt-16 md:pt-24 pb-12 border-t border-neutral-800">
       <div className="max-w-[1600px] mx-auto px-6 md:px-12 space-y-16">
         
-        {/* Top Section: Studio Mission & Newsletter */}
+        {/* Top Section: Brand Story & Newsletter */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Brand Philosophy */}
@@ -30,26 +32,28 @@ export default function Footer() {
             <Link href="/" className="inline-flex flex-col gap-1 group">
               <div className="flex items-center gap-2">
                 <span className="font-extrabold tracking-[-0.04em] text-2xl sm:text-3xl uppercase font-sans">
-                  THE COZY THEORY
+                  {storeSettings?.brand_name || "THE COZY THEORY"}
                 </span>
                 <span className="w-2.5 h-2.5 rounded-full bg-[#004fff] inline-block -mt-3"></span>
               </div>
               <span className="text-[10px] font-mono tracking-[0.25em] text-blue-400 uppercase font-bold">
-                Stay Cozy, Stay You
+                {storeSettings?.brand_tagline || "Stay Cozy, Stay You"}
               </span>
             </Link>
             <p className="text-xs md:text-sm text-neutral-400 leading-relaxed max-w-xl font-normal">
-              The Cozy Theory is an artisanal design and homeware studio crafting objects that transform your living space into a sanctuary of warmth, texture, and individual expression. We believe in everyday rituals elevated by honest materials.
+              {storeSettings?.about_description ||
+                "The Cozy Theory curates everyday objects, dining accents, and soft furnishings that transform your living space into a sanctuary of warmth, texture, and individual expression. We believe in everyday rituals elevated by honest materials."}
             </p>
           </div>
 
           {/* Newsletter Signup */}
           <div className="lg:col-span-6 space-y-4">
             <span className="text-[11px] font-mono tracking-[0.2em] text-blue-400 uppercase block">
-              Join The Cozy Theory Collector List
+              {storeSettings?.footer_newsletter_title || "Join The Cozy Theory Collector List"}
             </span>
             <p className="text-xs text-neutral-300">
-              Be first to gain access to limited seasonal drops, archival ceramics, and private studio discounts.
+              {storeSettings?.footer_newsletter_text ||
+                "Be first to gain access to limited seasonal drops, archival ceramics, and private offers."}
             </p>
 
             <form onSubmit={handleSubscribe} className="flex max-w-md">
@@ -109,12 +113,12 @@ export default function Footer() {
 
           <div className="space-y-3">
             <div className="text-neutral-500 uppercase tracking-widest text-[10px]">
-              Studio
+              About
             </div>
             <ul className="space-y-2 text-neutral-300">
               <li><Link href="/pages/our-story" className="hover:text-white transition-colors">Our Story</Link></li>
               <li><Link href="/pages/about-us" className="hover:text-white transition-colors">About The Cozy Theory</Link></li>
-              <li><Link href="/blogs/news" className="hover:text-white transition-colors">Studio Journal</Link></li>
+              <li><Link href="/blogs/news" className="hover:text-white transition-colors">Journal</Link></li>
               <li><Link href="/pages/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
               <li><Link href="/pages/faq" className="hover:text-white transition-colors">FAQs & Care Guides</Link></li>
             </ul>

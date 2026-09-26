@@ -28,11 +28,13 @@ import {
   EyeOff,
   ArrowRight,
   MoreHorizontal,
+  Settings,
+  MessageSquare,
 } from "lucide-react";
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
-  const { analytics, orders } = useStore();
+  const { analytics, orders, inquiries } = useStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [adminSearch, setAdminSearch] = useState("");
 
@@ -119,6 +121,12 @@ export default function AdminLayout({ children }) {
       badge: pendingOrdersCount > 0 ? pendingOrdersCount : null,
     },
     {
+      title: "Support Inquiries",
+      href: "/admin/inquiries",
+      icon: MessageSquare,
+      badge: (inquiries && inquiries.length > 0) ? inquiries.length : null,
+    },
+    {
       title: "Products",
       href: "/admin/products",
       icon: Package,
@@ -150,6 +158,11 @@ export default function AdminLayout({ children }) {
       title: "Discounts",
       href: "/admin/discounts",
       icon: Tag,
+    },
+    {
+      title: "Brand & Settings",
+      href: "/admin/settings",
+      icon: Settings,
     },
   ];
 
@@ -207,7 +220,7 @@ export default function AdminLayout({ children }) {
                 Derick Martin Admin Lock
               </h1>
               <p className="text-xs font-mono text-neutral-500 max-w-xs mx-auto">
-                Studio administration console. Enter your master owner passcode to unlock.
+                Store administration console. Enter your master owner passcode to unlock.
               </p>
             </div>
           </div>
@@ -253,7 +266,7 @@ export default function AdminLayout({ children }) {
               className="w-full py-3 bg-[#121212] hover:bg-neutral-800 text-white rounded text-xs font-mono uppercase font-bold tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
             >
               <Unlock className="w-4 h-4" />
-              <span>{unlocking ? "Verifying..." : "Unlock Studio Console"}</span>
+              <span>{unlocking ? "Verifying..." : "Unlock Admin Console"}</span>
             </button>
           </form>
 
@@ -261,7 +274,7 @@ export default function AdminLayout({ children }) {
           <div className="pt-4 border-t border-[#e5e3dc] text-center">
             <div className="flex items-center justify-center gap-1.5 text-[11px] font-mono text-neutral-500">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Protected by The Cozy Theory Studio Auth</span>
+              <span>Protected by The Cozy Theory Security Auth</span>
             </div>
           </div>
 
@@ -269,7 +282,7 @@ export default function AdminLayout({ children }) {
 
         {/* Footer */}
         <div className="text-center text-xs font-mono text-neutral-400">
-          The Cozy Theory Studio &copy; {new Date().getFullYear()} • Lower Parel, Mumbai
+          The Cozy Theory &copy; {new Date().getFullYear()} • Ernakulam, Kerala
         </div>
 
       </div>
@@ -308,7 +321,7 @@ export default function AdminLayout({ children }) {
                 </span>
                 <span className="text-[10px] font-mono tracking-wider text-emerald-700 flex items-center gap-1 font-semibold">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
-                  Admin Studio
+                  Admin Console
                 </span>
               </div>
             </Link>

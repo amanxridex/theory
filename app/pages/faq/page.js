@@ -44,7 +44,7 @@ export default function FAQPage() {
         {/* Header */}
         <div className="text-center space-y-3 pb-8 border-b border-[#e5e3dc]">
           <span className="text-[10px] md:text-xs font-mono tracking-[0.25em] uppercase text-blue-600 block">
-            Studio Knowledge Base
+            Help &amp; Knowledge Base
           </span>
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-[#121212]">
             Frequently Asked Questions
@@ -84,7 +84,7 @@ export default function FAQPage() {
             Have another question about our pieces?
           </h3>
           <p className="text-xs font-mono text-neutral-500">
-            Our studio team is available to assist you with styling and orders.
+            Our customer care team is available to assist you with styling and orders.
           </p>
           <a
             href="mailto:hello@thecozytheory.com"

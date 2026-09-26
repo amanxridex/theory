@@ -164,7 +164,7 @@ export default function CartPage() {
                 <textarea
                   value={orderNote}
                   onChange={(e) => setOrderNote(e.target.value)}
-                  placeholder="Leave a personalized message or delivery instruction for our studio team..."
+                  placeholder="Leave a personalized message or delivery instruction for our team..."
                   rows={3}
                   className="w-full bg-[#f7f5ef] border border-[#e5e3dc] p-3 text-xs font-mono focus:outline-none focus:border-black"
                 />

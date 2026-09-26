@@ -68,7 +68,7 @@ export default function NewCollectionPage() {
           </Link>
           <div>
             <span className="text-xs font-mono uppercase tracking-widest text-[#004fff] font-bold">
-              Theory Category Studio
+              Category Management
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212] mt-0.5">
               Create New Category

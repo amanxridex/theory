@@ -67,7 +67,7 @@ export default function NewBlogPostPage() {
             <span>Back to Journal</span>
           </Link>
           <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212] mt-2">
-            Compose Studio Journal Post
+            Compose Journal Article
           </h1>
         </div>
 
@@ -169,7 +169,7 @@ export default function NewBlogPostPage() {
               required
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-              placeholder="Write the studio essay here. You can separate paragraphs with an empty line..."
+              placeholder="Write the article here. You can separate paragraphs with an empty line..."
               className="w-full bg-[#f5f2eb] border border-[#e5e3dc] rounded p-4 text-xs font-mono leading-relaxed text-black placeholder:text-neutral-400 focus:outline-none focus:border-black focus:bg-white"
             />
           </div>
@@ -188,7 +188,7 @@ export default function NewBlogPostPage() {
             disabled={submitting}
             className="px-6 py-2.5 bg-[#121212] hover:bg-neutral-800 text-white rounded text-xs font-mono uppercase font-bold tracking-wider transition-all disabled:opacity-50"
           >
-            {submitting ? "Publishing..." : "Publish To Studio Journal"}
+            {submitting ? "Publishing..." : "Publish Article"}
           </button>
         </div>
 

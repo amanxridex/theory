@@ -65,7 +65,7 @@ function ConfirmationContent() {
             className="w-full sm:w-auto px-8 py-3.5 bg-[#121212] text-[#fffdf8] text-xs font-mono uppercase tracking-widest hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2"
           >
             <Home className="w-4 h-4" />
-            <span>Return to Studio</span>
+            <span>Return to Store</span>
           </Link>
           <Link
             href="/collections/all-products"

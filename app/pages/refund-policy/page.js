@@ -38,7 +38,7 @@ export default function RefundPolicyPage() {
     {
       num: "03",
       title: "Review & Fast Payout",
-      desc: "Once our studio team reviews your unboxing footage, we will approve and process your 50% refund within 3 business days and send you an official payout confirmation.",
+      desc: "Once our support team reviews your unboxing footage, we will approve and process your 50% refund within 3 business days and send you an official payout confirmation.",
       icon: Clock,
       badge: "Processed in 3 Days"
     }
@@ -54,7 +54,7 @@ export default function RefundPolicyPage() {
             className="inline-flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-neutral-500 hover:text-[#004fff] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to Studio</span>
+            <span>Back to Home</span>
           </Link>
           <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-neutral-400">
             <span>thecozytheory.in</span>

@@ -8,7 +8,7 @@ export default function EditorialBanner() {
         {/* Left Manifesto Typography */}
         <div className="lg:col-span-7 space-y-6">
           <span className="text-[11px] font-mono tracking-[0.25em] text-blue-400 uppercase block">
-            Studio Manifesto // Stay Cozy, Stay You
+            Living Manifesto // Stay Cozy, Stay You
           </span>
           <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight leading-[0.95]">
             WARMTH.<br />

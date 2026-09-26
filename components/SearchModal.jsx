@@ -49,7 +49,7 @@ export default function SearchModal({ isOpen, onClose }) {
         {/* Modal Header */}
         <div className="flex justify-between items-center pb-2 border-b border-[#e5e3dc]">
           <span className="text-xs font-mono uppercase tracking-widest text-neutral-500">
-            Search Objects Studio
+            Search Objects Catalog
           </span>
           <button
             onClick={onClose}

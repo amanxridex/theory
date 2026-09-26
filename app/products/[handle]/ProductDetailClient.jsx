@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import ProductCard from "@/components/ProductCard";
+import { parseProductSections } from "@/lib/productSections";
 import {
   Plus,
   Minus,
@@ -29,6 +30,44 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
 
   const product = initialProduct || (products && products.find((p) => p.handle === handle)) || null;
   const relatedProducts = initialRelated || (products ? products.slice(0, 4) : []);
+
+  const { sections } = useMemo(
+    () => parseProductSections(product?.description),
+    [product?.description]
+  );
+
+  const activeAccordionList = useMemo(() => {
+    const list = [];
+    if (sections?.objectDetails?.enabled) {
+      list.push({
+        id: "details",
+        title: "Object Details",
+        content: sections.objectDetails.content,
+      });
+    }
+    if (sections?.materialDimensions?.enabled) {
+      list.push({
+        id: "dimensions",
+        title: "Material & Dimensions",
+        content: sections.materialDimensions.content,
+      });
+    }
+    if (sections?.careMaintenance?.enabled) {
+      list.push({
+        id: "care",
+        title: "Care & Maintenance",
+        content: sections.careMaintenance.content,
+      });
+    }
+    if (sections?.shippingReturns?.enabled) {
+      list.push({
+        id: "shipping",
+        title: "Shipping & Returns",
+        content: sections.shippingReturns.content,
+      });
+    }
+    return list;
+  }, [sections]);
 
   if (!product) {
     return (
@@ -241,100 +280,31 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
               </div>
             </div>
 
-            {/* Accordions (Details, Material & Dimensions, Care, Shipping) */}
-            <div className="border-t border-[#e5e3dc] divide-y divide-[#e5e3dc] pt-2">
-              
-              {/* Details Accordion */}
-              <div className="py-4">
-                <button
-                  onClick={() => toggleAccordion("details")}
-                  className="w-full flex items-center justify-between text-left text-xs font-mono font-bold uppercase tracking-wider text-[#121212]"
-                >
-                  <span>Object Details</span>
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${
-                      openAccordion === "details" ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                {openAccordion === "details" && (
-                  <div className="mt-3 text-xs text-neutral-600 leading-relaxed font-normal space-y-2">
-                    <p>
-                      The Cozy Theory crafts artisanal objects, everyday ceramics, and pure linens to stay cozy, stay you. Designed with organic balances and tactile finishes to bring character to every room.
-                    </p>
-                    <p>
-                      Each piece undergoes meticulous hand-crafting and quality inspection in our studio, ensuring every surface reflects warmth and elegance.
-                    </p>
+            {/* Accordions (Object Details, Material & Dimensions, Care & Maintenance, Shipping & Returns) */}
+            {activeAccordionList.length > 0 && (
+              <div className="border-t border-[#e5e3dc] divide-y divide-[#e5e3dc] pt-2">
+                {activeAccordionList.map((sec) => (
+                  <div key={sec.id} className="py-4">
+                    <button
+                      onClick={() => toggleAccordion(sec.id)}
+                      className="w-full flex items-center justify-between text-left text-xs font-mono font-bold uppercase tracking-wider text-[#121212]"
+                    >
+                      <span>{sec.title}</span>
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-200 ${
+                          openAccordion === sec.id ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    {openAccordion === sec.id && (
+                      <div className="mt-3 text-xs text-neutral-600 leading-relaxed font-normal whitespace-pre-line">
+                        {sec.content}
+                      </div>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
-
-              {/* Material & Dimensions Accordion */}
-              <div className="py-4">
-                <button
-                  onClick={() => toggleAccordion("dimensions")}
-                  className="w-full flex items-center justify-between text-left text-xs font-mono font-bold uppercase tracking-wider text-[#121212]"
-                >
-                  <span>Material & Dimensions</span>
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${
-                      openAccordion === "dimensions" ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                {openAccordion === "dimensions" && (
-                  <div className="mt-3 text-xs font-mono text-neutral-600 space-y-1.5">
-                    <div><strong>Material:</strong> Artisanal Stoneware / Handcrafted Ceramic & Cotton</div>
-                    <div><strong>Weight:</strong> Approx 450g - 1.5kg</div>
-                    <div><strong>Origin:</strong> Handcrafted in India</div>
-                  </div>
-                )}
-              </div>
-
-              {/* Care & Maintenance */}
-              <div className="py-4">
-                <button
-                  onClick={() => toggleAccordion("care")}
-                  className="w-full flex items-center justify-between text-left text-xs font-mono font-bold uppercase tracking-wider text-[#121212]"
-                >
-                  <span>Care & Maintenance</span>
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${
-                      openAccordion === "care" ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                {openAccordion === "care" && (
-                  <div className="mt-3 text-xs text-neutral-600 leading-relaxed">
-                    Wipe clean with a dry microfiber cloth. Avoid harsh chemical cleaners or abrasive scouring pads. Metal finishes will develop a distinguished natural patina over time.
-                  </div>
-                )}
-              </div>
-
-              {/* Shipping & Returns */}
-              <div className="py-4">
-                <button
-                  onClick={() => toggleAccordion("shipping")}
-                  className="w-full flex items-center justify-between text-left text-xs font-mono font-bold uppercase tracking-wider text-[#121212]"
-                >
-                  <span>Shipping & Returns</span>
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-200 ${
-                      openAccordion === "shipping" ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                {openAccordion === "shipping" && (
-                  <div className="mt-3 text-xs text-neutral-600 leading-relaxed space-y-1">
-                    <p>• Complimentary express domestic delivery across India on orders above Rs. 9,999.</p>
-                    <p>• Enjoy Rs. 500 off on orders above Rs. 5,999.</p>
-                    <p>• In the rare event of transit mishap, 50% refund provided if damaged.</p>
-                    <p>• Dispatches within 24–48 hours via express courier.</p>
-                  </div>
-                )}
-              </div>
-            </div>
-
+            )}
           </div>
 
           {/* Social Share Suite: WhatsApp, Telegram, Facebook, Copy Link */}
@@ -347,7 +317,7 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
               <button
                 onClick={() => {
                   const url = window.location.href;
-                  const text = `✨ *${product.title}* (₹${formattedPrice})\nDiscover handcrafted living objects by The Cozy Theory Studio:\n${url}`;
+                  const text = `✨ *${product.title}* (₹${formattedPrice})\nDiscover handcrafted living objects by The Cozy Theory:\n${url}`;
                   window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
                 }}
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-[#25D366]/10 text-[#128C7E] hover:bg-[#25D366] hover:text-white rounded border border-[#25D366]/30 transition-colors font-medium"
@@ -404,7 +374,7 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
           <div className="flex justify-between items-end mb-8">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500 block mb-1">
-                More From The Studio
+                Curated Archive
               </span>
               <h3 className="text-2xl md:text-3xl font-extrabold uppercase tracking-tight text-[#121212]">
                 You May Also Like

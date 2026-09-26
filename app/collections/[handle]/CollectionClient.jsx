@@ -178,23 +178,23 @@ export default function CollectionClient({ handle, allProducts }) {
         <span className="text-black font-semibold uppercase">{collectionInfo.title}</span>
       </div>
 
-      {/* Collection Editorial Banner */}
-      <div className="border-b border-[#e5e3dc] py-12 md:py-16 bg-[#f7f5ef]">
-        <div className="max-w-[1600px] mx-auto px-4 md:px-8 space-y-3">
-          <span className="text-[10px] md:text-xs font-mono tracking-[0.25em] uppercase text-neutral-500 block">
+      {/* Collection Editorial Banner (Vibrant Studio Blue matching Announcement Bar) */}
+      <div className="border-b border-[#003ec7] py-12 md:py-16 bg-[#004fff] text-white relative overflow-hidden shadow-sm">
+        <div className="max-w-[1600px] mx-auto px-4 md:px-8 space-y-3 relative z-10">
+          <span className="text-[10px] md:text-xs font-mono tracking-[0.25em] uppercase text-blue-200 block font-semibold">
             {collectionInfo.subtitle}
           </span>
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-[#121212]">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-white font-sans">
             {collectionInfo.title}
           </h1>
-          <p className="text-xs md:text-sm text-neutral-600 font-normal max-w-xl leading-relaxed">
+          <p className="text-xs md:text-sm text-blue-100 font-normal max-w-xl leading-relaxed">
             {collectionInfo.description}
           </p>
         </div>
       </div>
 
       {/* Filter and Controls Bar */}
-      <div className="sticky top-16 md:top-20 z-30 bg-[#fffdf8]/95 backdrop-blur-md border-b border-[#e5e3dc]">
+      <div className="sticky top-14 md:top-[102px] z-30 bg-[#fffdf8]/95 backdrop-blur-md border-b border-[#e5e3dc]">
         <div className="max-w-[1600px] mx-auto px-4 md:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
           
           {/* Quick Sub-Filter Chips */}
@@ -278,13 +278,13 @@ export default function CollectionClient({ handle, allProducts }) {
           <div className="py-12 sm:py-16 text-center space-y-8">
             <div className="max-w-md mx-auto space-y-3">
               <span className="text-[10px] font-mono tracking-widest uppercase text-[#004fff] font-bold">
-                STUDIO PRODUCTION // ARRIVING SOON
+                CURATED PIECES // ARRIVING SOON
               </span>
               <p className="text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-[#121212]">
                 New Creations in Craft
               </p>
               <p className="text-xs font-mono text-neutral-500 leading-relaxed">
-                New artisanal releases for this category are currently being shaped in our studio workshop. In the meantime, explore our available handcrafted living pieces below.
+                New releases for this category are arriving soon. In the meantime, explore our available handcrafted living pieces below.
               </p>
               <div className="pt-2">
                 <Link

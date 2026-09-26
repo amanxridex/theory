@@ -27,7 +27,7 @@ export default function OurStoryPage() {
             className="inline-flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-neutral-500 hover:text-[#004fff] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to Studio</span>
+            <span>Back to Home</span>
           </Link>
           <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-neutral-400">
             <span>thecozytheory.in</span>
@@ -92,7 +92,7 @@ export default function OurStoryPage() {
               </div>
               <div className="mt-3 flex justify-between items-center text-[10px] font-mono text-neutral-400 uppercase tracking-widest">
                 <span>Fig. 01 — Handcrafted Ceramic</span>
-                <span>The Cozy Theory Studio</span>
+                <span>The Cozy Theory</span>
               </div>
             </div>
           </div>
@@ -186,7 +186,7 @@ export default function OurStoryPage() {
               </div>
               <div className="mt-3 flex justify-between items-center text-[10px] font-mono text-neutral-400 uppercase tracking-widest">
                 <span>Fig. 02 — Everyday Rituals</span>
-                <span>The Cozy Theory Studio</span>
+                <span>The Cozy Theory</span>
               </div>
             </div>
           </div>
@@ -240,7 +240,7 @@ export default function OurStoryPage() {
               href="/blogs/news"
               className="px-6 py-3.5 bg-neutral-800 text-neutral-200 hover:text-white hover:bg-neutral-700 transition-colors uppercase font-bold tracking-wider"
             >
-              Read Studio Journal
+              Read Journal
             </Link>
           </div>
         </div>

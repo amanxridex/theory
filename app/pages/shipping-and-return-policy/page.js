@@ -78,7 +78,7 @@ export default function ShippingAndReturnPolicyPage() {
       id: "pickup-option",
       title: "Pick-Up Option",
       icon: Building2,
-      desc: "If you choose to pick up your order directly from one of our studio locations, no shipping charges apply. Please allow 2 days for processing before picking up.",
+      desc: "If you choose to pick up your order directly from one of our warehouse dispatch locations, no shipping charges apply. Please allow 2 days for processing before picking up.",
       badge: "Zero Shipping Fee"
     },
     {
@@ -121,7 +121,7 @@ export default function ShippingAndReturnPolicyPage() {
             className="inline-flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-neutral-500 hover:text-[#004fff] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to Studio</span>
+            <span>Back to Home</span>
           </Link>
           <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-neutral-400">
             <span>thecozytheory.in</span>

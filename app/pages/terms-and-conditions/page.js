@@ -218,7 +218,7 @@ export default function TermsAndConditionsPage() {
             className="inline-flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-neutral-500 hover:text-[#004fff] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to Studio</span>
+            <span>Back to Home</span>
           </Link>
           <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-neutral-400">
             <span>thecozytheory.in</span>
@@ -374,14 +374,14 @@ export default function TermsAndConditionsPage() {
                 Authentic Craftsmanship, Transparent Principles
               </h3>
               <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed max-w-2xl font-normal">
-                Every homeware and ceramic object leaving our studio is created with integrity. Should you have any concerns regarding your orders, specifications, or rights, our customer care team is available to assist you promptly.
+                Every homeware and ceramic object in our collection is curated with integrity. Should you have any concerns regarding your orders, specifications, or rights, our customer care team is available to assist you promptly.
               </p>
               <div className="pt-2 flex flex-wrap gap-4 text-xs font-mono">
                 <Link 
                   href="/pages/contact" 
                   className="px-4 py-2.5 bg-[#004fff] text-white hover:bg-blue-600 transition-colors uppercase font-bold text-[11px] tracking-wider"
                 >
-                  Contact Studio
+                  Contact Us
                 </Link>
                 <Link 
                   href="/pages/faq" 

@@ -54,7 +54,7 @@ export default function AdminAnalyticsPage() {
 
   // Real traffic sources from Supabase
   const sources = analytics.sources && analytics.sources.length > 0 ? analytics.sources : [
-    { source: "Direct Studio Sessions", share: 100, visits: analytics.todayVisitors || 1, color: "bg-[#121212]" },
+    { source: "Direct Store Sessions", share: 100, visits: analytics.todayVisitors || 1, color: "bg-[#121212]" },
   ];
 
   // Real hour distribution

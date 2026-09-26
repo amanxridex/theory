@@ -18,7 +18,7 @@ export default function AdminCustomersPage() {
     city: c.city || "India",
     orders: c.orders_count || 1,
     totalSpent: parseFloat(c.total_spent) || 0,
-    tier: (parseFloat(c.total_spent) || 0) > 10000 ? "VIP Collector" : "Studio Member",
+    tier: (parseFloat(c.total_spent) || 0) > 10000 ? "VIP Collector" : "Collector Member",
     lastOrder: c.created_at
       ? new Date(c.created_at).toLocaleDateString("en-IN", {
           day: "numeric",

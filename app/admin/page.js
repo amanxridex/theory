@@ -20,10 +20,12 @@ import {
   Truck,
   Sparkles,
   FileText,
+  Settings,
+  MessageSquare,
 } from "lucide-react";
 
 export default function AdminDashboardPage() {
-  const { products, collections, orders, analytics, updateOrderStatus } = useStore();
+  const { products, collections, orders, analytics, updateOrderStatus, inquiries = [] } = useStore();
   const [timeRange, setTimeRange] = useState("today");
 
   const salesFormatted = Number(analytics.totalSales || 0).toLocaleString("en-IN", {
@@ -46,7 +48,7 @@ export default function AdminDashboardPage() {
 
   // Real traffic sources computed from Supabase analytics_events
   const sources = analytics.sources && analytics.sources.length > 0 ? analytics.sources : [
-    { source: "Direct Studio Sessions", share: 100, visits: analytics.todayVisitors || 1, color: "bg-[#121212]" },
+    { source: "Direct Store Sessions", share: 100, visits: analytics.todayVisitors || 1, color: "bg-[#121212]" },
   ];
 
   return (
@@ -455,7 +457,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Quick Launchpad to Subpages */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-2">
         <Link
           href="/admin/products"
           className="p-5 bg-white hover:bg-[#faf8f5] border border-[#e5e3dc] hover:border-black rounded transition-all group flex items-center gap-4 shadow-xs"
@@ -520,6 +522,45 @@ export default function AdminDashboardPage() {
             </h3>
             <p className="text-xs text-neutral-500 font-mono">
               Live traffic &amp; sessions
+            </p>
+          </div>
+        </Link>
+
+        <Link
+          href="/admin/inquiries"
+          className="p-5 bg-white hover:bg-[#faf8f5] border border-[#e5e3dc] hover:border-emerald-600 rounded transition-all group flex items-center gap-4 shadow-xs"
+        >
+          <div className="w-12 h-12 rounded bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 group-hover:scale-105 transition-transform">
+            <MessageSquare className="w-6 h-6" />
+          </div>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <h3 className="text-sm font-bold uppercase text-[#121212]">
+                Support ({inquiries.length})
+              </h3>
+              {inquiries.length > 0 && (
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              )}
+            </div>
+            <p className="text-xs text-neutral-500 font-mono">
+              WhatsApp &amp; queries
+            </p>
+          </div>
+        </Link>
+
+        <Link
+          href="/admin/settings"
+          className="p-5 bg-white hover:bg-[#faf8f5] border border-[#e5e3dc] hover:border-[#004fff] rounded transition-all group flex items-center gap-4 shadow-xs"
+        >
+          <div className="w-12 h-12 rounded bg-blue-50 border border-blue-200 flex items-center justify-center text-[#004fff] group-hover:scale-105 transition-transform">
+            <Settings className="w-6 h-6" />
+          </div>
+          <div>
+            <h3 className="text-sm font-bold uppercase text-[#121212]">
+              Brand Settings
+            </h3>
+            <p className="text-xs text-neutral-500 font-mono">
+              Bio, taglines &amp; marquee
             </p>
           </div>
         </Link>

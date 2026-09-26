@@ -14,7 +14,7 @@ export default function AboutPage() {
       <div className="border-b border-[#e5e3dc] py-16 md:py-24 bg-[#121212] text-[#fffdf8]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 space-y-6">
           <span className="text-xs font-mono tracking-[0.25em] text-blue-400 uppercase block">
-            Studio Philosophy // Stay Cozy, Stay You
+            Design Philosophy // Stay Cozy, Stay You
           </span>
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold uppercase tracking-tight leading-[0.92]">
             OBJECTS FOR<br />
@@ -22,7 +22,7 @@ export default function AboutPage() {
             <span className="text-neutral-400">LIVING.</span>
           </h1>
           <p className="text-sm md:text-lg text-neutral-300 font-normal max-w-2xl leading-relaxed">
-            The Cozy Theory is an artisanal design studio. We craft everyday ceramics, tactile tabletop objects, and pure cotton linen to turn houses into sanctuaries.
+            The Cozy Theory curates everyday ceramics, tactile tabletop objects, and pure cotton linen to turn houses into sanctuaries.
           </p>
         </div>
       </div>
@@ -39,7 +39,7 @@ export default function AboutPage() {
               We founded The Cozy Theory on the belief that everyday objects carry emotional weight. The coffee mug you reach for at sunrise, the textured linen on your bed, the sculpted vase catching afternoon light—these are not mere fillers.
             </p>
             <p>
-              Each piece in our studio is designed to celebrate raw textures: organic hand-thrown ceramics, matte glazes, breathable natural cotton, and hand-finished metal accents.
+              Each piece in our collection is curated to celebrate raw textures: organic ceramics, matte glazes, breathable natural cotton, and hand-finished metal accents.
             </p>
             <div className="p-4 bg-[#f7f5ef] border-l-2 border-[#004fff] text-xs font-mono">
               &ldquo;Stay cozy, stay you — transform your home into a sanctuary of everyday comfort, warmth, and deliberate living.&rdquo;

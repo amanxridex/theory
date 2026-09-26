@@ -10,11 +10,22 @@ import {
   updateProduct as dbUpdateProduct,
   deleteProduct as dbDeleteProduct,
   createCategory as dbCreateCategory,
+  updateCategory as dbUpdateCategory,
+  deleteCategory as dbDeleteCategory,
   updateOrderStatus as dbUpdateOrderStatus,
   getCustomers as dbGetCustomers,
   getDiscounts as dbGetDiscounts,
+  createDiscount as dbCreateDiscount,
+  updateDiscount as dbUpdateDiscount,
+  deleteDiscount as dbDeleteDiscount,
+  toggleDiscountStatus as dbToggleDiscountStatus,
   getDbMetrics,
   getRealAnalytics,
+  getStoreSettings as dbGetStoreSettings,
+  updateStoreSettings as dbUpdateStoreSettings,
+  DEFAULT_STORE_SETTINGS,
+  getContactInquiries as dbGetContactInquiries,
+  deleteContactInquiry as dbDeleteContactInquiry,
 } from "@/lib/supabase";
 
 const StoreContext = createContext(null);
@@ -26,8 +37,8 @@ export const INITIAL_COLLECTIONS = [
     title: "All Objects",
     label: "All Objects",
     description: "Complete archive of artisanal homeware and living objects.",
-    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136",
-    itemCount: NOTICE_PRODUCTS.length,
+    image: "/products/drive/Lemon Ceramic Vase with Handles.webp",
+    itemCount: 18,
   },
   {
     id: "col-ceramics",
@@ -35,8 +46,8 @@ export const INITIAL_COLLECTIONS = [
     title: "Everyday Ceramics",
     label: "Everyday Ceramics",
     description: "Handcrafted stoneware, daily mugs, and glazed bowls.",
-    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product9-01.png?v=1784242846",
-    itemCount: 158,
+    image: "/products/drive/Flower-Shaped Ceramic Decorative Plate.webp",
+    itemCount: 0,
   },
   {
     id: "col-tableware",
@@ -44,26 +55,8 @@ export const INITIAL_COLLECTIONS = [
     title: "Tableware & Dining",
     label: "Tableware & Dining",
     description: "Porcelain & stoneware dining plates, ramen bowls, and oil pourers.",
-    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/TT75REDDIVIDEDBOWL.png?v=1788126151",
-    itemCount: 82,
-  },
-  {
-    id: "col-serveware",
-    handle: "serveware",
-    title: "Platters & Serveware",
-    label: "Platters & Serveware",
-    description: "Elevated ceramic serving trays, dip bowls, and cheese platters.",
-    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/IMG_0517_ab4b2575-73cd-44f0-bef6-e22d87b409e1.jpg?v=1726212864",
-    itemCount: 54,
-  },
-  {
-    id: "col-linen",
-    handle: "home-linen",
-    title: "Home Linen & Bedding",
-    label: "Home Linen & Bedding",
-    description: "Pure washed cotton bedsheets, quilted covers, and runners.",
-    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/DSC00422_eee0df88-82cb-49a4-818d-182c056960b2.jpg?v=1740976529",
-    itemCount: 45,
+    image: "/products/drive/3D Lemon Scalloped Serving Platter.webp",
+    itemCount: 0,
   },
   {
     id: "col-vases",
@@ -71,8 +64,17 @@ export const INITIAL_COLLECTIONS = [
     title: "Vases & Planters",
     label: "Vases & Planters",
     description: "Contemporary ceramic and stoneware vases for botanical stems.",
-    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/ChatGPTImageJul18_2026_11_18_29PM.png?v=1784397111",
-    itemCount: 42,
+    image: "/products/drive/Lemon Ceramic Vase  Planter.webp",
+    itemCount: 0,
+  },
+  {
+    id: "col-linen",
+    handle: "home-linen",
+    title: "Home Linen & Bedding",
+    label: "Home Linen & Bedding",
+    description: "Pure washed cotton bedsheets, quilted covers, and runners.",
+    image: "/products/drive/ChatGPT Image Sep 17_ 2026_ 10_30_21 AM.webp",
+    itemCount: 0,
   },
   {
     id: "col-candles",
@@ -80,8 +82,17 @@ export const INITIAL_COLLECTIONS = [
     title: "Candles & Holders",
     label: "Candles & Holders",
     description: "Sculptural candleholders and ambient t-light vessels.",
-    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/DSC07087_copy_ca9966aa-409f-4d01-a865-701ca110f64c.jpg?v=1726405433",
-    itemCount: 28,
+    image: "/products/drive/MARLBORO RED ASH TRAY CAMEL ASH TRAY CIGARETTE ASHTRAY.webp",
+    itemCount: 0,
+  },
+  {
+    id: "col-pottery",
+    handle: "blue-pottery",
+    title: "Traditional Blue Pottery",
+    label: "Traditional Blue Pottery",
+    description: "Classic blue pottery pieces crafted with authentic floral motifs.",
+    image: "/products/drive/TT-176 Tulip Garden Ceramic Vase  Planter.webp",
+    itemCount: 0,
   },
   {
     id: "col-decor",
@@ -89,17 +100,17 @@ export const INITIAL_COLLECTIONS = [
     title: "Decorative Objects",
     label: "Decorative Objects",
     description: "Handcrafted figurines, bookends, and organic conversation pieces.",
-    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/ChatGPTImageJul18_2026_04_59_45PM.png?v=1784374314",
-    itemCount: 40,
+    image: "/products/drive/Pomegranate Ceramic Vase.webp",
+    itemCount: 0,
   },
   {
     id: "col-festive",
     handle: "merry-bright",
-    title: "Festive Accents",
-    label: "Festive Accents",
+    title: "Festive & Merry",
+    label: "Festive & Merry",
     description: "Heirloom holiday figurines, winter village pieces, and seasonal tabletop items.",
-    image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/ChatGPTImageSep13_2026_05_26_10PM.png?v=1789300631",
-    itemCount: 385,
+    image: "/products/drive/Pomegranate Ceramic Vase  Planter.webp",
+    itemCount: 0,
   },
 ];
 
@@ -153,6 +164,8 @@ export function StoreProvider({ children }) {
   const [orders, setOrders] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [discounts, setDiscounts] = useState([]);
+  const [inquiries, setInquiries] = useState([]);
+  const [storeSettings, setStoreSettings] = useState(DEFAULT_STORE_SETTINGS);
   const [loading, setLoading] = useState(true);
   const [isDbConnected, setIsDbConnected] = useState(true);
 
@@ -174,7 +187,7 @@ export function StoreProvider({ children }) {
   const refreshData = useCallback(async () => {
     try {
       setLoading(true);
-      const [prodRes, catRes, ordRes, custRes, discRes, mtrRes, trafficRes] = await Promise.all([
+      const [prodRes, catRes, ordRes, custRes, discRes, mtrRes, trafficRes, settingsRes, inqRes] = await Promise.all([
         getProducts({ limit: 1000 }),
         getCategories(),
         getOrders(),
@@ -182,6 +195,8 @@ export function StoreProvider({ children }) {
         dbGetDiscounts(),
         getDbMetrics(),
         getRealAnalytics(),
+        dbGetStoreSettings(),
+        dbGetContactInquiries(),
       ]);
 
       if (prodRes && prodRes.products && prodRes.products.length > 0) {
@@ -212,6 +227,14 @@ export function StoreProvider({ children }) {
 
       if (discRes) {
         setDiscounts(discRes);
+      }
+
+      if (settingsRes) {
+        setStoreSettings(settingsRes);
+      }
+
+      if (inqRes) {
+        setInquiries(inqRes);
       }
 
       setAnalytics({
@@ -295,23 +318,35 @@ export function StoreProvider({ children }) {
 
   // Delete product (syncs to Supabase)
   const deleteProduct = async (id) => {
-    setProducts((prev) => prev.filter((p) => p.id !== id));
+    setProducts((prev) => prev.filter((p) => String(p.id) !== String(id)));
     try {
       await dbDeleteProduct(id);
     } catch (err) {
       console.error("Failed to delete from DB:", err);
+      await refreshData();
+      throw err;
     }
   };
 
-  // Update product (syncs to Supabase)
+  // Update product (syncs to Supabase in real time)
   const updateProduct = async (id, updates) => {
+    // 1. Optimistic update for instant UI feedback
     setProducts((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, ...updates } : p))
+      prev.map((p) => (String(p.id) === String(id) ? { ...p, ...updates } : p))
     );
     try {
-      await dbUpdateProduct(id, updates);
+      const saved = await dbUpdateProduct(id, updates);
+      if (saved) {
+        setProducts((prev) =>
+          prev.map((p) => (String(p.id) === String(id) ? { ...p, ...saved } : p))
+        );
+        return saved;
+      }
+      return null;
     } catch (err) {
-      console.error("Failed to update in DB:", err);
+      console.error("Failed to update product in DB:", err);
+      await refreshData();
+      throw err;
     }
   };
 
@@ -322,10 +357,13 @@ export function StoreProvider({ children }) {
       const formatted = {
         id: created.id,
         handle: created.handle,
-        title: created.label,
-        label: created.label,
-        description: created.description,
-        image: created.image_url,
+        title: created.label || created.title,
+        label: created.label || created.title,
+        description: created.description || "",
+        image: created.image_url || created.image || "/products/drive/Lemon Ceramic Vase with Handles.webp",
+        image_url: created.image_url || created.image || "/products/drive/Lemon Ceramic Vase with Handles.webp",
+        display_order: created.display_order ?? 10,
+        filter: created.filter || created.handle,
         itemCount: 0,
       };
       setCollections((prev) => [...prev, formatted]);
@@ -334,18 +372,81 @@ export function StoreProvider({ children }) {
       console.error("Failed to insert collection in DB:", err);
       const slug =
         newCol.handle ||
-        newCol.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        (newCol.label || newCol.title || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
       const fallbackCol = {
         id: "col-" + Date.now(),
         handle: slug,
-        title: newCol.title,
-        label: newCol.title,
+        title: newCol.title || newCol.label || "New Category",
+        label: newCol.title || newCol.label || "New Category",
         description: newCol.description || "",
-        image: newCol.image || "",
+        image: newCol.image || newCol.image_url || "/products/drive/Lemon Ceramic Vase with Handles.webp",
+        image_url: newCol.image || newCol.image_url || "/products/drive/Lemon Ceramic Vase with Handles.webp",
+        display_order: 10,
+        filter: slug,
         itemCount: 0,
       };
       setCollections((prev) => [...prev, fallbackCol]);
       return fallbackCol;
+    }
+  };
+
+  // Update existing collection / category (syncs to Supabase in real time)
+  const updateCollection = async (id, updates) => {
+    setCollections((prev) =>
+      prev.map((c) =>
+        String(c.id) === String(id) || c.handle === id
+          ? {
+              ...c,
+              ...updates,
+              title: updates.label || updates.title || c.title,
+              label: updates.label || updates.title || c.label,
+              image: updates.image_url || updates.image || c.image,
+              image_url: updates.image_url || updates.image || c.image_url,
+            }
+          : c
+      )
+    );
+
+    try {
+      const saved = await dbUpdateCategory(id, updates);
+      if (saved) {
+        setCollections((prev) =>
+          prev.map((c) =>
+            String(c.id) === String(id) || c.handle === id
+              ? {
+                  ...c,
+                  ...saved,
+                  title: saved.label || saved.title,
+                  label: saved.label || saved.title,
+                  image: saved.image_url || saved.image,
+                  image_url: saved.image_url || saved.image,
+                }
+              : c
+          )
+        );
+        return saved;
+      }
+      return null;
+    } catch (err) {
+      console.error("Failed to update category in Supabase:", err);
+      await refreshData();
+      throw err;
+    }
+  };
+
+  // Delete collection / category (syncs to Supabase in real time)
+  const deleteCollection = async (id) => {
+    setCollections((prev) =>
+      prev.filter((c) => String(c.id) !== String(id) && c.handle !== id)
+    );
+
+    try {
+      await dbDeleteCategory(id);
+      return true;
+    } catch (err) {
+      console.error("Failed to delete category in Supabase:", err);
+      await refreshData();
+      throw err;
     }
   };
 
@@ -369,6 +470,85 @@ export function StoreProvider({ children }) {
     }
   };
 
+  // Discount actions (sync to Supabase)
+  const addDiscount = async (discountData) => {
+    try {
+      const created = await dbCreateDiscount(discountData);
+      await refreshData();
+      return created;
+    } catch (err) {
+      console.error("Failed to add discount in Supabase:", err);
+      throw err;
+    }
+  };
+
+  const updateDiscount = async (id, updates) => {
+    try {
+      const updated = await dbUpdateDiscount(id, updates);
+      await refreshData();
+      return updated;
+    } catch (err) {
+      console.error("Failed to update discount in Supabase:", err);
+      throw err;
+    }
+  };
+
+  const deleteDiscount = async (id) => {
+    setDiscounts((prev) => prev.filter((d) => d.id !== id && d.code !== id));
+    try {
+      await dbDeleteDiscount(id);
+      await refreshData();
+    } catch (err) {
+      console.error("Failed to delete discount in Supabase:", err);
+      throw err;
+    }
+  };
+
+  const toggleDiscountStatus = async (id, currentStatus) => {
+    try {
+      const updated = await dbToggleDiscountStatus(id, currentStatus);
+      await refreshData();
+      return updated;
+    } catch (err) {
+      console.error("Failed to toggle discount status in Supabase:", err);
+      throw err;
+    }
+  };
+
+  // Delete inquiry (syncs to Supabase)
+  const deleteInquiry = async (id) => {
+    setInquiries((prev) => prev.filter((inq) => inq.id !== id));
+    try {
+      await dbDeleteContactInquiry(id);
+    } catch (err) {
+      console.error("Failed to delete inquiry in Supabase:", err);
+      await refreshData();
+      throw err;
+    }
+  };
+
+  // Update store and brand settings (syncs to Supabase in real time)
+  const updateStoreSettings = async (newSettings) => {
+    // Optimistic local state update
+    setStoreSettings((prev) => ({
+      ...prev,
+      ...newSettings,
+    }));
+
+    try {
+      const saved = await dbUpdateStoreSettings(newSettings);
+      if (saved) {
+        setStoreSettings(saved);
+        return saved;
+      }
+      return null;
+    } catch (err) {
+      console.error("Failed to update store settings in Supabase:", err);
+      await refreshData();
+      throw err;
+    }
+  };
+
   return (
     <StoreContext.Provider
       value={{
@@ -377,6 +557,8 @@ export function StoreProvider({ children }) {
         orders,
         customers,
         discounts,
+        inquiries,
+        storeSettings,
         analytics,
         loading,
         isDbConnected,
@@ -385,7 +567,18 @@ export function StoreProvider({ children }) {
         deleteProduct,
         updateProduct,
         addCollection,
+        updateCollection,
+        deleteCollection,
+        addCategory: addCollection,
+        updateCategory: updateCollection,
+        deleteCategory: deleteCollection,
         updateOrderStatus,
+        addDiscount,
+        updateDiscount,
+        deleteDiscount,
+        toggleDiscountStatus,
+        deleteInquiry,
+        updateStoreSettings,
       }}
     >
       {children}
@@ -402,6 +595,8 @@ export function useStore() {
       orders: [],
       customers: [],
       discounts: [],
+      inquiries: [],
+      storeSettings: DEFAULT_STORE_SETTINGS,
       analytics: { activeVisitors: 24, todayVisitors: 1428, totalSales: 12418, totalOrders: 5 },
       loading: false,
       isDbConnected: true,
@@ -410,7 +605,18 @@ export function useStore() {
       deleteProduct: () => {},
       updateProduct: () => {},
       addCollection: () => {},
+      updateCollection: () => {},
+      deleteCollection: () => {},
+      addCategory: () => {},
+      updateCategory: () => {},
+      deleteCategory: () => {},
       updateOrderStatus: () => {},
+      addDiscount: () => {},
+      updateDiscount: () => {},
+      deleteDiscount: () => {},
+      toggleDiscountStatus: () => {},
+      deleteInquiry: () => {},
+      updateStoreSettings: () => {},
     };
   }
   return context;

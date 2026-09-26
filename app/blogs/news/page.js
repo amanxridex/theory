@@ -2,8 +2,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export const metadata = {
-  title: "News & Studio Journal | The Cozy Theory",
-  description: "Dispatches from The Cozy Theory studio. Stories behind artisanal ceramics, handcrafted textiles, and warm living spaces.",
+  title: "News & Journal | The Cozy Theory",
+  description: "Dispatches and stories behind artisanal ceramics, handcrafted textiles, and warm living spaces.",
 };
 
 export const BLOG_POSTS = [
@@ -14,13 +14,13 @@ export const BLOG_POSTS = [
     excerpt: "How deliberate craftsmanship and honest tactile materials transform ordinary rooms into sanctuaries of warmth.",
     image: "https://cdn.shopify.com/s/files/1/0826/5053/0110/files/06_f701ce34-3d80-4167-87f5-e3dd0ec7dc5f.jpg?v=1765797590&width=800",
     readTime: "4 min read",
-    author: "The Cozy Theory Studio",
+    author: "The Cozy Theory",
   },
   {
     handle: "the-birth-of-the-cozy-theory-from-concept-to-artisanal-objects",
     title: "The Birth of The Cozy Theory: From Concept to Artisanal Objects",
     date: "July 15, 2024",
-    excerpt: "Why we abandoned generic interior mass-production to handcraft objects for warm living. An interview with our studio team.",
+    excerpt: "Why we abandoned generic interior mass-production to curate objects for warm living. An interview with our team.",
     image: "https://cdn.shopify.com/s/files/1/0826/5053/0110/files/Two_Odd_x_Notice_Aditya_Sinha-1.jpg?v=1788185403&width=800",
     readTime: "6 min read",
     author: "Editorial Team",
@@ -32,7 +32,7 @@ export const BLOG_POSTS = [
     excerpt: "Scale, tactile density, and architectural placement. How to select focal art pieces that anchor modern rooms.",
     image: "https://cdn.shopify.com/s/files/1/0826/5053/0110/files/YUV0134copy.jpg?v=1764335586&width=800",
     readTime: "5 min read",
-    author: "The Cozy Theory Studio",
+    author: "The Cozy Theory",
   },
   {
     handle: "melting-edge-design-that-s-hot-fresh",
@@ -41,7 +41,7 @@ export const BLOG_POSTS = [
     excerpt: "Deconstructing the fluid curves and hand-glazed finishes of our latest ceramic releases.",
     image: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136",
     readTime: "3 min read",
-    author: "The Cozy Theory Studio",
+    author: "The Cozy Theory",
   },
 ];
 
@@ -60,13 +60,13 @@ export default async function BlogNewsPage() {
         {/* Header */}
         <div className="text-center space-y-3 pb-8 border-b border-[#e5e3dc]">
           <span className="text-[10px] md:text-xs font-mono tracking-[0.25em] uppercase text-neutral-500 block">
-            Studio Journal
+            Journal
           </span>
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold uppercase tracking-tight text-[#121212]">
-            News & Dispatches
+            News &amp; Dispatches
           </h1>
           <p className="text-xs md:text-sm font-mono text-neutral-600 max-w-lg mx-auto">
-            Design essays, material investigations, and drop backstories directly from our foundry floor.
+            Design essays, material investigations, and drop backstories directly from our team.
           </p>
         </div>
 
