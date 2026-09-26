@@ -403,7 +403,7 @@ export default function AdminProductsPage() {
                     <td className="py-3 px-4">
                       <button
                         onClick={() => handleOpenEditModal(product)}
-                        className="font-bold text-[#121212] group-hover:text-[#004fff] transition-colors line-clamp-1 max-w-sm text-left hover:underline cursor-pointer"
+                        className="font-bold text-[#121212] group-hover:text-[#001540] transition-colors line-clamp-1 max-w-sm text-left hover:underline cursor-pointer"
                         title="Click to edit product"
                       >
                         {product.title}

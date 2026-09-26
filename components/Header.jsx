@@ -67,7 +67,7 @@ export default function Header({
                 <span className="font-extrabold tracking-[-0.03em] text-base sm:text-xl md:text-2xl uppercase font-sans text-[#121212] whitespace-nowrap">
                   {storeSettings?.brand_name || "THE COZY THEORY"}
                 </span>
-                <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#004fff] inline-block -mt-1.5 sm:-mt-2 flex-shrink-0"></span>
+                <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#001540] inline-block -mt-1.5 sm:-mt-2 flex-shrink-0"></span>
               </div>
               <span className="hidden sm:block text-[8px] font-mono tracking-[0.22em] text-neutral-500 uppercase -mt-0.5">
                 {storeSettings?.brand_tagline || "Stay Cozy, Stay You"}
@@ -122,7 +122,7 @@ export default function Header({
           <div className="flex items-center justify-center gap-6 xl:gap-8 text-[11px] xl:text-[12px] tracking-[0.1em] font-medium uppercase text-[#121212]">
             <Link
               href="/collections/all-products"
-              className="transition-colors hover:text-[#004fff] py-0.5 whitespace-nowrap"
+              className="transition-colors hover:text-[#001540] py-0.5 whitespace-nowrap"
             >
               All Objects
             </Link>
@@ -131,7 +131,7 @@ export default function Header({
               <Link
                 key={col.handle}
                 href={`/collections/${col.handle}`}
-                className="transition-colors hover:text-[#004fff] py-0.5 whitespace-nowrap"
+                className="transition-colors hover:text-[#001540] py-0.5 whitespace-nowrap"
               >
                 {col.title || col.label}
               </Link>
@@ -140,7 +140,7 @@ export default function Header({
             {/* More Collections Dropdown if more than 6 */}
             {remainingCollections.length > 0 && (
               <div className="relative group py-0.5">
-                <button className="flex items-center gap-1 hover:text-[#004fff] transition-colors cursor-pointer uppercase">
+                <button className="flex items-center gap-1 hover:text-[#001540] transition-colors cursor-pointer uppercase">
                   <span>More Collections</span>
                   <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
                 </button>
@@ -194,7 +194,7 @@ export default function Header({
                 <span className="font-extrabold tracking-[-0.03em] text-lg uppercase font-sans text-[#121212]">
                   {storeSettings?.brand_name || "THE COZY THEORY"}
                 </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#004fff] inline-block -mt-1"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#001540] inline-block -mt-1"></span>
               </div>
               <span className="text-[8px] font-mono tracking-[0.2em] text-neutral-500 uppercase -mt-0.5">
                 {storeSettings?.brand_tagline || "Stay Cozy, Stay You"}
@@ -220,7 +220,7 @@ export default function Header({
                   key={col.handle}
                   href={`/collections/${col.handle}`}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block text-base font-medium uppercase text-neutral-900 hover:text-[#004fff] transition-colors"
+                  className="block text-base font-medium uppercase text-neutral-900 hover:text-[#001540] transition-colors"
                 >
                   {col.title || col.label}
                 </Link>
@@ -231,12 +231,13 @@ export default function Header({
             <div className="pt-4 border-t border-[#e5e3dc] space-y-2.5 text-xs font-mono uppercase text-neutral-500">
               <div><Link href="/account" onClick={() => setMobileMenuOpen(false)} className="hover:text-black flex items-center gap-1.5"><User className="w-3.5 h-3.5" /> Collector Account</Link></div>
               <div><Link href="/cart" onClick={() => setMobileMenuOpen(false)} className="hover:text-black">Shopping Bag</Link></div>
-              <div><Link href="/checkout" onClick={() => setMobileMenuOpen(false)} className="hover:text-black font-bold text-[#004fff]">Express Checkout →</Link></div>
+              <div><Link href="/checkout" onClick={() => setMobileMenuOpen(false)} className="hover:text-black font-bold text-[#001540]">Express Checkout →</Link></div>
               <div><Link href="/pages/our-story" onClick={() => setMobileMenuOpen(false)} className="hover:text-black">Our Story</Link></div>
-              <div><Link href="/pages/about-us" onClick={() => setMobileMenuOpen(false)} className="hover:text-black">About The Cozy Theory</Link></div>
               <div><Link href="/pages/contact" onClick={() => setMobileMenuOpen(false)} className="hover:text-black">Contact Us</Link></div>
               <div><Link href="/pages/faq" onClick={() => setMobileMenuOpen(false)} className="hover:text-black">FAQs</Link></div>
-              <div><Link href="/blogs/news" onClick={() => setMobileMenuOpen(false)} className="hover:text-black">Journal</Link></div>
+              {storeSettings?.journal_visible !== false && (
+                <div><Link href="/blogs/news" onClick={() => setMobileMenuOpen(false)} className="hover:text-black">Journal</Link></div>
+              )}
             </div>
           </div>
 

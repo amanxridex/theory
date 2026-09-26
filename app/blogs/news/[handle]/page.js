@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { BLOG_POSTS } from "../page";
-import { getBlogPostByHandle, getBlogPosts } from "@/lib/supabase";
+import { getBlogPostByHandle, getBlogPosts, getStoreSettings } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +19,37 @@ export async function generateMetadata({ params }) {
 
 export default async function BlogPostPage({ params }) {
   const { handle } = await params;
-  const dbPost = await getBlogPostByHandle(handle);
+  const [dbPost, settings] = await Promise.all([
+    getBlogPostByHandle(handle),
+    getStoreSettings(),
+  ]);
+
+  if (settings?.journal_visible === false) {
+    return (
+      <div className="bg-[#fffdf8] min-h-screen py-24 px-4 flex items-center justify-center">
+        <div className="max-w-md mx-auto text-center space-y-5 font-mono">
+          <span className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-neutral-400 block font-bold">
+            The Cozy Theory Journal
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212]">
+            Journal Currently In Preparation
+          </h1>
+          <p className="text-xs text-neutral-600 leading-relaxed font-sans">
+            Our editorial dispatches and articles are currently being prepared. Check back soon.
+          </p>
+          <div className="pt-4">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#121212] hover:bg-neutral-800 text-white text-xs font-mono uppercase font-bold tracking-wider transition-colors shadow-sm"
+            >
+              <span>Return to Store →</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const post = dbPost || BLOG_POSTS.find((p) => p.handle === handle);
 
   if (!post) {

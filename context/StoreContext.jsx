@@ -26,6 +26,10 @@ import {
   DEFAULT_STORE_SETTINGS,
   getContactInquiries as dbGetContactInquiries,
   deleteContactInquiry as dbDeleteContactInquiry,
+  getBlogPosts as dbGetBlogPosts,
+  createBlogPost as dbCreateBlogPost,
+  updateBlogPost as dbUpdateBlogPost,
+  deleteBlogPost as dbDeleteBlogPost,
 } from "@/lib/supabase";
 
 const StoreContext = createContext(null);
@@ -165,6 +169,7 @@ export function StoreProvider({ children }) {
   const [customers, setCustomers] = useState([]);
   const [discounts, setDiscounts] = useState([]);
   const [inquiries, setInquiries] = useState([]);
+  const [blogPosts, setBlogPosts] = useState([]);
   const [storeSettings, setStoreSettings] = useState(DEFAULT_STORE_SETTINGS);
   const [loading, setLoading] = useState(true);
   const [isDbConnected, setIsDbConnected] = useState(true);
@@ -187,7 +192,7 @@ export function StoreProvider({ children }) {
   const refreshData = useCallback(async () => {
     try {
       setLoading(true);
-      const [prodRes, catRes, ordRes, custRes, discRes, mtrRes, trafficRes, settingsRes, inqRes] = await Promise.all([
+      const [prodRes, catRes, ordRes, custRes, discRes, mtrRes, trafficRes, settingsRes, inqRes, blogRes] = await Promise.all([
         getProducts({ limit: 1000 }),
         getCategories(),
         getOrders(),
@@ -197,6 +202,7 @@ export function StoreProvider({ children }) {
         getRealAnalytics(),
         dbGetStoreSettings(),
         dbGetContactInquiries(),
+        dbGetBlogPosts({ includeUnpublished: true }),
       ]);
 
       if (prodRes && prodRes.products && prodRes.products.length > 0) {
@@ -235,6 +241,10 @@ export function StoreProvider({ children }) {
 
       if (inqRes) {
         setInquiries(inqRes);
+      }
+
+      if (blogRes) {
+        setBlogPosts(blogRes);
       }
 
       setAnalytics({
@@ -527,6 +537,53 @@ export function StoreProvider({ children }) {
     }
   };
 
+  // Blog article actions (syncs to Supabase blog_posts)
+  const addBlogPost = async (postData) => {
+    try {
+      const created = await dbCreateBlogPost(postData);
+      await refreshData();
+      return created;
+    } catch (err) {
+      console.error("Failed to create blog post in Supabase:", err);
+      throw err;
+    }
+  };
+
+  const updateBlogPost = async (id, updates) => {
+    try {
+      const updated = await dbUpdateBlogPost(id, updates);
+      await refreshData();
+      return updated;
+    } catch (err) {
+      console.error("Failed to update blog post in Supabase:", err);
+      throw err;
+    }
+  };
+
+  const deleteBlogPost = async (id) => {
+    setBlogPosts((prev) => prev.filter((p) => p.id !== id));
+    try {
+      await dbDeleteBlogPost(id);
+      await refreshData();
+      return true;
+    } catch (err) {
+      console.error("Failed to delete blog post in Supabase:", err);
+      await refreshData();
+      throw err;
+    }
+  };
+
+  const toggleBlogPostPublish = async (id, currentPublished) => {
+    try {
+      const updated = await dbUpdateBlogPost(id, { published: !currentPublished });
+      await refreshData();
+      return updated;
+    } catch (err) {
+      console.error("Failed to toggle blog post publish status:", err);
+      throw err;
+    }
+  };
+
   // Update store and brand settings (syncs to Supabase in real time)
   const updateStoreSettings = async (newSettings) => {
     // Optimistic local state update
@@ -558,6 +615,7 @@ export function StoreProvider({ children }) {
         customers,
         discounts,
         inquiries,
+        blogPosts,
         storeSettings,
         analytics,
         loading,
@@ -578,6 +636,10 @@ export function StoreProvider({ children }) {
         deleteDiscount,
         toggleDiscountStatus,
         deleteInquiry,
+        addBlogPost,
+        updateBlogPost,
+        deleteBlogPost,
+        toggleBlogPostPublish,
         updateStoreSettings,
       }}
     >
@@ -596,6 +658,7 @@ export function useStore() {
       customers: [],
       discounts: [],
       inquiries: [],
+      blogPosts: [],
       storeSettings: DEFAULT_STORE_SETTINGS,
       analytics: { activeVisitors: 24, todayVisitors: 1428, totalSales: 12418, totalOrders: 5 },
       loading: false,
@@ -616,6 +679,10 @@ export function useStore() {
       deleteDiscount: () => {},
       toggleDiscountStatus: () => {},
       deleteInquiry: () => {},
+      addBlogPost: () => {},
+      updateBlogPost: () => {},
+      deleteBlogPost: () => {},
+      toggleBlogPostPublish: () => {},
       updateStoreSettings: () => {},
     };
   }

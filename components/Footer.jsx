@@ -34,9 +34,9 @@ export default function Footer() {
                 <span className="font-extrabold tracking-[-0.04em] text-2xl sm:text-3xl uppercase font-sans">
                   {storeSettings?.brand_name || "THE COZY THEORY"}
                 </span>
-                <span className="w-2.5 h-2.5 rounded-full bg-[#004fff] inline-block -mt-3"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-[#001540] inline-block -mt-3"></span>
               </div>
-              <span className="text-[10px] font-mono tracking-[0.25em] text-blue-400 uppercase font-bold">
+              <span className="text-[10px] font-mono tracking-[0.25em] text-sky-300 uppercase font-bold">
                 {storeSettings?.brand_tagline || "Stay Cozy, Stay You"}
               </span>
             </Link>
@@ -48,7 +48,7 @@ export default function Footer() {
 
           {/* Newsletter Signup */}
           <div className="lg:col-span-6 space-y-4">
-            <span className="text-[11px] font-mono tracking-[0.2em] text-blue-400 uppercase block">
+            <span className="text-[11px] font-mono tracking-[0.2em] text-sky-300 uppercase block">
               {storeSettings?.footer_newsletter_title || "Join The Cozy Theory Collector List"}
             </span>
             <p className="text-xs text-neutral-300">
@@ -63,11 +63,11 @@ export default function Footer() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
                 required
-                className="flex-1 bg-neutral-900 border border-neutral-700 text-white px-4 py-3 text-xs font-mono placeholder:text-neutral-500 focus:outline-none focus:border-blue-500 transition-colors"
+                className="flex-1 bg-neutral-900 border border-neutral-700 text-white px-4 py-3 text-xs font-mono placeholder:text-neutral-500 focus:outline-none focus:border-[#001540] transition-colors"
               />
               <button
                 type="submit"
-                className="px-5 py-3 bg-[#004fff] text-white hover:bg-blue-600 transition-colors flex items-center justify-center"
+                className="px-5 py-3 bg-[#001540] text-white hover:bg-[#002266] transition-colors flex items-center justify-center"
                 aria-label="Subscribe to newsletter"
               >
                 {subscribed ? (
@@ -117,8 +117,9 @@ export default function Footer() {
             </div>
             <ul className="space-y-2 text-neutral-300">
               <li><Link href="/pages/our-story" className="hover:text-white transition-colors">Our Story</Link></li>
-              <li><Link href="/pages/about-us" className="hover:text-white transition-colors">About The Cozy Theory</Link></li>
-              <li><Link href="/blogs/news" className="hover:text-white transition-colors">Journal</Link></li>
+              {storeSettings?.journal_visible !== false && (
+                <li><Link href="/blogs/news" className="hover:text-white transition-colors">Journal</Link></li>
+              )}
               <li><Link href="/pages/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
               <li><Link href="/pages/faq" className="hover:text-white transition-colors">FAQs & Care Guides</Link></li>
             </ul>

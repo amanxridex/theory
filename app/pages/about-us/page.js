@@ -41,7 +41,7 @@ export default function AboutPage() {
             <p>
               Each piece in our collection is curated to celebrate raw textures: organic ceramics, matte glazes, breathable natural cotton, and hand-finished metal accents.
             </p>
-            <div className="p-4 bg-[#f7f5ef] border-l-2 border-[#004fff] text-xs font-mono">
+            <div className="p-4 bg-[#f7f5ef] border-l-2 border-[#001540] text-xs font-mono">
               &ldquo;Stay cozy, stay you — transform your home into a sanctuary of everyday comfort, warmth, and deliberate living.&rdquo;
             </div>
           </div>
@@ -92,7 +92,7 @@ export default function AboutPage() {
           <div>
             <Link
               href="/collections/all-products"
-              className="inline-block px-8 py-4 bg-[#004fff] text-white text-xs font-mono uppercase tracking-widest hover:bg-blue-600 transition-colors shadow-md"
+              className="inline-block px-8 py-4 bg-[#001540] text-white text-xs font-mono uppercase tracking-widest hover:bg-[#002266] transition-colors shadow-md"
             >
               Browse The Cozy Theory Collection →
             </Link>

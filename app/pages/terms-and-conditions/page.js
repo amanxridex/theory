@@ -12,8 +12,7 @@ import {
   Mail, 
   Phone, 
   ArrowLeft,
-  ChevronRight,
-  Sparkles
+  ChevronRight
 } from "lucide-react";
 
 export const metadata = {
@@ -54,11 +53,11 @@ export default function TermsAndConditionsPage() {
           </p>
           <ul className="space-y-2 list-none pl-0">
             <li className="flex items-start gap-2.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#004fff] mt-2 shrink-0"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#001540] mt-2 shrink-0"></span>
               <span>Use the site for lawful purposes only.</span>
             </li>
             <li className="flex items-start gap-2.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#004fff] mt-2 shrink-0"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#001540] mt-2 shrink-0"></span>
               <span>Provide accurate and truthful information when required, such as when placing orders or creating an account.</span>
             </li>
           </ul>
@@ -180,9 +179,9 @@ export default function TermsAndConditionsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
             <a 
               href="mailto:thecozytheory.store@gmail.com"
-              className="flex items-center gap-3 p-3.5 rounded-sm border border-[#e5e3dc] bg-white hover:border-[#004fff] hover:shadow-xs transition-all group"
+              className="flex items-center gap-3 p-3.5 rounded-sm border border-[#e5e3dc] bg-white hover:border-[#001540] hover:shadow-xs transition-all group"
             >
-              <div className="w-8 h-8 rounded-full bg-blue-50 text-[#004fff] flex items-center justify-center shrink-0 group-hover:bg-[#004fff] group-hover:text-white transition-colors">
+              <div className="w-8 h-8 rounded-full bg-blue-50 text-[#001540] flex items-center justify-center shrink-0 group-hover:bg-[#001540] group-hover:text-white transition-colors">
                 <Mail className="w-4 h-4" />
               </div>
               <div className="min-w-0">
@@ -192,9 +191,9 @@ export default function TermsAndConditionsPage() {
             </a>
             <a 
               href="tel:7558085343"
-              className="flex items-center gap-3 p-3.5 rounded-sm border border-[#e5e3dc] bg-white hover:border-[#004fff] hover:shadow-xs transition-all group"
+              className="flex items-center gap-3 p-3.5 rounded-sm border border-[#e5e3dc] bg-white hover:border-[#001540] hover:shadow-xs transition-all group"
             >
-              <div className="w-8 h-8 rounded-full bg-blue-50 text-[#004fff] flex items-center justify-center shrink-0 group-hover:bg-[#004fff] group-hover:text-white transition-colors">
+              <div className="w-8 h-8 rounded-full bg-blue-50 text-[#001540] flex items-center justify-center shrink-0 group-hover:bg-[#001540] group-hover:text-white transition-colors">
                 <Phone className="w-4 h-4" />
               </div>
               <div className="min-w-0">
@@ -215,7 +214,7 @@ export default function TermsAndConditionsPage() {
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-4 flex items-center justify-between">
           <Link 
             href="/" 
-            className="inline-flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-neutral-500 hover:text-[#004fff] transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-neutral-500 hover:text-[#001540] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Home</span>
@@ -223,7 +222,7 @@ export default function TermsAndConditionsPage() {
           <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-neutral-400">
             <span>thecozytheory.in</span>
             <span>•</span>
-            <span className="text-[#004fff] font-bold">Legal</span>
+            <span className="text-[#001540] font-bold">Legal</span>
           </div>
         </div>
       </div>
@@ -232,8 +231,8 @@ export default function TermsAndConditionsPage() {
       <div className="border-b border-[#e5e3dc] bg-[#faf8f2]">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-16">
           <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white border border-[#e5e3dc] text-[10px] font-mono uppercase tracking-[0.2em] text-[#004fff] font-semibold">
-              <Sparkles className="w-3 h-3" />
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white border border-[#e5e3dc] text-[10px] font-mono uppercase tracking-[0.2em] text-[#001540] font-semibold">
+              <ShieldCheck className="w-3 h-3" />
               Legal & Operating Agreement
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight text-[#121212]">
@@ -254,7 +253,7 @@ export default function TermsAndConditionsPage() {
           <aside className="hidden lg:block lg:col-span-4">
             <div className="sticky top-28 space-y-6 p-6 bg-white border border-[#e5e3dc] shadow-xs">
               <div className="space-y-1 pb-4 border-b border-[#e5e3dc]">
-                <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#004fff] font-bold">
+                <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#001540] font-bold">
                   Quick Navigation
                 </div>
                 <div className="text-sm font-bold uppercase tracking-tight text-[#121212]">
@@ -264,7 +263,7 @@ export default function TermsAndConditionsPage() {
               <nav className="space-y-1.5 text-xs font-mono">
                 <a 
                   href="#introduction" 
-                  className="flex items-center justify-between p-2 text-neutral-600 hover:text-[#004fff] hover:bg-neutral-50 rounded transition-colors"
+                  className="flex items-center justify-between p-2 text-neutral-600 hover:text-[#001540] hover:bg-neutral-50 rounded transition-colors"
                 >
                   <span>Introduction</span>
                   <ChevronRight className="w-3.5 h-3.5 opacity-40" />
@@ -273,7 +272,7 @@ export default function TermsAndConditionsPage() {
                   <a
                     key={sec.id}
                     href={`#${sec.id}`}
-                    className="flex items-center justify-between p-2 text-neutral-600 hover:text-[#004fff] hover:bg-neutral-50 rounded transition-colors"
+                    className="flex items-center justify-between p-2 text-neutral-600 hover:text-[#001540] hover:bg-neutral-50 rounded transition-colors"
                   >
                     <span className="truncate">{sec.number}. {sec.title}</span>
                     <ChevronRight className="w-3.5 h-3.5 opacity-40 shrink-0" />
@@ -288,7 +287,7 @@ export default function TermsAndConditionsPage() {
                 </div>
                 <a 
                   href="mailto:thecozytheory.store@gmail.com" 
-                  className="text-xs text-neutral-800 hover:text-[#004fff] font-medium block truncate"
+                  className="text-xs text-neutral-800 hover:text-[#001540] font-medium block truncate"
                 >
                   thecozytheory.store@gmail.com
                 </a>
@@ -309,7 +308,7 @@ export default function TermsAndConditionsPage() {
             >
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-neutral-100 text-neutral-900 flex items-center justify-center font-mono font-bold text-xs">
-                  <FileText className="w-4 h-4 text-[#004fff]" />
+                  <FileText className="w-4 h-4 text-[#001540]" />
                 </div>
                 <div>
                   <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block">
@@ -325,7 +324,7 @@ export default function TermsAndConditionsPage() {
                 <p>
                   Welcome to <strong className="text-neutral-900 font-semibold">thecozytheory.in</strong>. By accessing and using this website, you agree to the following terms and conditions. Please read them carefully before using the site or making any purchases.
                 </p>
-                <div className="p-3.5 bg-[#faf8f2] border-l-2 border-[#004fff] text-neutral-800 text-xs sm:text-sm">
+                <div className="p-3.5 bg-[#faf8f2] border-l-2 border-[#001540] text-neutral-800 text-xs sm:text-sm">
                   If you do not agree with these terms, you may not use this website.
                 </div>
               </div>
@@ -367,7 +366,7 @@ export default function TermsAndConditionsPage() {
             {/* Bottom Guarantee Banner */}
             <div className="p-6 sm:p-8 bg-[#121212] text-[#fffdf8] border border-neutral-800 space-y-4">
               <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-blue-400">
-                <Sparkles className="w-3.5 h-3.5" />
+                <ShieldCheck className="w-3.5 h-3.5" />
                 The Cozy Theory Assurance
               </div>
               <h3 className="text-lg sm:text-xl font-bold uppercase tracking-tight">
@@ -379,7 +378,7 @@ export default function TermsAndConditionsPage() {
               <div className="pt-2 flex flex-wrap gap-4 text-xs font-mono">
                 <Link 
                   href="/pages/contact" 
-                  className="px-4 py-2.5 bg-[#004fff] text-white hover:bg-blue-600 transition-colors uppercase font-bold text-[11px] tracking-wider"
+                  className="px-4 py-2.5 bg-[#001540] text-white hover:bg-[#002266] transition-colors uppercase font-bold text-[11px] tracking-wider"
                 >
                   Contact Us
                 </Link>

@@ -45,13 +45,43 @@ export const BLOG_POSTS = [
   },
 ];
 
-import { getBlogPosts } from "@/lib/supabase";
+import { getBlogPosts, getStoreSettings } from "@/lib/supabase";
 
 export const revalidate = 60; // Revalidate every minute
 
 export default async function BlogNewsPage() {
-  const dbPosts = await getBlogPosts();
+  const [dbPosts, settings] = await Promise.all([
+    getBlogPosts(),
+    getStoreSettings(),
+  ]);
   const posts = dbPosts && dbPosts.length > 0 ? dbPosts : BLOG_POSTS;
+
+  // Check if Journal has been toggled to hidden by admin
+  if (settings?.journal_visible === false) {
+    return (
+      <div className="bg-[#fffdf8] min-h-screen py-24 px-4 flex items-center justify-center">
+        <div className="max-w-md mx-auto text-center space-y-5 font-mono">
+          <span className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-neutral-400 block font-bold">
+            The Cozy Theory Journal
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212]">
+            Journal Currently In Preparation
+          </h1>
+          <p className="text-xs text-neutral-600 leading-relaxed font-sans">
+            Our editorial dispatches, drop stories, and living philosophy articles are currently being prepared. Check back soon for new dispatches.
+          </p>
+          <div className="pt-4">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#121212] hover:bg-neutral-800 text-white text-xs font-mono uppercase font-bold tracking-wider transition-colors shadow-sm"
+            >
+              <span>Explore Homeware Archive →</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#fffdf8] min-h-screen py-12 md:py-20">

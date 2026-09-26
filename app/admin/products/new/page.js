@@ -13,11 +13,11 @@ import {
   DollarSign,
   Tag,
   Layers,
-  Sparkles,
   ExternalLink,
 } from "lucide-react";
 import { DEFAULT_PRODUCT_SECTIONS, serializeProductSections } from "@/lib/productSections";
 import ProductSectionsEditor from "@/components/admin/ProductSectionsEditor";
+import ProductImageUploader from "@/components/admin/ProductImageUploader";
 
 export default function AddNewProductPage() {
   const router = useRouter();
@@ -35,13 +35,9 @@ export default function AddNewProductPage() {
     sku: "TCT-CER-01",
     available: true,
     tags: "Curated Living, Artisanal Stoneware, New Drop",
-    images: [
-      "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136",
-      "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product9-01.png?v=1784242846",
-    ],
+    images: [],
   });
 
-  const [newImageUrl, setNewImageUrl] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createdProduct, setCreatedProduct] = useState(null);
   const [sections, setSections] = useState(DEFAULT_PRODUCT_SECTIONS);
@@ -53,24 +49,6 @@ export default function AddNewProductPage() {
       ...prev,
       title: val,
       handle: prev.handle === "" || prev.handle === prev.title.toLowerCase().replace(/[^a-z0-9]+/g, "-") ? autoSlug : prev.handle,
-    }));
-  };
-
-  const handleAddImage = (e) => {
-    e.preventDefault();
-    if (newImageUrl.trim()) {
-      setFormData((prev) => ({
-        ...prev,
-        images: [...prev.images, newImageUrl.trim()],
-      }));
-      setNewImageUrl("");
-    }
-  };
-
-  const handleRemoveImage = (indexToRemove) => {
-    setFormData((prev) => ({
-      ...prev,
-      images: prev.images.filter((_, idx) => idx !== indexToRemove),
     }));
   };
 
@@ -112,15 +90,6 @@ export default function AddNewProductPage() {
     }
   };
 
-  // Preset sample studio images to click-and-add
-  const imagePresets = [
-    { title: "Ceramic Pitcher", url: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product_79-01.png?v=1784392136" },
-    { title: "Chicken Condiment Jar", url: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/Product9-01.png?v=1784242846" },
-    { title: "Bird Section Bowl", url: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/TT75REDDIVIDEDBOWL.png?v=1788126151" },
-    { title: "Washed Cotton Linen", url: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/DSC00422_eee0df88-82cb-49a4-818d-182c056960b2.jpg?v=1740976529" },
-    { title: "Sculptural Ceramic Vase", url: "https://cdn.shopify.com/s/files/1/0888/0121/4761/files/ChatGPTImageJul18_2026_11_18_29PM.png?v=1784397111" },
-  ];
-
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       
@@ -135,7 +104,7 @@ export default function AddNewProductPage() {
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <span className="text-xs font-mono uppercase tracking-widest text-[#004fff] font-bold">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#001540] font-bold">
               Catalog Management
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212] mt-0.5">
@@ -260,100 +229,12 @@ export default function AddNewProductPage() {
           {/* Card: 4 Product Accordion Sections (Object Details, Material & Dimensions, Care, Shipping) */}
           <ProductSectionsEditor sections={sections} onChange={setSections} />
 
-          {/* Card: Media & Images */}
-          <div className="p-6 bg-white border border-[#e5e3dc] rounded space-y-5 shadow-xs">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-sm font-bold uppercase tracking-wider text-[#121212]">
-                  Media & Product Imagery
-                </h2>
-                <p className="text-xs text-neutral-500 font-mono">
-                  Primary photo appears in grid, secondary photo on hover flip
-                </p>
-              </div>
-              <span className="text-xs font-mono text-neutral-500">
-                {formData.images.length} Images
-              </span>
-            </div>
-
-            {/* Existing Image Thumbnails */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {formData.images.map((img, idx) => (
-                <div
-                  key={idx}
-                  className="relative aspect-square rounded border border-[#e5e3dc] bg-neutral-100 overflow-hidden group"
-                >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveImage(idx)}
-                      className="p-1.5 bg-rose-600 hover:bg-rose-500 text-white rounded"
-                      title="Remove image"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                  {idx === 0 && (
-                    <span className="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 bg-[#121212] text-white text-[9px] font-mono font-bold rounded uppercase">
-                      Primary
-                    </span>
-                  )}
-                  {idx === 1 && (
-                    <span className="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 bg-neutral-700 text-white text-[9px] font-mono font-bold rounded uppercase">
-                      Hover Flip
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Add Image by URL Input */}
-            <div className="pt-3 border-t border-[#e5e3dc] space-y-3">
-              <label className="text-xs font-mono uppercase tracking-wider text-neutral-600 block font-semibold">
-                Add Image from URL
-              </label>
-              <div className="flex gap-2">
-                <input
-                  type="url"
-                  value={newImageUrl}
-                  onChange={(e) => setNewImageUrl(e.target.value)}
-                  placeholder="Paste image URL here..."
-                  className="flex-1 bg-[#f5f2eb] border border-[#e5e3dc] rounded px-3 py-2 text-xs font-mono text-black placeholder:text-neutral-400 focus:outline-none focus:border-black focus:bg-white"
-                />
-                <button
-                  type="button"
-                  onClick={handleAddImage}
-                  className="px-4 py-2 bg-[#121212] hover:bg-neutral-800 text-white rounded text-xs font-mono transition-colors"
-                >
-                  Add Media
-                </button>
-              </div>
-
-              {/* Presets picker */}
-              <div className="pt-2">
-                <span className="text-[10px] font-mono uppercase text-neutral-500 block mb-2 font-semibold">
-                  Or pick sample studio image:
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {imagePresets.map((preset) => (
-                    <button
-                      key={preset.url}
-                      type="button"
-                      onClick={() => {
-                        if (!formData.images.includes(preset.url)) {
-                          setFormData((prev) => ({ ...prev, images: [...prev.images, preset.url] }));
-                        }
-                      }}
-                      className="px-2.5 py-1 bg-[#f5f2eb] hover:bg-[#ede9e0] border border-[#e5e3dc] rounded text-[11px] font-mono text-neutral-800 transition-colors"
-                    >
-                      + {preset.title}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Card: Media & Product Imagery with Computer Upload and Drag & Drop Reordering */}
+          <ProductImageUploader
+            images={formData.images}
+            onChange={(newImages) => setFormData((prev) => ({ ...prev, images: newImages }))}
+            maxImages={8}
+          />
 
           {/* Card: Pricing */}
           <div className="p-6 bg-white border border-[#e5e3dc] rounded space-y-4 shadow-xs">
@@ -457,7 +338,7 @@ export default function AddNewProductPage() {
               <h2 className="text-sm font-bold uppercase tracking-wider text-[#121212]">
                 Category Selection
               </h2>
-              <Link href="/admin/collections/new" className="text-xs font-mono text-[#004fff] font-bold hover:underline">
+              <Link href="/admin/collections/new" className="text-xs font-mono text-[#001540] font-bold hover:underline">
                 + New
               </Link>
             </div>

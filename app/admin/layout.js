@@ -213,7 +213,7 @@ export default function AdminLayout({ children }) {
             </div>
 
             <div className="space-y-1">
-              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#004fff] font-bold block">
+              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#001540] font-bold block">
                 RESTRICTED ACCESS
               </span>
               <h1 className="text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-[#121212]">
@@ -343,7 +343,7 @@ export default function AdminLayout({ children }) {
               className="w-full flex items-center justify-between px-3 py-2 bg-[#f5f2eb] hover:bg-[#ede9e0] text-xs font-mono rounded text-neutral-800 hover:text-black transition-colors border border-[#e5e3dc]"
             >
               <span className="flex items-center gap-2">
-                <Store className="w-3.5 h-3.5 text-[#004fff]" />
+                <Store className="w-3.5 h-3.5 text-[#001540]" />
                 <span className="font-medium">View Online Store</span>
               </span>
               <ExternalLink className="w-3.5 h-3.5 text-neutral-400" />
@@ -377,7 +377,7 @@ export default function AdminLayout({ children }) {
                     </div>
 
                     {item.badge && (
-                      <span className="text-[10px] font-mono font-bold bg-[#004fff] text-white px-1.5 py-0.5 rounded-full">
+                      <span className="text-[10px] font-mono font-bold bg-[#001540] text-white px-1.5 py-0.5 rounded-full">
                         {item.badge}
                       </span>
                     )}
@@ -568,7 +568,7 @@ export default function AdminLayout({ children }) {
             <div className="relative">
               <ShoppingBag className="w-4 h-4" />
               {pendingOrdersCount > 0 && (
-                <span className="absolute -top-1 -right-2 w-3.5 h-3.5 bg-[#004fff] text-white text-[9px] rounded-full flex items-center justify-center font-bold">
+                <span className="absolute -top-1 -right-2 w-3.5 h-3.5 bg-[#001540] text-white text-[9px] rounded-full flex items-center justify-center font-bold">
                   {pendingOrdersCount}
                 </span>
               )}

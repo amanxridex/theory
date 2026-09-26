@@ -17,7 +17,7 @@ import {
   CheckCircle2,
   AlertCircle,
   Image as ImageIcon,
-  Sparkles,
+  ShieldCheck,
 } from "lucide-react";
 
 const IMAGE_PRESETS = [
@@ -276,7 +276,7 @@ export default function AdminCollectionsPage() {
                     </span>
                   </div>
                   {collection.handle === "all-products" && (
-                    <span className="absolute top-2.5 left-2.5 px-2 py-0.5 bg-[#004fff] text-white rounded text-[9px] font-mono font-bold uppercase tracking-wider shadow">
+                    <span className="absolute top-2.5 left-2.5 px-2 py-0.5 bg-[#001540] text-white rounded text-[9px] font-mono font-bold uppercase tracking-wider shadow">
                       Master Archive
                     </span>
                   )}
@@ -284,10 +284,10 @@ export default function AdminCollectionsPage() {
 
                 {/* Details */}
                 <div className="p-4 sm:p-5 space-y-2">
-                  <div className="text-[10px] font-mono text-[#004fff] uppercase tracking-wider font-bold">
+                  <div className="text-[10px] font-mono text-[#001540] uppercase tracking-wider font-bold">
                     /collections/{collection.handle}
                   </div>
-                  <h3 className="text-base font-bold uppercase text-[#121212] group-hover:text-[#004fff] transition-colors">
+                  <h3 className="text-base font-bold uppercase text-[#121212] group-hover:text-[#001540] transition-colors">
                     {collection.title || collection.label}
                   </h3>
                   <p className="text-xs text-neutral-600 font-mono line-clamp-2 leading-relaxed">
@@ -301,7 +301,7 @@ export default function AdminCollectionsPage() {
                 <Link
                   href={`/collections/${collection.handle}`}
                   target="_blank"
-                  className="flex items-center gap-1 text-black font-semibold hover:text-[#004fff] transition-colors"
+                  className="flex items-center gap-1 text-black font-semibold hover:text-[#001540] transition-colors"
                 >
                   <Eye className="w-3.5 h-3.5" />
                   <span>Storefront ↗</span>

@@ -14,7 +14,6 @@ import {
   ShieldCheck,
   Truck,
   RotateCcw,
-  Sparkles,
   Share2,
 } from "lucide-react";
 
@@ -200,8 +199,8 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
             {/* Micro Highlights */}
             <div className="p-4 bg-[#f7f5ef] border border-[#e5e3dc] space-y-2 text-xs font-mono text-neutral-700">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-600" />
-                <span>Handcrafted & Curated by The Cozy Theory</span>
+                <CheckCircle2 className="w-4 h-4 text-neutral-800" />
+                <span>Handcrafted &amp; Curated by The Cozy Theory</span>
               </div>
               <div className="flex items-center gap-2">
                 <Truck className="w-4 h-4 text-neutral-700" />
@@ -272,7 +271,7 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
                   <button
                     onClick={handleBuyNow}
                     id="gokwik-buy-now"
-                    className="w-full py-4 bg-[#004fff] text-white text-xs font-mono font-bold tracking-widest uppercase hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 shadow-md"
+                    className="w-full py-4 bg-[#001540] text-white text-xs font-mono font-bold tracking-widest uppercase hover:bg-[#002266] transition-colors flex items-center justify-center gap-2 shadow-md"
                   >
                     <span>⚡ Buy It Now (Cash on Delivery Express)</span>
                   </button>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Phone, ArrowRight, Package, ShieldCheck, Sparkles } from "lucide-react";
+import { Phone, ArrowRight, Package, ShieldCheck } from "lucide-react";
 import { getCustomerByPhone, getOrdersByPhone } from "@/lib/supabase";
 
 export default function LoginPage() {
@@ -67,9 +67,9 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="w-14 h-14 rounded-full bg-[#f7f5ef] flex items-center justify-center mx-auto border border-[#e5e3dc] text-neutral-800">
-            <Phone className="w-6 h-6 text-[#004fff]" />
+            <Phone className="w-6 h-6 text-[#001540]" />
           </div>
-          <span className="text-[10px] font-mono tracking-[0.25em] text-[#004fff] uppercase font-bold block">
+          <span className="text-[10px] font-mono tracking-[0.25em] text-[#001540] uppercase font-bold block">
             Collector Verification
           </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212]">
@@ -83,7 +83,7 @@ export default function LoginPage() {
         {/* Informative Auto-Account Banner */}
         <div className="p-3.5 bg-[#f7f5ef] border border-[#e5e3dc] text-[11px] font-mono text-neutral-600 space-y-1">
           <div className="flex items-center gap-1.5 font-bold text-neutral-800">
-            <Sparkles className="w-3.5 h-3.5 text-[#004fff]" />
+            <ShieldCheck className="w-3.5 h-3.5 text-[#001540]" />
             <span>Seamless Instant Access</span>
           </div>
           <p>

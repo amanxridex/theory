@@ -88,7 +88,7 @@ export default function FAQPage() {
           </p>
           <a
             href="mailto:hello@thecozytheory.com"
-            className="inline-block px-6 py-3 bg-[#004fff] text-white text-xs font-mono uppercase tracking-widest hover:bg-blue-600 transition-colors"
+            className="inline-block px-6 py-3 bg-[#001540] text-white text-xs font-mono uppercase tracking-widest hover:bg-[#002266] transition-colors"
           >
             Email The Cozy Theory Team →
           </a>

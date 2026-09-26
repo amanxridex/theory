@@ -10,7 +10,7 @@ import {
   CheckCircle2,
   ExternalLink,
   Image as ImageIcon,
-  Sparkles,
+  ShieldCheck,
 } from "lucide-react";
 
 export default function NewCollectionPage() {
@@ -67,7 +67,7 @@ export default function NewCollectionPage() {
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <span className="text-xs font-mono uppercase tracking-widest text-[#004fff] font-bold">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#001540] font-bold">
               Category Management
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212] mt-0.5">

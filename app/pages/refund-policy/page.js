@@ -8,7 +8,6 @@ import {
   ArrowLeft, 
   CheckCircle2, 
   AlertCircle, 
-  Sparkles, 
   FileCheck2,
   RefreshCw,
   Gift
@@ -51,7 +50,7 @@ export default function RefundPolicyPage() {
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-4 flex items-center justify-between">
           <Link 
             href="/" 
-            className="inline-flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-neutral-500 hover:text-[#004fff] transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-neutral-500 hover:text-[#001540] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Home</span>
@@ -59,7 +58,7 @@ export default function RefundPolicyPage() {
           <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-neutral-400">
             <span>thecozytheory.in</span>
             <span>•</span>
-            <span className="text-[#004fff] font-bold">Policy</span>
+            <span className="text-[#001540] font-bold">Policy</span>
           </div>
         </div>
       </div>
@@ -68,8 +67,8 @@ export default function RefundPolicyPage() {
       <div className="border-b border-[#e5e3dc] bg-[#faf8f2]">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-16">
           <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white border border-[#e5e3dc] text-[10px] font-mono uppercase tracking-[0.2em] text-[#004fff] font-semibold">
-              <Sparkles className="w-3 h-3" />
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white border border-[#e5e3dc] text-[10px] font-mono uppercase tracking-[0.2em] text-[#001540] font-semibold">
+              <ShieldCheck className="w-3 h-3" />
               Customer Protection & Guarantee
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight text-[#121212]">
@@ -90,7 +89,7 @@ export default function RefundPolicyPage() {
           <aside className="hidden lg:block lg:col-span-4">
             <div className="sticky top-28 space-y-6 p-6 bg-white border border-[#e5e3dc] shadow-xs">
               <div className="space-y-1 pb-4 border-b border-[#e5e3dc]">
-                <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#004fff] font-bold">
+                <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#001540] font-bold">
                   At A Glance
                 </div>
                 <div className="text-sm font-bold uppercase tracking-tight text-[#121212]">
@@ -110,7 +109,7 @@ export default function RefundPolicyPage() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-blue-50 text-[#004fff] flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-6 h-6 rounded-full bg-blue-50 text-[#001540] flex items-center justify-center shrink-0 mt-0.5">
                     <PackageX className="w-4 h-4" />
                   </div>
                   <div>
@@ -147,7 +146,7 @@ export default function RefundPolicyPage() {
                 </div>
                 <a 
                   href="mailto:thecozytheory.store@gmail.com" 
-                  className="text-xs text-neutral-900 hover:text-[#004fff] font-medium block truncate"
+                  className="text-xs text-neutral-900 hover:text-[#001540] font-medium block truncate"
                 >
                   thecozytheory.store@gmail.com
                 </a>
@@ -161,7 +160,7 @@ export default function RefundPolicyPage() {
             {/* Introduction Card */}
             <section className="p-6 sm:p-8 bg-white border border-[#e5e3dc] shadow-xs space-y-4">
               <div className="flex items-center gap-3 pb-3 border-b border-neutral-100">
-                <div className="w-8 h-8 rounded-full bg-[#004fff]/10 text-[#004fff] flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-full bg-[#001540]/10 text-[#001540] flex items-center justify-center shrink-0">
                   <ShieldCheck className="w-4 h-4" />
                 </div>
                 <div>
@@ -181,7 +180,7 @@ export default function RefundPolicyPage() {
               {/* Primary 50% Refund Guarantee Highlight */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div className="p-4 sm:p-5 bg-[#faf8f2] border border-[#e5e3dc] space-y-2">
-                  <div className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-[#004fff] font-bold">
+                  <div className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-[#001540] font-bold">
                     <Video className="w-3.5 h-3.5" />
                     50% Refund with Opening Video
                   </div>
@@ -229,7 +228,7 @@ export default function RefundPolicyPage() {
                   return (
                     <div 
                       key={step.num}
-                      className="p-4 sm:p-5 rounded-sm border border-[#e5e3dc] bg-[#fffdf8] hover:border-[#004fff] transition-colors space-y-2"
+                      className="p-4 sm:p-5 rounded-sm border border-[#e5e3dc] bg-[#fffdf8] hover:border-[#001540] transition-colors space-y-2"
                     >
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2.5">
@@ -240,7 +239,7 @@ export default function RefundPolicyPage() {
                             {step.title}
                           </h3>
                         </div>
-                        <span className="text-[10px] font-mono text-[#004fff] bg-blue-50 px-2 py-0.5 rounded-sm font-medium">
+                        <span className="text-[10px] font-mono text-[#001540] bg-blue-50 px-2 py-0.5 rounded-sm font-medium">
                           {step.badge}
                         </span>
                       </div>
@@ -277,7 +276,7 @@ export default function RefundPolicyPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                   <div className="p-4 bg-[#faf8f2] border border-[#e5e3dc] space-y-1.5">
                     <div className="flex items-center gap-2 text-neutral-900 font-semibold text-xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#004fff]"></span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#001540]"></span>
                       Option A: Standard Refund
                     </div>
                     <p className="text-xs text-neutral-600 leading-relaxed">
@@ -301,7 +300,7 @@ export default function RefundPolicyPage() {
             {/* Questions & Contact Banner */}
             <div className="p-6 sm:p-8 bg-[#121212] text-[#fffdf8] border border-neutral-800 space-y-4">
               <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-blue-400">
-                <Sparkles className="w-3.5 h-3.5" />
+                <ShieldCheck className="w-3.5 h-3.5" />
                 Customer Care & Queries
               </div>
               <h3 className="text-lg sm:text-xl font-bold uppercase tracking-tight">
@@ -313,7 +312,7 @@ export default function RefundPolicyPage() {
               <div className="pt-2 flex flex-wrap gap-4 items-center">
                 <a 
                   href="mailto:thecozytheory.store@gmail.com"
-                  className="inline-flex items-center gap-2.5 px-5 py-3 bg-[#004fff] text-white hover:bg-blue-600 transition-colors uppercase font-bold text-xs tracking-wider"
+                  className="inline-flex items-center gap-2.5 px-5 py-3 bg-[#001540] text-white hover:bg-[#002266] transition-colors uppercase font-bold text-xs tracking-wider"
                 >
                   <Mail className="w-4 h-4" />
                   <span>thecozytheory.store@gmail.com</span>

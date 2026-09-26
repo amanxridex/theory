@@ -15,7 +15,7 @@ import {
   ArrowUpRight,
   Globe,
   ShoppingBag,
-  Sparkles,
+  ShieldCheck,
   Layers,
 } from "lucide-react";
 
@@ -141,7 +141,7 @@ export default function AdminAnalyticsPage() {
         <div className="p-5 bg-white border border-[#e5e3dc] rounded space-y-2 shadow-xs">
           <div className="flex items-center justify-between text-neutral-500 text-xs font-mono">
             <span className="font-semibold">TOTAL SESSIONS</span>
-            <Eye className="w-4 h-4 text-[#004fff]" />
+            <Eye className="w-4 h-4 text-[#001540]" />
           </div>
           <div className="text-2xl font-extrabold text-[#121212] font-mono">
             {analytics.todayPageViews || 1}
@@ -224,7 +224,7 @@ export default function AdminAnalyticsPage() {
 
                 <div
                   style={{ height: `${height}%` }}
-                  className="w-full max-w-[48px] bg-[#121212] rounded-t transition-all group-hover:bg-[#004fff]"
+                  className="w-full max-w-[48px] bg-[#121212] rounded-t transition-all group-hover:bg-[#001540]"
                 />
 
                 <span className="text-[10px] font-mono text-neutral-500 uppercase">
@@ -303,7 +303,7 @@ export default function AdminAnalyticsPage() {
             {realRegions.map((r) => (
               <div key={r.region} className="flex justify-between items-center py-1.5 border-b border-[#e5e3dc]">
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-3.5 h-3.5 text-[#004fff]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#001540]" />
                   <span className="text-[#121212]">{r.region}</span>
                 </div>
                 <div className="text-right">
@@ -341,7 +341,7 @@ export default function AdminAnalyticsPage() {
             <tbody className="divide-y divide-[#e5e3dc]">
               {topPages.map((p) => (
                 <tr key={p.path} className="hover:bg-[#faf8f5] transition-colors">
-                  <td className="py-3 px-4 font-bold text-[#004fff]">
+                  <td className="py-3 px-4 font-bold text-[#001540]">
                     {p.path}
                   </td>
                   <td className="py-3 px-4 text-neutral-800 font-bold">

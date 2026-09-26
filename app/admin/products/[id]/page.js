@@ -17,11 +17,11 @@ import {
   X,
   ExternalLink,
   Layers,
-  Sparkles,
   DollarSign,
   Tag,
   Package,
 } from "lucide-react";
+import ProductImageUploader from "@/components/admin/ProductImageUploader";
 import {
   DEFAULT_PRODUCT_SECTIONS,
   parseProductSections,
@@ -54,8 +54,6 @@ export default function EditProductPage({ params }) {
     tags: "",
     images: [],
   });
-
-  const [newImageUrl, setNewImageUrl] = useState("");
 
   // Load product data
   useEffect(() => {
@@ -112,34 +110,6 @@ export default function EditProductPage({ params }) {
       available: p.available !== false,
       tags: Array.isArray(p.tags) ? p.tags.join(", ") : String(p.tags || ""),
       images: Array.isArray(p.images) ? p.images : (p.images ? [p.images] : []),
-    });
-  };
-
-  const handleAddImage = (e) => {
-    if (e) e.preventDefault();
-    if (newImageUrl.trim()) {
-      setFormData((prev) => ({
-        ...prev,
-        images: [...prev.images, newImageUrl.trim()],
-      }));
-      setNewImageUrl("");
-    }
-  };
-
-  const handleRemoveImage = (indexToRemove) => {
-    setFormData((prev) => ({
-      ...prev,
-      images: prev.images.filter((_, idx) => idx !== indexToRemove),
-    }));
-  };
-
-  const handleMakePrimary = (index) => {
-    if (index === 0) return;
-    setFormData((prev) => {
-      const copy = [...prev.images];
-      const [item] = copy.splice(index, 1);
-      copy.unshift(item);
-      return { ...prev, images: copy };
     });
   };
 
@@ -418,87 +388,19 @@ export default function EditProductPage({ params }) {
 
             {discountPct > 0 && (
               <div className="text-xs font-mono text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded inline-block">
-                ★ {discountPct}% Customer Discount applied on storefront
+                Save {discountPct}% Customer Discount applied on storefront
               </div>
             )}
           </div>
 
-          {/* Media & Images Gallery */}
-          <div className="bg-white border border-[#e5e3dc] rounded p-5 space-y-4 shadow-xs">
-            <div className="flex items-center justify-between border-b border-[#e5e3dc] pb-2">
-              <h2 className="text-xs font-bold uppercase tracking-wider text-[#121212] font-mono">
-                Product Images ({formData.images.length})
-              </h2>
-              <span className="text-[11px] font-mono text-neutral-400">
-                First image is primary showcase
-              </span>
-            </div>
-
-            {/* Current Images Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {formData.images.map((imgUrl, idx) => (
-                <div
-                  key={idx}
-                  className="group relative aspect-square bg-[#f5f2eb] rounded border border-[#e5e3dc] overflow-hidden flex flex-col justify-between"
-                >
-                  <img
-                    src={imgUrl}
-                    alt={`Product ${idx + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                  {idx === 0 && (
-                    <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-[#121212] text-white text-[9px] font-mono font-bold uppercase tracking-wider rounded">
-                      Primary
-                    </span>
-                  )}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                    {idx !== 0 && (
-                      <button
-                        type="button"
-                        onClick={() => handleMakePrimary(idx)}
-                        className="px-2 py-1 bg-white text-black text-[10px] font-mono font-bold rounded shadow hover:bg-neutral-100"
-                        title="Make Primary Image"
-                      >
-                        Set Primary
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveImage(idx)}
-                      className="p-1.5 bg-rose-600 text-white rounded shadow hover:bg-rose-700"
-                      title="Remove image"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Add New Image URL */}
-            <div className="pt-2">
-              <label className="text-xs font-mono text-neutral-600 font-semibold block mb-1">
-                Add Image by URL or Path
-              </label>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={newImageUrl}
-                  onChange={(e) => setNewImageUrl(e.target.value)}
-                  placeholder="e.g. /products/drive/Lemon Ceramic Vase.webp or https://..."
-                  className="flex-1 bg-[#fdfbf7] border border-[#e5e3dc] rounded px-3 py-2 text-xs font-mono text-black focus:outline-none focus:border-black focus:bg-white"
-                />
-                <button
-                  type="button"
-                  onClick={handleAddImage}
-                  className="px-4 py-2 bg-[#121212] hover:bg-neutral-800 text-white text-xs font-mono rounded inline-flex items-center gap-1.5 transition-colors"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Add</span>
-                </button>
-              </div>
-            </div>
-          </div>
+          {/* Media & Images Gallery with Computer File Upload & Drag-and-Drop */}
+          <ProductImageUploader
+            images={formData.images}
+            onChange={(newImages) =>
+              setFormData((prev) => ({ ...prev, images: newImages }))
+            }
+            maxImages={8}
+          />
 
         </div>
 

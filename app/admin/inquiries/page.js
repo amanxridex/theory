@@ -15,7 +15,6 @@ import {
   Send,
   CheckCircle2,
   Clock,
-  Sparkles,
   ArrowLeft,
   User,
   HelpCircle,
@@ -148,7 +147,7 @@ export default function AdminInquiriesPage() {
             disabled={refreshing || loading}
             className="inline-flex items-center gap-2 px-3 py-2 bg-white hover:bg-neutral-50 text-neutral-700 border border-[#e5e3dc] rounded text-xs font-mono uppercase tracking-wider font-semibold transition-all shadow-xs disabled:opacity-50"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin text-[#004fff]" : ""}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin text-[#001540]" : ""}`} />
             <span>{refreshing ? "Syncing..." : "Refresh"}</span>
           </button>
 
@@ -209,7 +208,7 @@ export default function AdminInquiriesPage() {
                 onClick={() => setActiveTab("email")}
                 className={`px-2.5 py-1 rounded transition-colors text-[11px] font-medium ${
                   activeTab === "email"
-                    ? "bg-[#004fff] text-white"
+                    ? "bg-[#001540] text-white"
                     : "bg-[#f5f2eb] text-neutral-600 hover:text-black"
                 }`}
               >
@@ -336,7 +335,7 @@ export default function AdminInquiriesPage() {
                     <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-neutral-500 mt-0.5">
                       <span className="flex items-center gap-1 text-neutral-700">
                         <Mail className="w-3.5 h-3.5 text-neutral-400" />
-                        <a href={`mailto:${selectedInquiry.email}`} className="hover:underline hover:text-[#004fff]">
+                        <a href={`mailto:${selectedInquiry.email}`} className="hover:underline hover:text-[#001540]">
                           {selectedInquiry.email}
                         </a>
                       </span>
@@ -369,7 +368,7 @@ export default function AdminInquiriesPage() {
 
                   <a
                     href={getEmailLink(selectedInquiry, replyMessage)}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#004fff] hover:bg-blue-600 text-white rounded text-xs font-mono font-bold uppercase transition-colors shadow-xs"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#001540] hover:bg-[#002266] text-white rounded text-xs font-mono font-bold uppercase transition-colors shadow-xs"
                     title="Send Email"
                   >
                     <Mail className="w-3.5 h-3.5" />
@@ -415,7 +414,7 @@ export default function AdminInquiriesPage() {
                 {/* Customer Message Bubble */}
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-[11px] font-mono text-neutral-400 uppercase tracking-wider">
-                    <span className="w-2 h-2 rounded-full bg-[#004fff]"></span>
+                    <span className="w-2 h-2 rounded-full bg-[#001540]"></span>
                     <span>Incoming Customer Message</span>
                   </div>
 
@@ -434,7 +433,7 @@ export default function AdminInquiriesPage() {
                 {/* Quick Info Box (Address & Support info) */}
                 <div className="p-4 bg-[#faf8f5] border border-[#e5e3dc] rounded text-xs font-mono space-y-2 text-neutral-600">
                   <div className="flex items-center gap-2 text-black font-bold uppercase text-[11px]">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                    <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
                     <span>Store Response Credentials</span>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">

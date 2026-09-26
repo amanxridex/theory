@@ -18,7 +18,7 @@ import {
   CheckCircle2,
   AlertCircle,
   Truck,
-  Sparkles,
+  ShieldCheck,
   FileText,
   Settings,
   MessageSquare,
@@ -58,7 +58,7 @@ export default function AdminDashboardPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#e5e3dc]">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#004fff] font-bold">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#001540] font-bold">
               THE COZY THEORY CONTROL CENTER // DERICK MARTIN
             </span>
             <span className="text-xs font-mono text-neutral-400">•</span>
@@ -219,7 +219,7 @@ export default function AdminDashboardPage() {
                   <div className="w-full max-w-[48px] flex items-end h-full justify-center">
                     <div
                       style={{ height: `${heightPct}%` }}
-                      className="w-full bg-[#121212] rounded-t transition-all duration-500 group-hover:bg-[#004fff]"
+                      className="w-full bg-[#121212] rounded-t transition-all duration-500 group-hover:bg-[#001540]"
                     />
                   </div>
 
@@ -233,7 +233,7 @@ export default function AdminDashboardPage() {
 
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-xs font-mono text-neutral-500">
             <span>Real database telemetry: {totalPageViews} total page loads recorded.</span>
-            <Link href="/admin/analytics" className="text-[#004fff] font-bold hover:underline">
+            <Link href="/admin/analytics" className="text-[#001540] font-bold hover:underline">
               View Detailed Analytics Report →
             </Link>
           </div>
@@ -297,7 +297,7 @@ export default function AdminDashboardPage() {
           </div>
           <Link
             href="/admin/orders"
-            className="text-xs font-mono text-[#004fff] font-bold hover:underline flex items-center gap-1"
+            className="text-xs font-mono text-[#001540] font-bold hover:underline flex items-center gap-1"
           >
             <span>View All Orders &amp; Print Slips</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -550,9 +550,9 @@ export default function AdminDashboardPage() {
 
         <Link
           href="/admin/settings"
-          className="p-5 bg-white hover:bg-[#faf8f5] border border-[#e5e3dc] hover:border-[#004fff] rounded transition-all group flex items-center gap-4 shadow-xs"
+          className="p-5 bg-white hover:bg-[#faf8f5] border border-[#e5e3dc] hover:border-[#001540] rounded transition-all group flex items-center gap-4 shadow-xs"
         >
-          <div className="w-12 h-12 rounded bg-blue-50 border border-blue-200 flex items-center justify-center text-[#004fff] group-hover:scale-105 transition-transform">
+          <div className="w-12 h-12 rounded bg-blue-50 border border-blue-200 flex items-center justify-center text-[#001540] group-hover:scale-105 transition-transform">
             <Settings className="w-6 h-6" />
           </div>
           <div>

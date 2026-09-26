@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Phone, MapPin, Check, MessageSquare, Send, Sparkles } from "lucide-react";
+import { Mail, Phone, MapPin, Check, MessageSquare, Send, ShieldCheck } from "lucide-react";
 import { submitContactInquiry } from "@/lib/supabase";
 
 export default function ContactPage() {
@@ -77,7 +77,7 @@ export default function ContactPage() {
                   <Mail className="w-4 h-4 text-neutral-600 flex-shrink-0" />
                   <a
                     href="mailto:thecozytheory.store@gmail.com"
-                    className="hover:underline text-[#004fff] font-medium break-all"
+                    className="hover:underline text-[#001540] font-medium break-all"
                   >
                     thecozytheory.store@gmail.com
                   </a>
@@ -232,7 +232,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full py-4 bg-[#004fff] text-white text-xs font-mono font-bold tracking-widest uppercase hover:bg-blue-600 transition-colors shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full py-4 bg-[#001540] text-white text-xs font-mono font-bold tracking-widest uppercase hover:bg-[#002266] transition-colors shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   <Send className="w-3.5 h-3.5" />
                   <span>{submitting ? "Sending..." : "Send Inquiry →"}</span>

@@ -17,7 +17,6 @@ import {
   Banknote,
   Tag,
   X,
-  Sparkles,
 } from "lucide-react";
 
 export default function CheckoutPage() {
@@ -200,7 +199,7 @@ export default function CheckoutPage() {
                     setPaymentMethod("upi");
                     alert("Selected Express UPI. Fill shipping address to complete.");
                   }}
-                  className="py-3 bg-[#004fff] text-white text-xs font-mono font-bold uppercase hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 shadow-sm"
+                  className="py-3 bg-[#001540] text-white text-xs font-mono font-bold uppercase hover:bg-[#002266] transition-colors flex items-center justify-center gap-2 shadow-sm"
                 >
                   <QrCode className="w-4 h-4" />
                   <span>Google Pay / PhonePe</span>
@@ -513,7 +512,7 @@ export default function CheckoutPage() {
                   <div className="pt-1.5 space-y-1.5">
                     <div className="flex items-center justify-between text-[10px] font-mono uppercase text-neutral-500 font-semibold">
                       <span className="flex items-center gap-1">
-                        <Sparkles className="w-3 h-3 text-[#004fff]" />
+                        <ShieldCheck className="w-3 h-3 text-[#001540]" />
                         <span>Active Offers Available:</span>
                       </span>
                     </div>

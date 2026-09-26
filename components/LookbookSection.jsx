@@ -2,9 +2,20 @@
 
 import { useState } from "react";
 import { Plus, X, ShoppingBag } from "lucide-react";
+import { useStore } from "@/context/StoreContext";
 
 export default function LookbookSection({ hotspots, onAddToCart }) {
+  const { storeSettings } = useStore();
   const [activeSpot, setActiveSpot] = useState(null);
+
+  const bannerImage =
+    storeSettings?.lookbook_image ||
+    "https://cdn.shopify.com/s/files/1/0826/5053/0110/files/Two_Odd_x_Notice_Aditya_Sinha-1.jpg?v=1788185403&width=1600&format=webp";
+  const title = storeSettings?.lookbook_title || "Shop The Look";
+  const subtitle = storeSettings?.lookbook_subtitle || "Curated Atmosphere";
+  const description =
+    storeSettings?.lookbook_text ||
+    "Tap the illuminated hotspots on the art arrangement to inspect and add individual conversation objects directly to your bag.";
 
   return (
     <section className="py-16 md:py-24 bg-[#f3f3f3] border-y border-[#e5e3dc] overflow-hidden">
@@ -14,31 +25,25 @@ export default function LookbookSection({ hotspots, onAddToCart }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-4">
           <div>
             <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-neutral-500 block mb-1">
-              Curated Atmosphere
+              {subtitle}
             </span>
             <h2 className="text-3xl md:text-5xl font-extrabold uppercase tracking-tight text-[#121212]">
-              Shop The Look
+              {title}
             </h2>
           </div>
           <p className="text-xs md:text-sm font-mono text-neutral-600 max-w-md">
-            Tap the illuminated hotspots on the art arrangement to inspect and add individual conversation objects directly to your bag.
+            {description}
           </p>
         </div>
 
         {/* Main Lifestyle Photo Container with interactive Hotspots */}
         <div className="relative w-full aspect-[4/3] md:aspect-[21/9] max-h-[680px] bg-neutral-900 border border-[#e5e3dc] overflow-hidden group">
-          <picture className="w-full h-full">
-            <source
-              media="(min-width: 768px)"
-              srcSet="https://cdn.shopify.com/s/files/1/0826/5053/0110/files/Two_Odd_x_Notice_Aditya_Sinha-1.jpg?v=1788185403&width=1600&format=webp"
-            />
-            <img
-              src="https://cdn.shopify.com/s/files/1/0826/5053/0110/files/TwoOddxNotice_AdityaSinha-2.jpg?v=1788185490&width=1080&format=webp"
-              alt="The Cozy Theory Curated Objects in living space"
-              className="w-full h-full object-cover object-center"
-              loading="lazy"
-            />
-          </picture>
+          <img
+            src={bannerImage}
+            alt="The Cozy Theory Curated Objects in living space"
+            className="w-full h-full object-cover object-center"
+            loading="lazy"
+          />
 
           {/* Hotspot Pins */}
           {hotspots.map((spot) => (
@@ -85,7 +90,7 @@ export default function LookbookSection({ hotspots, onAddToCart }) {
                           });
                           setActiveSpot(null);
                         }}
-                        className="mt-2 flex items-center gap-1.5 px-2.5 py-1 bg-[#121212] text-[#fffdf8] text-[10px] font-mono tracking-wider uppercase hover:bg-neutral-800 transition-colors"
+                        className="mt-2 flex items-center gap-1.5 px-2.5 py-1 bg-[#001540] hover:bg-[#002266] text-[#fffdf8] text-[10px] font-mono tracking-wider uppercase transition-colors"
                       >
                         <ShoppingBag className="w-3 h-3" />
                         <span>Add To Bag</span>

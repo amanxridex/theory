@@ -4,7 +4,7 @@ import { DEFAULT_PRODUCT_SECTIONS } from "@/lib/productSections";
 import {
   FileText,
   Box,
-  Sparkles,
+  ShieldCheck,
   Truck,
   RotateCcw,
   CheckCircle2,
@@ -33,7 +33,7 @@ export default function ProductSectionsEditor({ sections, onChange }) {
     {
       key: "careMaintenance",
       title: "Care & Maintenance",
-      icon: Sparkles,
+      icon: ShieldCheck,
       description: "Washing instructions, wiping guidance, and longevity tips.",
       placeholder: "E.g. Wipe clean with a soft dry cloth. Avoid harsh chemical abrasives...",
     },
@@ -88,7 +88,7 @@ export default function ProductSectionsEditor({ sections, onChange }) {
         <div>
           <div className="flex items-center gap-2">
             <h3 className="text-sm font-bold uppercase tracking-wider text-[#121212] font-mono flex items-center gap-2">
-              <FileText className="w-4 h-4 text-[#004fff]" />
+              <FileText className="w-4 h-4 text-[#001540]" />
               <span>Product Accordions &amp; Website Specifications</span>
             </h3>
             <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">

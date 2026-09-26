@@ -163,7 +163,7 @@ export default function AdminCustomersPage() {
                   </td>
                   <td className="py-3.5 px-4 text-neutral-600">
                     <div className="flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-[#004fff]" />
+                      <MapPin className="w-3.5 h-3.5 text-[#001540]" />
                       <span>{c.city}</span>
                     </div>
                   </td>

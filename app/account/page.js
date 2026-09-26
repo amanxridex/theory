@@ -13,7 +13,6 @@ import {
   Clock,
   CheckCircle2,
   Truck,
-  Sparkles,
   ShoppingBag,
   ExternalLink,
 } from "lucide-react";
@@ -127,9 +126,9 @@ export default function AccountDashboard() {
           
           <div className="text-center space-y-2">
             <div className="w-14 h-14 rounded-full bg-[#f7f5ef] flex items-center justify-center mx-auto border border-[#e5e3dc] text-neutral-800">
-              <Phone className="w-6 h-6 text-[#004fff]" />
+              <Phone className="w-6 h-6 text-[#001540]" />
             </div>
-            <span className="text-[10px] font-mono tracking-[0.25em] text-[#004fff] uppercase font-bold block">
+            <span className="text-[10px] font-mono tracking-[0.25em] text-[#001540] uppercase font-bold block">
               Collector Portal
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#121212]">
@@ -142,7 +141,7 @@ export default function AccountDashboard() {
 
           <div className="p-3.5 bg-[#f7f5ef] border border-[#e5e3dc] text-[11px] font-mono text-neutral-600 space-y-1">
             <div className="flex items-center gap-1.5 font-bold text-neutral-800">
-              <Sparkles className="w-3.5 h-3.5 text-[#004fff]" />
+              <ShieldCheck className="w-3.5 h-3.5 text-[#001540]" />
               <span>Instant Order Access</span>
             </div>
             <p>
@@ -223,7 +222,7 @@ export default function AccountDashboard() {
         {/* Account Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between pb-6 border-b border-[#e5e3dc] gap-4">
           <div>
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] text-[#004fff] font-bold block mb-1">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] text-[#001540] font-bold block mb-1">
               Collector Portal // Verified Member
             </span>
             <h1 className="text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#121212]">
@@ -412,7 +411,7 @@ export default function AccountDashboard() {
 
                       <Link
                         href={`/order-confirmation?order_id=${order.id}&amount=${order.total}&payment=cod`}
-                        className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#004fff] hover:underline"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#001540] hover:underline"
                       >
                         <span>View Order Receipt</span>
                         <ExternalLink className="w-3.5 h-3.5" />

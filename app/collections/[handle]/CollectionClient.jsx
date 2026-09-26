@@ -179,7 +179,7 @@ export default function CollectionClient({ handle, allProducts }) {
       </div>
 
       {/* Collection Editorial Banner (Vibrant Studio Blue matching Announcement Bar) */}
-      <div className="border-b border-[#003ec7] py-12 md:py-16 bg-[#004fff] text-white relative overflow-hidden shadow-sm">
+      <div className="border-b border-[#003ec7] py-12 md:py-16 bg-[#001540] text-white relative overflow-hidden shadow-sm">
         <div className="max-w-[1600px] mx-auto px-4 md:px-8 space-y-3 relative z-10">
           <span className="text-[10px] md:text-xs font-mono tracking-[0.25em] uppercase text-blue-200 block font-semibold">
             {collectionInfo.subtitle}
@@ -277,7 +277,7 @@ export default function CollectionClient({ handle, allProducts }) {
         {filteredProducts.length === 0 && (
           <div className="py-12 sm:py-16 text-center space-y-8">
             <div className="max-w-md mx-auto space-y-3">
-              <span className="text-[10px] font-mono tracking-widest uppercase text-[#004fff] font-bold">
+              <span className="text-[10px] font-mono tracking-widest uppercase text-[#001540] font-bold">
                 CURATED PIECES // ARRIVING SOON
               </span>
               <p className="text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-[#121212]">

@@ -20,7 +20,7 @@ import {
   CheckCircle2,
   AlertCircle,
   Calendar,
-  Sparkles,
+  ShieldCheck,
   Zap,
   Power,
   RefreshCw,
@@ -554,7 +554,7 @@ export default function AdminDiscountsPage() {
                       {/* Code */}
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-2">
-                          <Tag className="w-3.5 h-3.5 text-[#004fff] shrink-0" />
+                          <Tag className="w-3.5 h-3.5 text-[#001540] shrink-0" />
                           <span className="font-bold text-[#121212] tracking-wide text-sm">
                             {c.code}
                           </span>

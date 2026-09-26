@@ -191,7 +191,7 @@ export default function CartDrawer({
               <Link
                 href="/checkout"
                 onClick={onClose}
-                className="w-full py-3.5 bg-[#004fff] text-white text-xs font-mono font-bold tracking-widest uppercase hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-[#001540] text-white text-xs font-mono font-bold tracking-widest uppercase hover:bg-[#002266] transition-colors flex items-center justify-center gap-2"
               >
                 <span>⚡ Express 1-Click Buy (UPI / COD)</span>
               </Link>

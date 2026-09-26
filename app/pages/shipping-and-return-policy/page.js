@@ -11,8 +11,7 @@ import {
   XCircle, 
   CornerDownLeft, 
   AlertTriangle, 
-  ArrowLeft, 
-  Sparkles,
+  ArrowLeft,
   MessageCircle,
   Mail,
   Phone
@@ -118,7 +117,7 @@ export default function ShippingAndReturnPolicyPage() {
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-4 flex items-center justify-between">
           <Link 
             href="/" 
-            className="inline-flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-neutral-500 hover:text-[#004fff] transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-mono tracking-wider uppercase text-neutral-500 hover:text-[#001540] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Home</span>
@@ -126,7 +125,7 @@ export default function ShippingAndReturnPolicyPage() {
           <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-neutral-400">
             <span>thecozytheory.in</span>
             <span>•</span>
-            <span className="text-[#004fff] font-bold">Logistics</span>
+            <span className="text-[#001540] font-bold">Logistics</span>
           </div>
         </div>
       </div>
@@ -135,8 +134,8 @@ export default function ShippingAndReturnPolicyPage() {
       <div className="border-b border-[#e5e3dc] bg-[#faf8f2]">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-16">
           <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white border border-[#e5e3dc] text-[10px] font-mono uppercase tracking-[0.2em] text-[#004fff] font-semibold">
-              <Sparkles className="w-3 h-3" />
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white border border-[#e5e3dc] text-[10px] font-mono uppercase tracking-[0.2em] text-[#001540] font-semibold">
+              <ShieldCheck className="w-3 h-3" />
               Delivery Timelines & Operational Terms
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight text-[#121212]">
@@ -157,7 +156,7 @@ export default function ShippingAndReturnPolicyPage() {
           <aside className="hidden lg:block lg:col-span-4">
             <div className="sticky top-28 space-y-6 p-6 bg-white border border-[#e5e3dc] shadow-xs">
               <div className="space-y-1 pb-4 border-b border-[#e5e3dc]">
-                <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#004fff] font-bold">
+                <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#001540] font-bold">
                   Quick Summary
                 </div>
                 <div className="text-sm font-bold uppercase tracking-tight text-[#121212]">
@@ -167,7 +166,7 @@ export default function ShippingAndReturnPolicyPage() {
 
               <div className="space-y-3.5 text-xs">
                 <div className="flex items-start gap-2.5">
-                  <MapPin className="w-4 h-4 text-[#004fff] mt-0.5 shrink-0" />
+                  <MapPin className="w-4 h-4 text-[#001540] mt-0.5 shrink-0" />
                   <div>
                     <strong className="block text-neutral-900 font-semibold">India-Wide Coverage</strong>
                     <span className="text-neutral-500">No international shipping available.</span>
@@ -175,7 +174,7 @@ export default function ShippingAndReturnPolicyPage() {
                 </div>
 
                 <div className="flex items-start gap-2.5">
-                  <Clock className="w-4 h-4 text-[#004fff] mt-0.5 shrink-0" />
+                  <Clock className="w-4 h-4 text-[#001540] mt-0.5 shrink-0" />
                   <div>
                     <strong className="block text-neutral-900 font-semibold">2-4 Days Dispatch</strong>
                     <span className="text-neutral-500">Packaged with break-resistant protection.</span>
@@ -208,7 +207,7 @@ export default function ShippingAndReturnPolicyPage() {
                   href="https://wa.me/917558085343" 
                   target="_blank" 
                   rel="noreferrer"
-                  className="flex items-center gap-2 text-xs text-neutral-900 hover:text-[#004fff] font-medium"
+                  className="flex items-center gap-2 text-xs text-neutral-900 hover:text-[#001540] font-medium"
                 >
                   <MessageCircle className="w-4 h-4 text-emerald-600" />
                   <span>WhatsApp: +91 7558085343</span>
@@ -223,7 +222,7 @@ export default function ShippingAndReturnPolicyPage() {
             {/* Estimated Delivery Times Grid */}
             <section className="p-6 sm:p-8 bg-white border border-[#e5e3dc] shadow-xs space-y-5">
               <div className="flex items-center gap-3 pb-3 border-b border-neutral-100">
-                <div className="w-8 h-8 rounded-full bg-[#004fff]/10 text-[#004fff] flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-full bg-[#001540]/10 text-[#001540] flex items-center justify-center shrink-0">
                   <Clock className="w-4 h-4" />
                 </div>
                 <div>
@@ -277,19 +276,19 @@ export default function ShippingAndReturnPolicyPage() {
                   return (
                     <div 
                       key={item.id}
-                      className="p-4 rounded-sm border border-[#e5e3dc] bg-[#fffdf8] hover:border-[#004fff] transition-colors space-y-2 flex flex-col justify-between"
+                      className="p-4 rounded-sm border border-[#e5e3dc] bg-[#fffdf8] hover:border-[#001540] transition-colors space-y-2 flex flex-col justify-between"
                     >
                       <div className="space-y-2">
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex items-center gap-2">
                             <div className="w-7 h-7 rounded-full bg-neutral-100 text-neutral-800 flex items-center justify-center shrink-0">
-                              <Icon className="w-3.5 h-3.5 text-[#004fff]" />
+                              <Icon className="w-3.5 h-3.5 text-[#001540]" />
                             </div>
                             <h3 className="text-xs sm:text-sm font-bold uppercase text-neutral-900">
                               {item.title}
                             </h3>
                           </div>
-                          <span className="text-[9px] font-mono text-[#004fff] bg-blue-50 px-2 py-0.5 rounded-sm font-semibold uppercase">
+                          <span className="text-[9px] font-mono text-[#001540] bg-blue-50 px-2 py-0.5 rounded-sm font-semibold uppercase">
                             {item.badge}
                           </span>
                         </div>
