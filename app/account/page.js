@@ -140,9 +140,8 @@ export default function AccountDashboard() {
           </div>
 
           <div className="p-3.5 bg-[#f7f5ef] border border-[#e5e3dc] text-[11px] font-mono text-neutral-600 space-y-1">
-            <div className="flex items-center gap-1.5 font-bold text-neutral-800">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#001540]" />
-              <span>Instant Order Access</span>
+            <div className="font-bold text-neutral-800 uppercase tracking-wider">
+              Instant Order Access
             </div>
             <p>
               Your account was created automatically on your first order. No password required.
@@ -270,7 +269,7 @@ export default function AccountDashboard() {
           </div>
           <div className="p-4 bg-white border border-[#e5e3dc] space-y-1">
             <span className="text-[10px] font-mono uppercase text-neutral-400">Payment Preference</span>
-            <p className="text-sm font-bold font-mono text-black uppercase mt-1">Cash on Delivery</p>
+            <p className="text-sm font-bold font-mono text-black uppercase mt-1">UPI / Razorpay / PhonePe</p>
           </div>
           <div className="p-4 bg-white border border-[#e5e3dc] space-y-1">
             <span className="text-[10px] font-mono uppercase text-neutral-400">Account Status</span>

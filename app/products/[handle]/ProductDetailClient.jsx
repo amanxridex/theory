@@ -4,17 +4,16 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import ProductCard from "@/components/ProductCard";
-import { parseProductSections } from "@/lib/productSections";
+import { parseProductSections, parseProductSpecifications } from "@/lib/productSections";
 import {
   Plus,
   Minus,
   ShoppingBag,
   Check,
   ChevronDown,
-  ShieldCheck,
-  Truck,
   RotateCcw,
   Share2,
+  Scale,
 } from "lucide-react";
 
 import { useStore } from "@/context/StoreContext";
@@ -27,11 +26,32 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
   const [added, setAdded] = useState(false);
   const [openAccordion, setOpenAccordion] = useState("details");
 
-  const product = initialProduct || (products && products.find((p) => p.handle === handle)) || null;
-  const relatedProducts = initialRelated || (products ? products.slice(0, 4) : []);
+  // Prefer latest product from live store context (Supabase), fallback to initialProduct
+  const liveProduct = products?.find(
+    (p) =>
+      p.handle === handle ||
+      (initialProduct?.id && String(p.id) === String(initialProduct.id)) ||
+      (initialProduct?.handle && p.handle === initialProduct.handle)
+  );
+
+  const product = liveProduct || initialProduct || null;
+  const relatedProducts =
+    products && products.length > 0
+      ? products.filter((p) => p.handle !== handle).slice(0, 4)
+      : initialRelated || [];
+
+  const productImages =
+    product?.images && product.images.length > 0
+      ? product.images
+      : ["/og-image.jpg"];
 
   const { sections } = useMemo(
     () => parseProductSections(product?.description),
+    [product?.description]
+  );
+
+  const specs = useMemo(
+    () => parseProductSpecifications(product?.description),
     [product?.description]
   );
 
@@ -136,7 +156,7 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
           <div className="w-full aspect-square bg-[#f7f5ef] border border-[#e5e3dc] overflow-hidden relative group">
             <img
               id="main-product-image"
-              src={product.images[selectedImage] || product.images[0]}
+              src={productImages[selectedImage] || productImages[0]}
               alt={product.title}
               className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
             />
@@ -148,9 +168,9 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
           </div>
 
           {/* Thumbnails Gallery */}
-          {product.images.length > 1 && (
+          {productImages.length > 1 && (
             <div className="grid grid-cols-4 sm:grid-cols-5 gap-3 pt-2">
-              {product.images.map((img, idx) => (
+              {productImages.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedImage(idx)}
@@ -191,26 +211,52 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
                   </span>
                 )}
                 <span className="text-[11px] font-mono text-neutral-500">
-                  (Tax included. Free Express Shipping)
+                  (Tax included. Free Standard Shipping)
                 </span>
               </div>
             </div>
 
-            {/* Micro Highlights */}
-            <div className="p-4 bg-[#f7f5ef] border border-[#e5e3dc] space-y-2 text-xs font-mono text-neutral-700">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-neutral-800" />
-                <span>Handcrafted &amp; Curated by The Cozy Theory</span>
+
+            {/* Quick Specifications Strip (Weight & Dimensions) */}
+            {specs && (specs.weight || specs.dimensions || specs.material) && (
+              <div className="p-4 bg-white border border-[#e5e3dc] shadow-xs space-y-2.5">
+                <div className="flex items-center justify-between border-b border-neutral-100 pb-2">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#001540] font-bold">
+                    Specifications
+                  </span>
+                  <span className="text-[10px] font-mono text-neutral-400 uppercase flex items-center gap-1">
+                    <Scale className="w-3 h-3 text-neutral-500" />
+                    <span>Courier Weight Rate</span>
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-3 text-xs font-mono">
+                  {specs.material && (
+                    <div>
+                      <span className="text-neutral-400 block text-[10px] uppercase">Material</span>
+                      <span className="font-semibold text-neutral-900">{specs.material}</span>
+                    </div>
+                  )}
+                  {specs.weight && (
+                    <div>
+                      <span className="text-neutral-400 block text-[10px] uppercase">Weight</span>
+                      <span className="font-semibold text-neutral-900">{specs.weight}</span>
+                    </div>
+                  )}
+                  {specs.dimensions && (
+                    <div>
+                      <span className="text-neutral-400 block text-[10px] uppercase">Dimensions</span>
+                      <span className="font-semibold text-neutral-900">{specs.dimensions}</span>
+                    </div>
+                  )}
+                  {specs.finish && (
+                    <div>
+                      <span className="text-neutral-400 block text-[10px] uppercase">Finish</span>
+                      <span className="font-semibold text-neutral-900">{specs.finish}</span>
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Truck className="w-4 h-4 text-neutral-700" />
-                <span>Dispatches within 24-48 Hours</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                <span>100% Authentic The Cozy Theory Collection</span>
-              </div>
-            </div>
+            )}
 
             {/* Quantity Stepper & Buy Actions */}
             <div className="space-y-4 pt-2">
@@ -271,9 +317,9 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
                   <button
                     onClick={handleBuyNow}
                     id="gokwik-buy-now"
-                    className="w-full py-4 bg-[#001540] text-white text-xs font-mono font-bold tracking-widest uppercase hover:bg-[#002266] transition-colors flex items-center justify-center gap-2 shadow-md"
+                    className="w-full py-4 bg-[#001540] text-white text-xs font-mono font-bold tracking-widest uppercase hover:bg-[#002266] transition-colors flex items-center justify-center gap-2 shadow-md cursor-pointer"
                   >
-                    <span>⚡ Buy It Now (Cash on Delivery Express)</span>
+                    <span>⚡ Instant Checkout (UPI / Razorpay / PhonePe)</span>
                   </button>
                 )}
               </div>
@@ -316,7 +362,7 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
               <button
                 onClick={() => {
                   const url = window.location.href;
-                  const text = `✨ *${product.title}* (₹${formattedPrice})\nDiscover handcrafted living objects by The Cozy Theory:\n${url}`;
+                  const text = `*${product.title}* (₹${formattedPrice})\nDiscover handcrafted living objects by The Cozy Theory:\n${url}`;
                   window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
                 }}
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-[#25D366]/10 text-[#128C7E] hover:bg-[#25D366] hover:text-white rounded border border-[#25D366]/30 transition-colors font-medium"
@@ -329,7 +375,7 @@ export default function ProductDetailClient({ product: initialProduct, relatedPr
               <button
                 onClick={() => {
                   const url = window.location.href;
-                  const text = `✨ ${product.title} (₹${formattedPrice}) — The Cozy Theory`;
+                  const text = `${product.title} (₹${formattedPrice}) — The Cozy Theory`;
                   window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, "_blank");
                 }}
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0088cc]/10 text-[#0088cc] hover:bg-[#0088cc] hover:text-white rounded border border-[#0088cc]/30 transition-colors font-medium"

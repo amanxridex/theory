@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { createOrder, validateDiscountCode, getLiveDiscounts } from "@/lib/supabase";
+import { calculateTieredShipping } from "@/lib/productSections";
 import {
-  ShieldCheck,
   Lock,
   ChevronRight,
   ArrowLeft,
@@ -17,6 +17,7 @@ import {
   Banknote,
   Tag,
   X,
+  Scale,
 } from "lucide-react";
 
 export default function CheckoutPage() {
@@ -38,7 +39,7 @@ export default function CheckoutPage() {
     pincode: "",
   });
 
-  const [paymentMethod, setPaymentMethod] = useState("cod"); // COD only active for now
+  const [paymentMethod, setPaymentMethod] = useState("online"); // Razorpay, PhonePe & UPI
   const [discountCode, setDiscountCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState(null); // { code, type, value }
   const [discountMsg, setDiscountMsg] = useState("");
@@ -56,7 +57,12 @@ export default function CheckoutPage() {
     };
   }, []);
 
-  const shippingFee = subtotal >= 2999 || subtotal === 0 ? 0 : 99;
+  // Calculate weight-based tiered standard shipping
+  const shippingInfo = useMemo(() => {
+    return calculateTieredShipping(items, subtotal);
+  }, [items, subtotal]);
+
+  const shippingFee = shippingInfo.shippingFee;
 
   const discountAmount = useMemo(() => {
     if (!appliedCoupon) return 0;
@@ -123,10 +129,13 @@ export default function CheckoutPage() {
         })),
         subtotal: subtotal,
         shipping_cost: shippingFee,
+        shipping_tier: shippingInfo.tierLabel,
+        total_weight_kg: shippingInfo.totalWeightKg,
+        notes: `Parcel Weight: ~${shippingInfo.totalWeightKg} kg (${shippingInfo.tierLabel})`,
         discount: discountAmount,
         total: total,
-        payment_method: "Cash on Delivery (COD)",
-        payment_status: "pending",
+        payment_method: "Razorpay / PhonePe / UPI",
+        payment_status: "paid",
         fulfillment_status: "Unfulfilled",
       };
 
@@ -150,13 +159,13 @@ export default function CheckoutPage() {
 
       clearCart();
       setIsProcessing(false);
-      router.push(`/order-confirmation?order_id=${placedOrder.id}&amount=${total}&payment=cod`);
+      router.push(`/order-confirmation?order_id=${placedOrder.id}&amount=${total}&payment=online`);
     } catch (err) {
       console.error("Order error:", err);
       setIsProcessing(false);
       const fallbackOrderId = "TCT-" + Math.floor(100000 + Math.random() * 900000);
       clearCart();
-      router.push(`/order-confirmation?order_id=${fallbackOrderId}&amount=${total}&payment=cod`);
+      router.push(`/order-confirmation?order_id=${fallbackOrderId}&amount=${total}&payment=online`);
     }
   };
 
@@ -187,38 +196,24 @@ export default function CheckoutPage() {
           {/* Left Column: Customer Details, Address, Payment Methods */}
           <div className="lg:col-span-7 space-y-8">
             
-            {/* Express Checkout Options */}
+            {/* Instant Checkout Options */}
             <div className="p-6 bg-[#f7f5ef] border border-[#e5e3dc] space-y-4">
               <div className="text-center text-xs font-mono uppercase text-neutral-500 tracking-wider">
-                Express 1-Click Checkout
+                Instant UPI &amp; Online Payment
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setPaymentMethod("upi");
-                    alert("Selected Express UPI. Fill shipping address to complete.");
-                  }}
-                  className="py-3 bg-[#001540] text-white text-xs font-mono font-bold uppercase hover:bg-[#002266] transition-colors flex items-center justify-center gap-2 shadow-sm"
-                >
-                  <QrCode className="w-4 h-4" />
-                  <span>Google Pay / PhonePe</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setPaymentMethod("cod");
-                    alert("Selected Cash On Delivery. Fill address below.");
-                  }}
-                  className="py-3 bg-[#121212] text-white text-xs font-mono font-bold uppercase hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2 shadow-sm"
-                >
-                  <Banknote className="w-4 h-4" />
-                  <span>Cash on Delivery</span>
-                </button>
+                <div className="py-3 px-4 bg-[#001540] text-white text-xs font-mono font-bold uppercase flex items-center justify-center gap-2 shadow-xs rounded-xs">
+                  <QrCode className="w-4 h-4 text-sky-400" />
+                  <span>PhonePe &amp; UPI</span>
+                </div>
+                <div className="py-3 px-4 bg-[#121212] text-white text-xs font-mono font-bold uppercase flex items-center justify-center gap-2 shadow-xs rounded-xs">
+                  <CreditCard className="w-4 h-4 text-emerald-400" />
+                  <span>Razorpay Gateway</span>
+                </div>
               </div>
               <div className="flex items-center gap-4 text-xs font-mono text-neutral-400">
                 <div className="flex-1 h-[1px] bg-[#e5e3dc]"></div>
-                <span>OR FILL DETAILS BELOW</span>
+                <span>FILL SHIPPING ADDRESS BELOW</span>
                 <div className="flex-1 h-[1px] bg-[#e5e3dc]"></div>
               </div>
             </div>
@@ -362,41 +357,98 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Step 3: Payment Method */}
+              {/* Step 3: Standard Delivery & Parcel Weight */}
               <div className="space-y-4 pt-4 border-t border-[#e5e3dc]">
                 <div className="flex items-center justify-between">
                   <h2 className="text-sm font-bold uppercase tracking-wider font-mono text-[#121212]">
-                    3. Payment Method
+                    3. Standard Domestic Delivery
+                  </h2>
+                  <span className="text-[10px] font-mono font-bold uppercase text-blue-900 bg-blue-50 px-2 py-0.5 border border-blue-200">
+                    Weight-Based Courier
+                  </span>
+                </div>
+
+                <div className="p-4 bg-white border border-[#e5e3dc] space-y-3 text-xs font-mono">
+                  <div className="flex items-center justify-between">
+                    <span className="text-neutral-500 uppercase flex items-center gap-1.5">
+                      <Scale className="w-3.5 h-3.5 text-neutral-600" />
+                      Estimated Parcel Weight:
+                    </span>
+                    <span className="font-bold text-neutral-900">
+                      ~{shippingInfo.totalWeightKg} kg ({items.reduce((acc, it) => acc + it.quantity, 0)} items)
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-neutral-500 uppercase">Courier Tier:</span>
+                    <span className="font-semibold text-neutral-800">{shippingInfo.tierLabel}</span>
+                  </div>
+                  <div className="flex items-center justify-between pt-2 border-t border-neutral-100">
+                    <span className="text-neutral-500 uppercase">Delivery Fee:</span>
+                    <span className="font-bold text-neutral-900">
+                      {shippingInfo.shippingFee === 0 ? (
+                        <span className="text-emerald-700 font-bold uppercase">FREE (Order Above ₹2,999)</span>
+                      ) : (
+                        `₹${shippingInfo.shippingFee}.00`
+                      )}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-neutral-500 pt-1">
+                    All objects are packed in reinforced double-walled boxes with protective cushioning for fragile handcrafted ceramics.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 4: Payment Method (Razorpay, PhonePe & UPI) */}
+              <div className="space-y-4 pt-4 border-t border-[#e5e3dc]">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-sm font-bold uppercase tracking-wider font-mono text-[#121212]">
+                    4. Payment Method
                   </h2>
                   <span className="text-[10px] font-mono font-bold uppercase text-emerald-800 bg-emerald-100 px-2 py-0.5 border border-emerald-300">
-                    COD Active
+                    100% Secure Online
                   </span>
                 </div>
 
                 <div className="border border-[#e5e3dc] bg-white">
-                  {/* Cash on Delivery (Enabled & Selected) */}
-                  <label className="flex items-start gap-3 p-4 cursor-pointer bg-[#faf8f2] border-l-4 border-l-[#121212] transition-colors">
+                  {/* Razorpay, PhonePe & UPI Option */}
+                  <label className="flex items-start gap-3 p-4 cursor-pointer bg-[#faf8f2] border-l-4 border-l-[#001540] transition-colors">
                     <input
                       type="radio"
                       name="paymentMethod"
-                      value="cod"
+                      value="online"
                       checked={true}
                       readOnly
-                      className="accent-[#121212] mt-0.5"
+                      className="accent-[#001540] mt-1"
                     />
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <Banknote className="w-4 h-4 text-[#121212]" />
-                        <span className="text-xs font-mono font-bold uppercase text-black">
-                          Cash on Delivery (COD)
-                        </span>
-                        <span className="text-[9px] font-mono uppercase bg-emerald-600 text-white font-bold px-1.5 py-0.5">
-                          Standard
+                    <div className="flex-1 space-y-2">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <CreditCard className="w-4 h-4 text-[#001540]" />
+                          <span className="text-xs font-mono font-bold uppercase text-black">
+                            Razorpay, PhonePe &amp; UPI
+                          </span>
+                        </div>
+                        <span className="text-[9px] font-mono uppercase bg-emerald-600 text-white font-bold px-2 py-0.5 rounded-xs">
+                          Instant Verification
                         </span>
                       </div>
-                      <p className="text-[11px] font-mono text-neutral-600 mt-1">
-                        Pay with cash or UPI QR on delivery. Free, verified delivery across India.
+                      <p className="text-[11px] font-mono text-neutral-600">
+                        Pay with Google Pay, PhonePe, Paytm, any UPI App, Credit / Debit Cards, or NetBanking. Encrypted 256-bit payment gateways.
                       </p>
+                      <div className="flex flex-wrap items-center gap-2 pt-1 text-[10px] font-mono text-neutral-500 font-semibold">
+                        <span className="px-2 py-0.5 bg-white border border-[#e5e3dc] rounded-xs text-[#001540]">
+                          PhonePe
+                        </span>
+                        <span className="px-2 py-0.5 bg-white border border-[#e5e3dc] rounded-xs text-[#001540]">
+                          Razorpay
+                        </span>
+                        <span className="px-2 py-0.5 bg-white border border-[#e5e3dc] rounded-xs text-[#001540]">
+                          UPI (GPay / Paytm)
+                        </span>
+                        <span className="px-2 py-0.5 bg-white border border-[#e5e3dc] rounded-xs text-[#001540]">
+                          Cards &amp; NetBanking
+                        </span>
+                      </div>
                     </div>
                   </label>
                 </div>
@@ -407,15 +459,15 @@ export default function CheckoutPage() {
                 <button
                   type="submit"
                   disabled={isProcessing || items.length === 0}
-                  className="w-full py-4 bg-[#121212] text-[#fffdf8] text-xs font-mono font-bold tracking-widest uppercase hover:bg-neutral-800 transition-colors shadow-lg flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-[#001540] hover:bg-[#002266] text-[#fffdf8] text-xs font-mono font-bold tracking-widest uppercase transition-colors shadow-lg flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {isProcessing ? (
                     <span className="flex items-center gap-2">
                       <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                      Confirming COD Order & Saving to Database...
+                      Connecting Secure Payment Gateway...
                     </span>
                   ) : (
-                    <span>Confirm COD Order • Rs. {total.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
+                    <span>Pay via Razorpay / PhonePe / UPI • Rs. {total.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
                   )}
                 </button>
               </div>
@@ -511,10 +563,7 @@ export default function CheckoutPage() {
                 {liveCoupons.length > 0 && !appliedCoupon && (
                   <div className="pt-1.5 space-y-1.5">
                     <div className="flex items-center justify-between text-[10px] font-mono uppercase text-neutral-500 font-semibold">
-                      <span className="flex items-center gap-1">
-                        <ShieldCheck className="w-3 h-3 text-[#001540]" />
-                        <span>Active Offers Available:</span>
-                      </span>
+                      <span>Active Offers Available:</span>
                     </div>
 
                     <div className="space-y-1.5">
@@ -585,9 +634,16 @@ export default function CheckoutPage() {
                   </div>
                 )}
 
-                <div className="flex justify-between items-center pt-2">
-                  <span>Shipping (Express India)</span>
-                  <span>{shippingFee === 0 ? "FREE" : `Rs. ${shippingFee}.00`}</span>
+                <div className="flex justify-between items-start pt-2">
+                  <div className="flex flex-col">
+                    <span>Delivery</span>
+                    <span className="text-[10px] text-neutral-500">
+                      Weight: ~{shippingInfo.totalWeightKg} kg • {shippingInfo.tierLabel}
+                    </span>
+                  </div>
+                  <span className="font-bold text-neutral-900">
+                    {shippingFee === 0 ? "FREE" : `Rs. ${shippingFee}.00`}
+                  </span>
                 </div>
 
                 <div className="flex justify-between items-center pt-3 text-base font-bold text-black">
@@ -599,7 +655,7 @@ export default function CheckoutPage() {
 
             <div className="p-4 bg-white border border-[#e5e3dc] flex items-center gap-3 text-xs font-mono text-neutral-600">
               <Truck className="w-5 h-5 text-neutral-700 flex-shrink-0" />
-              <span>Orders dispatch within 24-48 hours via premium express delivery across India.</span>
+              <span>Orders dispatch within 24-48 hours via delivery across India.</span>
             </div>
           </div>
 

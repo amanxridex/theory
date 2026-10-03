@@ -40,12 +40,12 @@ function ConfirmationContent() {
           </div>
           <div className="flex justify-between items-center pb-3 border-b border-[#e5e3dc]">
             <span className="text-neutral-500">Payment Mode:</span>
-            <span className="font-bold text-amber-900 bg-amber-100 px-2 py-0.5 border border-amber-300">
-              Cash on Delivery (COD)
+            <span className="font-bold text-emerald-900 bg-emerald-100 px-2 py-0.5 border border-emerald-300">
+              Paid Online (Razorpay / PhonePe / UPI)
             </span>
           </div>
           <div className="flex justify-between items-center pb-3 border-b border-[#e5e3dc]">
-            <span className="text-neutral-500">Amount Payable on Arrival:</span>
+            <span className="text-neutral-500">Total Amount Paid:</span>
             <span className="font-bold text-black">Rs. {Number(amount).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
           </div>
           <div className="flex justify-between items-center pb-3 border-b border-[#e5e3dc]">
@@ -54,7 +54,7 @@ function ConfirmationContent() {
           </div>
           <div className="flex justify-between items-center">
             <span className="text-neutral-500">Tracking:</span>
-            <span className="text-emerald-700 font-bold">Express Courier Assigned</span>
+            <span className="text-emerald-700 font-bold">Standard Courier Assigned (BlueDart / Delhivery)</span>
           </div>
         </div>
 

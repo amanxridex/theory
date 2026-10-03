@@ -18,7 +18,6 @@ import {
   CheckCircle2,
   AlertCircle,
   Truck,
-  ShieldCheck,
   FileText,
   Settings,
   MessageSquare,

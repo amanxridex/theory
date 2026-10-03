@@ -19,7 +19,7 @@ import {
 
 export const metadata = {
   title: "Shipping and Return Policy | The Cozy Theory",
-  description: "Domestic India shipping rates, transit times, pickup options, exchange policy, and RTO guidelines by The Cozy Theory.",
+  description: "Domestic India shipping rates, transit times, exchange policy, and RTO guidelines by The Cozy Theory.",
 };
 
 export default function ShippingAndReturnPolicyPage() {
@@ -56,8 +56,8 @@ export default function ShippingAndReturnPolicyPage() {
       id: "courier-charges",
       title: "Courier Charges",
       icon: Scale,
-      desc: "Shipping costs are calculated and based on the volumetric weight of the packaged ceramic and homeware objects.",
-      badge: "Volumetric Rate"
+      desc: "Shipping costs are calculated automatically based on the cumulative weight of your parcel (Up to 1 kg: ₹99, 1–2.5 kg: ₹149, 2.5–5 kg: ₹199). All orders above ₹2,999 enjoy 100% FREE Standard Shipping across India.",
+      badge: "Tiered Weight Rate"
     },
     {
       id: "processing-time",
@@ -71,14 +71,7 @@ export default function ShippingAndReturnPolicyPage() {
       title: "Shipping Carriers",
       icon: Truck,
       desc: "All shipments are managed and delivered through trusted third-party logistics and shipping agencies across India.",
-      badge: "Third-Party Express"
-    },
-    {
-      id: "pickup-option",
-      title: "Pick-Up Option",
-      icon: Building2,
-      desc: "If you choose to pick up your order directly from one of our warehouse dispatch locations, no shipping charges apply. Please allow 2 days for processing before picking up.",
-      badge: "Zero Shipping Fee"
+      badge: "Third-Party Logistics"
     },
     {
       id: "immediate-shipments",
@@ -134,8 +127,7 @@ export default function ShippingAndReturnPolicyPage() {
       <div className="border-b border-[#e5e3dc] bg-[#faf8f2]">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-16">
           <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white border border-[#e5e3dc] text-[10px] font-mono uppercase tracking-[0.2em] text-[#001540] font-semibold">
-              <ShieldCheck className="w-3 h-3" />
+            <div className="inline-flex items-center px-2.5 py-1 bg-white border border-[#e5e3dc] text-[10px] font-mono uppercase tracking-[0.2em] text-[#001540] font-semibold">
               Delivery Timelines & Operational Terms
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight text-[#121212]">
@@ -178,14 +170,6 @@ export default function ShippingAndReturnPolicyPage() {
                   <div>
                     <strong className="block text-neutral-900 font-semibold">2-4 Days Dispatch</strong>
                     <span className="text-neutral-500">Packaged with break-resistant protection.</span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-2.5">
-                  <Building2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
-                  <div>
-                    <strong className="block text-neutral-900 font-semibold">Store Pickup</strong>
-                    <span className="text-neutral-500">Free pickup ready in 2 business days.</span>
                   </div>
                 </div>
 

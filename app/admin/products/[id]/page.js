@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, use, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useStore } from "@/context/StoreContext";
@@ -40,6 +40,7 @@ export default function EditProductPage({ params }) {
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [sections, setSections] = useState(DEFAULT_PRODUCT_SECTIONS);
+  const hasLoadedRef = useRef(false);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -55,10 +56,15 @@ export default function EditProductPage({ params }) {
     images: [],
   });
 
+  useEffect(() => {
+    hasLoadedRef.current = false;
+  }, [productId]);
+
   // Load product data
   useEffect(() => {
+    if (hasLoadedRef.current) return;
+
     async function loadData() {
-      setLoading(true);
       // 1. Try finding in StoreContext first
       const foundInStore = products.find(
         (p) => String(p.id) === String(productId) || p.handle === productId
@@ -67,14 +73,17 @@ export default function EditProductPage({ params }) {
       if (foundInStore) {
         populateForm(foundInStore);
         setLoading(false);
+        hasLoadedRef.current = true;
         return;
       }
 
       // 2. Fetch directly from Supabase
       try {
+        setLoading(true);
         const dbProduct = await getProductById(productId);
         if (dbProduct) {
           populateForm(dbProduct);
+          hasLoadedRef.current = true;
         } else {
           setErrorMsg("Product not found in database.");
         }

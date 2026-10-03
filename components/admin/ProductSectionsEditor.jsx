@@ -4,7 +4,7 @@ import { DEFAULT_PRODUCT_SECTIONS } from "@/lib/productSections";
 import {
   FileText,
   Box,
-  ShieldCheck,
+  Heart,
   Truck,
   RotateCcw,
   CheckCircle2,
@@ -33,7 +33,7 @@ export default function ProductSectionsEditor({ sections, onChange }) {
     {
       key: "careMaintenance",
       title: "Care & Maintenance",
-      icon: ShieldCheck,
+      icon: Heart,
       description: "Washing instructions, wiping guidance, and longevity tips.",
       placeholder: "E.g. Wipe clean with a soft dry cloth. Avoid harsh chemical abrasives...",
     },
@@ -42,7 +42,7 @@ export default function ProductSectionsEditor({ sections, onChange }) {
       title: "Shipping & Returns",
       icon: Truck,
       description: "Delivery timelines, insured shipping terms, and 50% damage policy.",
-      placeholder: "E.g. • Express courier delivery across India\n• 50% refund if damaged in transit",
+      placeholder: "E.g. • Standard domestic courier delivery across India\n• 50% refund if damaged in transit",
     },
   ];
 

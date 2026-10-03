@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { X, Minus, Plus, ShoppingBag, ArrowRight, ShieldCheck } from "lucide-react";
+import { X, Minus, Plus, ShoppingBag, ArrowRight, Scale } from "lucide-react";
+import { calculateTieredShipping } from "@/lib/productSections";
 
 export default function CartDrawer({
   isOpen,
@@ -28,6 +29,8 @@ export default function CartDrawer({
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+
+  const shippingInfo = calculateTieredShipping(items, subtotal);
 
   return (
     <div
@@ -72,8 +75,8 @@ export default function CartDrawer({
                 Add <strong className="text-black">Rs. {amountNeeded.toLocaleString("en-IN")}</strong> more for Free Shipping!
               </span>
             ) : (
-              <span className="text-emerald-700 font-bold flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4" /> You have unlocked FREE Express Shipping!
+              <span className="text-emerald-700 font-bold flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                You have unlocked FREE Standard Shipping!
               </span>
             )}
           </div>
@@ -168,8 +171,21 @@ export default function CartDrawer({
           <div className="p-6 bg-[#f7f5ef] border-t border-[#e5e3dc] space-y-4">
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-xs font-mono text-neutral-600">
-                <span>Taxes & Shipping:</span>
-                <span>Calculated at checkout</span>
+                <span className="flex items-center gap-1">
+                  <Scale className="w-3.5 h-3.5 text-neutral-500" />
+                  <span>Parcel Weight:</span>
+                </span>
+                <span className="font-semibold text-neutral-800">~{shippingInfo.totalWeightKg} kg</span>
+              </div>
+              <div className="flex justify-between items-center text-xs font-mono text-neutral-600">
+                <span>Delivery:</span>
+                <span>
+                  {shippingInfo.shippingFee === 0 ? (
+                    <span className="text-emerald-700 font-bold uppercase">FREE</span>
+                  ) : (
+                    `Rs. ${shippingInfo.shippingFee}.00 (${shippingInfo.tierLabel})`
+                  )}
+                </span>
               </div>
               <div className="flex justify-between items-center text-base font-bold font-mono text-[#121212] pt-2 border-t border-[#e5e3dc]">
                 <span>SUBTOTAL:</span>
@@ -178,7 +194,7 @@ export default function CartDrawer({
             </div>
 
             {/* Sticky Mobile/Desktop Checkout CTA */}
-            <div className="space-y-2.5">
+            <div>
               <Link
                 href="/checkout"
                 onClick={onClose}
@@ -186,14 +202,6 @@ export default function CartDrawer({
               >
                 <span>Proceed To Checkout</span>
                 <ArrowRight className="w-4 h-4" />
-              </Link>
-
-              <Link
-                href="/checkout"
-                onClick={onClose}
-                className="w-full py-3.5 bg-[#001540] text-white text-xs font-mono font-bold tracking-widest uppercase hover:bg-[#002266] transition-colors flex items-center justify-center gap-2"
-              >
-                <span>⚡ Express 1-Click Buy (UPI / COD)</span>
               </Link>
             </div>
           </div>

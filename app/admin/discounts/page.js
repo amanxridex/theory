@@ -20,7 +20,6 @@ import {
   CheckCircle2,
   AlertCircle,
   Calendar,
-  ShieldCheck,
   Zap,
   Power,
   RefreshCw,

@@ -3,8 +3,8 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
-import { SlidersHorizontal, ArrowUpDown, Grid3X3, Grid2X2 } from "lucide-react";
-import { useStore } from "@/context/StoreContext";
+import { SlidersHorizontal, ArrowUpDown, Grid3X3, Grid2X2, Layers, ArrowRight } from "lucide-react";
+import { useStore, INITIAL_COLLECTIONS } from "@/context/StoreContext";
 
 export default function CollectionClient({ handle, allProducts }) {
   const { products: storeProducts, collections: storeCollections } = useStore();
@@ -190,6 +190,49 @@ export default function CollectionClient({ handle, allProducts }) {
           <p className="text-xs md:text-sm text-blue-100 font-normal max-w-xl leading-relaxed">
             {collectionInfo.description}
           </p>
+        </div>
+      </div>
+
+      {/* Interactive Collection Switcher (Shows different collections so visitors can choose which collection to go through) */}
+      <div className="bg-[#faf8f2] border-b border-[#e5e3dc] py-4 md:py-5 overflow-hidden">
+        <div className="max-w-[1600px] mx-auto px-4 md:px-8 space-y-2.5">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-[#001540] font-bold flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5" />
+              <span>Choose Collection To Explore:</span>
+            </span>
+            <Link
+              href="/collections"
+              className="text-[11px] font-mono uppercase text-neutral-600 hover:text-[#001540] transition-colors flex items-center gap-1 font-semibold"
+            >
+              <span>View All Collections Directory</span>
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-2.5 overflow-x-auto pb-1.5 scrollbar-none">
+            {(storeCollections && storeCollections.length > 0 ? storeCollections : INITIAL_COLLECTIONS).map((cat) => {
+              const isCurrent = cat.handle === handle;
+              return (
+                <Link
+                  key={cat.handle}
+                  href={`/collections/${cat.handle}`}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-sm border text-[11px] font-mono uppercase transition-all whitespace-nowrap shrink-0 ${
+                    isCurrent
+                      ? "bg-[#001540] text-white border-[#001540] font-bold shadow-xs"
+                      : "bg-white text-neutral-800 border-[#e5e3dc] hover:border-[#001540] hover:bg-[#f2efe6]"
+                  }`}
+                >
+                  <img
+                    src={cat.image || "/products/drive/Lemon Ceramic Vase with Handles.webp"}
+                    alt={cat.title || cat.label}
+                    className="w-4 h-4 rounded-full object-cover border border-neutral-300"
+                  />
+                  <span>{cat.title || cat.label}</span>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
 

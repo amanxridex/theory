@@ -433,7 +433,7 @@ export default function AdminInquiriesPage() {
                 {/* Quick Info Box (Address & Support info) */}
                 <div className="p-4 bg-[#faf8f5] border border-[#e5e3dc] rounded text-xs font-mono space-y-2 text-neutral-600">
                   <div className="flex items-center gap-2 text-black font-bold uppercase text-[11px]">
-                    <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-600" />
                     <span>Store Response Credentials</span>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">

@@ -10,7 +10,6 @@ import {
   CheckCircle2,
   ExternalLink,
   Image as ImageIcon,
-  ShieldCheck,
 } from "lucide-react";
 
 export default function NewCollectionPage() {

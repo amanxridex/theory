@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Phone, ArrowRight, Package, ShieldCheck } from "lucide-react";
+import { Phone, ArrowRight, Package } from "lucide-react";
 import { getCustomerByPhone, getOrdersByPhone } from "@/lib/supabase";
 
 export default function LoginPage() {
@@ -82,9 +82,8 @@ export default function LoginPage() {
 
         {/* Informative Auto-Account Banner */}
         <div className="p-3.5 bg-[#f7f5ef] border border-[#e5e3dc] text-[11px] font-mono text-neutral-600 space-y-1">
-          <div className="flex items-center gap-1.5 font-bold text-neutral-800">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#001540]" />
-            <span>Seamless Instant Access</span>
+          <div className="font-bold text-neutral-800 uppercase tracking-wider">
+            Seamless Instant Access
           </div>
           <p>
             No password needed. Your account was automatically created when you placed your order.

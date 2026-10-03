@@ -198,7 +198,7 @@ export default function OrderInvoicePage({ params }) {
               </div>
               <div className="flex justify-between">
                 <span className="text-neutral-500">Courier Service:</span>
-                <span className="font-semibold text-black">Express Air Courier (Insured)</span>
+                <span className="font-semibold text-black">Standard Domestic Courier (Insured)</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-neutral-500">Dispatch Check:</span>

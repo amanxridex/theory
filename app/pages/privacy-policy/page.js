@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
               1. Information Collection
             </h2>
             <p>
-              When you browse our studio catalog or place an order, we collect personal information you provide such as your name, delivery address, phone number, and email address to fulfill your shipments and notify you of order milestones.
+              When you browse our catalog or place an order, we collect personal information you provide such as your name, delivery address, phone number, and email address to fulfill your shipments and notify you of order milestones.
             </p>
           </section>
 

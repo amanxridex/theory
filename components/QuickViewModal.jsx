@@ -1,12 +1,17 @@
 "use client";
 
-import { X, ShoppingBag, Plus, Minus, Check } from "lucide-react";
-import { useState } from "react";
+import { X, ShoppingBag, Plus, Minus, Check, Scale } from "lucide-react";
+import { useState, useMemo } from "react";
+import { parseProductSpecifications } from "@/lib/productSections";
 
 export default function QuickViewModal({ product, isOpen, onClose, onAddToCart }) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+
+  const specs = useMemo(() => {
+    return parseProductSpecifications(product?.description);
+  }, [product?.description]);
 
   if (!isOpen || !product) return null;
 
@@ -90,6 +95,39 @@ export default function QuickViewModal({ product, isOpen, onClose, onAddToCart }
             <p className="text-xs text-neutral-600 leading-relaxed font-normal">
               Artisanal homeware crafted to stay cozy, stay you. Hand-finished stoneware and tactile textures that bring character to your space.
             </p>
+
+            {/* Quick Specs */}
+            {specs && (specs.weight || specs.dimensions || specs.material) && (
+              <div className="p-3 bg-[#faf8f2] border border-[#e5e3dc] rounded space-y-2">
+                <div className="flex items-center justify-between text-[10px] font-mono uppercase text-neutral-500 border-b border-[#e5e3dc] pb-1">
+                  <span className="font-bold text-[#001540]">Specifications</span>
+                  <span className="flex items-center gap-1">
+                    <Scale className="w-3 h-3" />
+                    <span>Courier Weight</span>
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                  {specs.material && (
+                    <div>
+                      <span className="text-neutral-400 block text-[9px] uppercase">Material</span>
+                      <span className="font-semibold text-neutral-900">{specs.material}</span>
+                    </div>
+                  )}
+                  {specs.weight && (
+                    <div>
+                      <span className="text-neutral-400 block text-[9px] uppercase">Weight</span>
+                      <span className="font-semibold text-neutral-900">{specs.weight}</span>
+                    </div>
+                  )}
+                  {specs.dimensions && (
+                    <div className="col-span-2">
+                      <span className="text-neutral-400 block text-[9px] uppercase">Dimensions</span>
+                      <span className="font-semibold text-neutral-900">{specs.dimensions}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Quantity Selector */}
             <div className="space-y-2 pt-2">

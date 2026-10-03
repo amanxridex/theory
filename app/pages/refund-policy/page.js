@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { 
-  ShieldCheck, 
   Video, 
   PackageX, 
   Clock, 
@@ -67,8 +66,7 @@ export default function RefundPolicyPage() {
       <div className="border-b border-[#e5e3dc] bg-[#faf8f2]">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-16">
           <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white border border-[#e5e3dc] text-[10px] font-mono uppercase tracking-[0.2em] text-[#001540] font-semibold">
-              <ShieldCheck className="w-3 h-3" />
+            <div className="inline-flex items-center px-2.5 py-1 bg-white border border-[#e5e3dc] text-[10px] font-mono uppercase tracking-[0.2em] text-[#001540] font-semibold">
               Customer Protection & Guarantee
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight text-[#121212]">
@@ -161,7 +159,7 @@ export default function RefundPolicyPage() {
             <section className="p-6 sm:p-8 bg-white border border-[#e5e3dc] shadow-xs space-y-4">
               <div className="flex items-center gap-3 pb-3 border-b border-neutral-100">
                 <div className="w-8 h-8 rounded-full bg-[#001540]/10 text-[#001540] flex items-center justify-center shrink-0">
-                  <ShieldCheck className="w-4 h-4" />
+                  <CheckCircle2 className="w-4 h-4" />
                 </div>
                 <div>
                   <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block">
@@ -300,7 +298,6 @@ export default function RefundPolicyPage() {
             {/* Questions & Contact Banner */}
             <div className="p-6 sm:p-8 bg-[#121212] text-[#fffdf8] border border-neutral-800 space-y-4">
               <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-blue-400">
-                <ShieldCheck className="w-3.5 h-3.5" />
                 Customer Care & Queries
               </div>
               <h3 className="text-lg sm:text-xl font-bold uppercase tracking-tight">

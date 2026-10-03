@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
-import { Minus, Plus, Trash2, ArrowRight, ShieldCheck, ShoppingBag } from "lucide-react";
+import { Minus, Plus, Trash2, ArrowRight, ShoppingBag, Scale } from "lucide-react";
 import { useState } from "react";
 import { NOTICE_PRODUCTS } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
+import { calculateTieredShipping } from "@/lib/productSections";
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, subtotal } = useCart();
@@ -18,6 +19,8 @@ export default function CartPage() {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+
+  const shippingInfo = calculateTieredShipping(items, subtotal);
 
   const recommendations = NOTICE_PRODUCTS.slice(4, 8);
 
@@ -75,11 +78,11 @@ export default function CartPage() {
                 <div className="flex justify-between items-center text-xs font-mono">
                   {amountNeeded > 0 ? (
                     <span>
-                      Add <strong>Rs. {amountNeeded.toLocaleString("en-IN")}</strong> more to claim <strong>FREE Express Shipping</strong>
+                      Add <strong>Rs. {amountNeeded.toLocaleString("en-IN")}</strong> more to claim <strong>FREE Standard Shipping</strong>
                     </span>
                   ) : (
-                    <span className="text-emerald-700 font-bold flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4" /> You have qualified for FREE Express Delivery!
+                    <span className="text-emerald-700 font-bold">
+                      You have qualified for FREE Standard Delivery!
                     </span>
                   )}
                 </div>
@@ -184,8 +187,21 @@ export default function CartPage() {
                     <span className="font-bold text-black">Rs. {formattedSubtotal}</span>
                   </div>
                   <div className="flex justify-between items-center pt-2">
-                    <span>Shipping</span>
-                    <span>{amountNeeded <= 0 ? "FREE Express" : "Calculated at next step"}</span>
+                    <span className="flex items-center gap-1">
+                      <Scale className="w-3.5 h-3.5 text-neutral-500" />
+                      <span>Parcel Weight</span>
+                    </span>
+                    <span className="font-semibold text-neutral-800">~{shippingInfo.totalWeightKg} kg</span>
+                  </div>
+                  <div className="flex justify-between items-center pt-2">
+                    <span>Delivery</span>
+                    <span>
+                      {shippingInfo.shippingFee === 0 ? (
+                        <span className="text-emerald-700 font-bold uppercase">FREE</span>
+                      ) : (
+                        `Rs. ${shippingInfo.shippingFee}.00 (${shippingInfo.tierLabel})`
+                      )}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center pt-2">
                     <span>Taxes</span>
@@ -193,11 +209,13 @@ export default function CartPage() {
                   </div>
                   <div className="flex justify-between items-center pt-3 text-sm font-bold text-black">
                     <span>Estimated Total</span>
-                    <span>Rs. {formattedSubtotal}</span>
+                    <span>
+                      Rs. {(subtotal + shippingInfo.shippingFee).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+                    </span>
                   </div>
                 </div>
 
-                <div className="space-y-3 pt-2">
+                <div className="pt-2">
                   <Link
                     href="/checkout"
                     className="w-full py-4 bg-[#121212] text-[#fffdf8] text-xs font-mono font-bold tracking-widest uppercase hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2 shadow-lg"
@@ -205,17 +223,10 @@ export default function CartPage() {
                     <span>Proceed To Checkout</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
-
-                  <Link
-                    href="/checkout"
-                    className="w-full py-3.5 bg-[#001540] text-white text-xs font-mono font-bold tracking-widest uppercase hover:bg-[#002266] transition-colors flex items-center justify-center gap-2"
-                  >
-                    <span>⚡ 1-Click Express Checkout</span>
-                  </Link>
                 </div>
 
                 <p className="text-[10px] font-mono text-neutral-500 text-center">
-                  🔒 Encrypted 256-Bit SSL Checkout. All cards, UPI, & COD accepted.
+                  🔒 Encrypted 256-Bit SSL Checkout. All cards, Net Banking & UPI accepted.
                 </p>
               </div>
             </div>
@@ -223,7 +234,7 @@ export default function CartPage() {
           </div>
         )}
 
-        {/* Studio Recommendations */}
+        {/* Curated Recommendations */}
         <div className="mt-20 pt-12 border-t border-[#e5e3dc]">
           <h3 className="text-xl md:text-2xl font-extrabold uppercase tracking-tight mb-8">
             Complete Your Living Gallery

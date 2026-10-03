@@ -17,7 +17,6 @@ import {
   CheckCircle2,
   AlertCircle,
   Image as ImageIcon,
-  ShieldCheck,
 } from "lucide-react";
 
 const IMAGE_PRESETS = [

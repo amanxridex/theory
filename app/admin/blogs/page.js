@@ -19,7 +19,6 @@ import {
   Edit,
   Save,
   X,
-  ShieldCheck,
   ArrowRight,
   Globe,
   Sliders,

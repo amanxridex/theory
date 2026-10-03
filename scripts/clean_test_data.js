@@ -23,6 +23,21 @@ async function cleanTestData() {
   if (evtErr) console.error("Error clearing analytics events:", evtErr);
   else console.log("✓ Cleared test analytics events");
 
+  // 4. Clear test customer inquiries
+  const { data: inqs } = await supabase.from("contact_inquiries").select("id");
+  const inqIds = (inqs || []).map((i) => i.id);
+  const { data: setPost } = await supabase.from("blog_posts").select("content").eq("handle", "store_settings").maybeSingle();
+  if (setPost?.content) {
+    try {
+      const parsed = JSON.parse(setPost.content);
+      const updated = { ...parsed, deleted_inquiry_ids: inqIds };
+      await supabase.from("blog_posts").update({ content: JSON.stringify(updated) }).eq("handle", "store_settings");
+      console.log(`✓ Cleared ${inqIds.length} test contact inquiries`);
+    } catch (e) {
+      console.error("Error updating deleted_inquiry_ids in settings:", e);
+    }
+  }
+
   // Verify products are untouched
   const { count: prodCount } = await supabase.from("products").select("*", { count: "exact", head: true });
   console.log(`✓ Products intact: ${prodCount} products in database.`);

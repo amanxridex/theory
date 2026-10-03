@@ -13,7 +13,7 @@ import { useCart } from "@/context/CartContext";
 import { useStore } from "@/context/StoreContext";
 
 export default function Home() {
-  const { products } = useStore();
+  const { products, storeSettings } = useStore();
   const { addToCart } = useCart();
   const [activeFilter, setActiveFilter] = useState("all");
   const [quickViewProduct, setQuickViewProduct] = useState(null);
@@ -59,7 +59,13 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#fffdf8] flex flex-col">
       {/* Hero Slideshow */}
-      <HeroSlider slides={HERO_SLIDES} />
+      <HeroSlider
+        slides={
+          storeSettings?.hero_slides && storeSettings.hero_slides.length > 0
+            ? storeSettings.hero_slides
+            : HERO_SLIDES
+        }
+      />
 
       {/* Product Catalog Section */}
       <section id="catalog" className="py-12 md:py-20 max-w-[1600px] mx-auto px-4 md:px-8 w-full">
@@ -157,7 +163,7 @@ export default function Home() {
 
       {/* Interactive Lookbook */}
       <LookbookSection
-        hotspots={LOOKBOOK_SPOTS}
+        hotspots={storeSettings?.lookbook_spots && storeSettings.lookbook_spots.length > 0 ? storeSettings.lookbook_spots : LOOKBOOK_SPOTS}
         onAddToCart={(p) => addToCart(p)}
       />
 

@@ -86,9 +86,9 @@ function triggerFlyToCart(imageUrl, sourceEventOrRect) {
     const targetX = cartRect.left + cartRect.width / 2 - 32;
     const targetY = cartRect.top + cartRect.height / 2 - 32;
 
-    // Organic parabolic arc (peaks higher in the vertical plane)
+    // Organic parabolic arc (peaks gracefully higher in the vertical plane)
     const midX = (startX + targetX) / 2;
-    const midY = Math.min(startY, targetY) - 55;
+    const midY = Math.min(startY, targetY) - 110;
 
     const keyframes = [
       {
@@ -97,25 +97,35 @@ function triggerFlyToCart(imageUrl, sourceEventOrRect) {
         offset: 0,
       },
       {
-        transform: `translate3d(${midX}px, ${midY}px, 0) scale(1.15) rotate(-10deg)`,
+        transform: `translate3d(${startX + (midX - startX) * 0.3}px, ${startY - 50}px, 0) scale(1.15) rotate(-5deg)`,
         opacity: 1,
-        offset: 0.4,
+        offset: 0.22,
       },
       {
-        transform: `translate3d(${targetX}px, ${targetY}px, 0) scale(0.2) rotate(18deg)`,
-        opacity: 0.4,
-        offset: 0.95,
+        transform: `translate3d(${midX}px, ${midY}px, 0) scale(1.08) rotate(-10deg)`,
+        opacity: 0.95,
+        offset: 0.52,
       },
       {
-        transform: `translate3d(${targetX}px, ${targetY}px, 0) scale(0.05) rotate(24deg)`,
+        transform: `translate3d(${targetX - (targetX - midX) * 0.25}px, ${midY + (targetY - midY) * 0.55}px, 0) scale(0.65) rotate(8deg)`,
+        opacity: 0.8,
+        offset: 0.8,
+      },
+      {
+        transform: `translate3d(${targetX}px, ${targetY}px, 0) scale(0.22) rotate(18deg)`,
+        opacity: 0.45,
+        offset: 0.96,
+      },
+      {
+        transform: `translate3d(${targetX}px, ${targetY}px, 0) scale(0.06) rotate(25deg)`,
         opacity: 0,
         offset: 1,
       },
     ];
 
     const animation = flyer.animate(keyframes, {
-      duration: 720,
-      easing: "cubic-bezier(0.25, 0.9, 0.3, 1)",
+      duration: 1250, // Slower, graceful, and clearly visible trajectory
+      easing: "cubic-bezier(0.22, 0.9, 0.32, 1)",
       fill: "forwards",
     });
 
@@ -133,13 +143,13 @@ function triggerFlyToCart(imageUrl, sourceEventOrRect) {
         cartBtn.animate(
           [
             { transform: "scale(1)" },
-            { transform: "scale(1.35)" },
-            { transform: "scale(0.92)" },
-            { transform: "scale(1.08)" },
+            { transform: "scale(1.4)" },
+            { transform: "scale(0.9)" },
+            { transform: "scale(1.12)" },
             { transform: "scale(1)" },
           ],
           {
-            duration: 380,
+            duration: 450,
             easing: "cubic-bezier(0.34, 1.56, 0.64, 1)",
           }
         );
@@ -150,7 +160,7 @@ function triggerFlyToCart(imageUrl, sourceEventOrRect) {
 
     animation.oncancel = cleanup;
     // Guaranteed fallback removal
-    setTimeout(cleanup, 1200);
+    setTimeout(cleanup, 2200);
   } catch (err) {
     console.error("Fly to cart animation error:", err);
   }
@@ -209,6 +219,7 @@ export function CartProvider({ children }) {
           price: product.price,
           images: product.images || [],
           quantity: qty,
+          description: product.description || "",
         },
       ];
     });
@@ -216,7 +227,7 @@ export function CartProvider({ children }) {
     // 3. Open cart drawer right after flying animation lands
     setTimeout(() => {
       setIsCartOpen(true);
-    }, 700);
+    }, 1300);
   };
 
   const updateQuantity = (id, newQty) => {

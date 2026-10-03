@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Save, Eye, ShieldCheck, CheckCircle } from "lucide-react";
+import { ArrowLeft, Save, Eye, CheckCircle } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 
 export default function NewBlogPostPage() {

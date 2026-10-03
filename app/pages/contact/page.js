@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Phone, MapPin, Check, MessageSquare, Send, ShieldCheck } from "lucide-react";
+import { Mail, Phone, MapPin, Check, MessageSquare, Send } from "lucide-react";
 import { submitContactInquiry } from "@/lib/supabase";
 
 export default function ContactPage() {

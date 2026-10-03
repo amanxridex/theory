@@ -15,7 +15,6 @@ import {
   ArrowUpRight,
   Globe,
   ShoppingBag,
-  ShieldCheck,
   Layers,
 } from "lucide-react";
 

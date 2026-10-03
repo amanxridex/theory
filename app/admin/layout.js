@@ -23,7 +23,6 @@ import {
   Lock,
   Unlock,
   KeyRound,
-  ShieldCheck,
   Eye,
   EyeOff,
   ArrowRight,
@@ -273,7 +272,7 @@ export default function AdminLayout({ children }) {
           {/* Security Note */}
           <div className="pt-4 border-t border-[#e5e3dc] text-center">
             <div className="flex items-center justify-center gap-1.5 text-[11px] font-mono text-neutral-500">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+              <Lock className="w-3.5 h-3.5 text-emerald-600" />
               <span>Protected by The Cozy Theory Security Auth</span>
             </div>
           </div>

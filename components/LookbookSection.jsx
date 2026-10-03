@@ -1,11 +1,11 @@
-"use client";
-
 import { useState } from "react";
-import { Plus, X, ShoppingBag } from "lucide-react";
+import Link from "next/link";
+import { Plus, X, ShoppingBag, ExternalLink } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
+import { LOOKBOOK_SPOTS } from "@/lib/products";
 
 export default function LookbookSection({ hotspots, onAddToCart }) {
-  const { storeSettings } = useStore();
+  const { storeSettings, products } = useStore();
   const [activeSpot, setActiveSpot] = useState(null);
 
   const bannerImage =
@@ -16,6 +16,15 @@ export default function LookbookSection({ hotspots, onAddToCart }) {
   const description =
     storeSettings?.lookbook_text ||
     "Tap the illuminated hotspots on the art arrangement to inspect and add individual conversation objects directly to your bag.";
+
+  const spotsToRender =
+    storeSettings?.lookbook_spots &&
+    Array.isArray(storeSettings.lookbook_spots) &&
+    storeSettings.lookbook_spots.length > 0
+      ? storeSettings.lookbook_spots
+      : hotspots && Array.isArray(hotspots) && hotspots.length > 0
+      ? hotspots
+      : LOOKBOOK_SPOTS;
 
   return (
     <section className="py-16 md:py-24 bg-[#f3f3f3] border-y border-[#e5e3dc] overflow-hidden">
@@ -46,61 +55,105 @@ export default function LookbookSection({ hotspots, onAddToCart }) {
           />
 
           {/* Hotspot Pins */}
-          {hotspots.map((spot) => (
-            <div
-              key={spot.id}
-              style={{ top: spot.top, left: spot.left }}
-              className="absolute -translate-x-1/2 -translate-y-1/2 z-20"
-            >
-              <button
-                onClick={() => setActiveSpot(activeSpot?.id === spot.id ? null : spot)}
-                className="hotspot-pin w-8 h-8 md:w-9 md:h-9 rounded-full bg-[#121212] text-white border-2 border-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-transform"
-                aria-label={`Inspect ${spot.productTitle}`}
-              >
-                {activeSpot?.id === spot.id ? (
-                  <X className="w-4 h-4" />
-                ) : (
-                  <Plus className="w-4 h-4" />
-                )}
-              </button>
+          {spotsToRender.map((spot, idx) => {
+            const matchedProduct = products?.find(
+              (p) => String(p.id) === String(spot.productId)
+            );
+            const productHandle =
+              matchedProduct?.handle ||
+              spot.handle ||
+              String(spot.productTitle || "")
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/^-|-$/g, "");
+            const displayTitle = matchedProduct?.title || spot.productTitle || "Artisanal Object";
+            const displayPrice = matchedProduct?.price ?? spot.price ?? 0;
+            const displayImage =
+              (Array.isArray(matchedProduct?.images) && matchedProduct.images[0]) ||
+              matchedProduct?.image ||
+              spot.image ||
+              "";
+            const formattedPrice = Number(displayPrice || 0).toLocaleString("en-IN", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            });
+            const spotTop = String(spot.top || "50%").includes("%") ? spot.top : `${spot.top}%`;
+            const spotLeft = String(spot.left || "50%").includes("%") ? spot.left : `${spot.left}%`;
 
-              {/* Popover Product Card */}
-              {activeSpot?.id === spot.id && (
-                <div className="absolute top-11 left-1/2 -translate-x-1/2 w-60 md:w-64 bg-[#fffdf8] border border-[#121212] shadow-2xl p-3 z-30 animate-in fade-in zoom-in duration-200">
-                  <div className="flex gap-3 items-center">
-                    <img
-                      src={spot.image}
-                      alt={spot.productTitle}
-                      className="w-16 h-16 object-cover border border-[#e5e3dc]"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-xs font-bold uppercase tracking-tight text-[#121212] truncate">
-                        {spot.productTitle}
-                      </h4>
-                      <p className="text-xs font-mono font-bold text-neutral-800 mt-0.5">
-                        Rs. {spot.price}
-                      </p>
-                      <button
-                        onClick={() => {
-                          onAddToCart({
-                            id: spot.productId,
-                            title: spot.productTitle,
-                            price: spot.price.replace(/,/g, ""),
-                            images: [spot.image],
-                          });
-                          setActiveSpot(null);
-                        }}
-                        className="mt-2 flex items-center gap-1.5 px-2.5 py-1 bg-[#001540] hover:bg-[#002266] text-[#fffdf8] text-[10px] font-mono tracking-wider uppercase transition-colors"
+            return (
+              <div
+                key={spot.id || idx}
+                style={{ top: spotTop, left: spotLeft }}
+                className="absolute -translate-x-1/2 -translate-y-1/2 z-20"
+              >
+                <button
+                  type="button"
+                  onClick={() => setActiveSpot(activeSpot?.id === spot.id ? null : spot)}
+                  className="hotspot-pin w-8 h-8 md:w-9 md:h-9 rounded-full bg-[#121212] text-white border-2 border-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-transform cursor-pointer"
+                  aria-label={`Inspect ${displayTitle}`}
+                >
+                  {activeSpot?.id === spot.id ? (
+                    <X className="w-4 h-4" />
+                  ) : (
+                    <Plus className="w-4 h-4" />
+                  )}
+                </button>
+
+                {/* Popover Product Card */}
+                {activeSpot?.id === spot.id && (
+                  <div className="absolute top-11 left-1/2 -translate-x-1/2 w-64 md:w-72 bg-[#fffdf8] border border-[#121212] shadow-2xl p-3.5 z-30 animate-in fade-in zoom-in duration-200">
+                    <div className="flex gap-3 items-center">
+                      <Link
+                        href={`/products/${productHandle}`}
+                        className="block w-16 h-16 shrink-0 bg-[#faf8f5] border border-[#e5e3dc] overflow-hidden"
                       >
-                        <ShoppingBag className="w-3 h-3" />
-                        <span>Add To Bag</span>
-                      </button>
+                        <img
+                          src={displayImage}
+                          alt={displayTitle}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform"
+                        />
+                      </Link>
+                      <div className="flex-1 min-w-0">
+                        <Link
+                          href={`/products/${productHandle}`}
+                          className="text-xs font-bold uppercase tracking-tight text-[#121212] hover:text-[#001540] truncate block transition-colors"
+                        >
+                          {displayTitle}
+                        </Link>
+                        <p className="text-xs font-mono font-bold text-neutral-800 mt-0.5">
+                          Rs. {formattedPrice}
+                        </p>
+                        <div className="mt-2 flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              onAddToCart({
+                                id: matchedProduct?.id || spot.productId,
+                                title: displayTitle,
+                                price: parseFloat(String(displayPrice).replace(/,/g, "")) || 0,
+                                images: [displayImage],
+                              });
+                              setActiveSpot(null);
+                            }}
+                            className="flex items-center gap-1.5 px-2.5 py-1 bg-[#001540] hover:bg-[#002266] text-[#fffdf8] text-[10px] font-mono tracking-wider uppercase transition-colors shadow-xs"
+                          >
+                            <ShoppingBag className="w-3 h-3" />
+                            <span>Add To Bag</span>
+                          </button>
+                          <Link
+                            href={`/products/${productHandle}`}
+                            className="text-[10px] font-mono text-neutral-500 hover:text-black uppercase underline"
+                          >
+                            Details
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
